@@ -1,0 +1,9 @@
+{
+  "codeConnect": {
+    "include": ["src/**/*.figma.tsx"],
+    "parser": "react",
+    "importPaths": {
+      "src/*": "@andromeda/react/*"
+    }
+  }
+}
