@@ -1,0 +1,52 @@
+/*
+ * ColorCard — Andromeda DS
+ * Card de documentación de color (Figma: "DS/Color Card").
+ * Este mismo archivo se usa desde el componente de React y el de Vue.
+ */
+
+.and-color-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 198px;
+  font-family: var(--font-family-sans);
+}
+
+.and-color-card__card {
+  background: var(--color-surface-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.and-color-card__swatch {
+  height: 120px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.and-color-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+}
+
+.and-color-card__name {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.and-color-card__value {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.and-color-card__description {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+}

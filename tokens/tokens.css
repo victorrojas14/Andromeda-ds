@@ -2,44 +2,95 @@
  * Andromeda Design System — Tokens
  *
  * Capa primitiva + capa semántica. Ambos paquetes (React y Vue)
- * consumen este mismo archivo. Cuando el refactor del DS termine,
- * este archivo se genera automáticamente vía Style Dictionary a
- * partir de las Variables de Figma.
+ * consumen este mismo archivo.
+ *
+ * Los valores provienen de las Variables y páginas de Fundamentos del
+ * archivo Figma "Ui Kit Web" (oTZzdsgGkCjbL2f3oybxD0):
+ *   - Colores Base            (node 9075:37705)
+ *   - Paleta gráfica de pastel (node 10445:399)
+ * Cuando el refactor del DS termine, este archivo se genera
+ * automáticamente vía Style Dictionary a partir de esas Variables.
  */
 
 :root {
   /* ============================================================
-   * PRIMITIVES — Colors (paleta cruda, no consumir directo)
+   * PRIMITIVES — Brand · Primary (Rojo INVEX)
+   * Figma: Color/Primary/*
    * ============================================================ */
+  --color-primary-light: #c68091; /* botones deshabilitados */
+  --color-primary:       #a41d36; /* header, botones e iconos; acción principal */
+  --color-primary-dark:  #6e0011; /* botón presionado */
 
-  /* Brand red (INVEX) */
-  --color-red-100: #fce8ec;
-  --color-red-300: #ea6b83;
-  --color-red-500: #a41d36;
-  --color-red-600: #8a1830;
-  --color-red-700: #6f1425;
+  /* ============================================================
+   * PRIMITIVES — Brand · Secondary (gris)
+   * Figma: Color/Secondary/*
+   * ============================================================ */
+  --color-secondary-light: #73797e;
+  --color-secondary:       #565a5c; /* textos de jerarquía secundaria */
+  --color-secondary-dark:  #232930;
 
-  /* Brand blue */
-  --color-blue-100: #e3f0f9;
-  --color-blue-300: #63b3e0;
-  --color-blue-500: #0f89d3;
-  --color-blue-600: #0c6ea8;
-  --color-blue-700: #0a5988;
+  /* ============================================================
+   * PRIMITIVES — Brand · Tertiary (azul)
+   * Figma: Color/Tertiary/*
+   * ============================================================ */
+  --color-tertiary-light: #eef4ff; /* fondo de botón outline presionado */
+  --color-tertiary:       #0f89d3; /* botones outline, texto, icono y steppers */
+  --color-tertiary-dark:  #035688;
 
-  /* Neutrals */
-  --color-neutral-0:   #ffffff;
-  --color-neutral-50:  #f6f6f6;
-  --color-neutral-100: #eeeeee;
-  --color-neutral-300: #cccccc;
-  --color-neutral-500: #73797e;
-  --color-neutral-700: #4a4d51;
-  --color-neutral-900: #222222;
+  /* ============================================================
+   * PRIMITIVES — Neutros
+   * Figma: Color/Neutros/*
+   * ============================================================ */
+  --color-white:      #ffffff; /* fondo modo light, texto en botones, iconos */
+  --color-background: #f6f6f6; /* fondo de todos los portales */
+  --color-gray-100:   #ededed; /* fondos en tablas */
+  --color-gray-200:   #e9e9e9; /* fondos en componentes */
+  --color-gray-300:   #cccccc; /* contornos y textos en formularios */
+  --color-gray-400:   #a7a7a7; /* contornos y textos en formularios */
+  --color-gray-500:   #666666; /* textos en formularios */
+  --color-body:       #222222; /* color principal de textos */
 
-  /* Feedback */
-  --color-success-500: #28a745;
-  --color-warning-500: #f0ad4e;
-  --color-danger-500:  #dc3545;
-  --color-info-500:    #3582ff;
+  /* ============================================================
+   * PRIMITIVES — Feedback (Light / Base / Dark)
+   * Figma: Color/{Success,Warning,Danger,Info}/*
+   * Light: fondo de alertas · Base: montos/etiquetas/iconos · Dark: texto en alertas
+   * ============================================================ */
+  --color-success-light: #d4edda;
+  --color-success:       #28a745;
+  --color-success-dark:  #176529;
+
+  --color-warning-light: #fff3cd;
+  --color-warning:       #ffc107;
+  --color-warning-dark:  #a17901;
+
+  --color-danger-light: #fcd9e0;
+  --color-danger:       #ed002f;
+  --color-danger-dark:  #bd0026;
+
+  --color-info-light: #d7e6ff;
+  --color-info:       #3582ff;
+  --color-info-dark:  #0044b4;
+
+  /* ============================================================
+   * PRIMITIVES — Dark mode
+   * Figma: Color/Tertiary/Dark--Blue01, Dark--Blue02, Black--Blue
+   * ============================================================ */
+  --color-dark-blue-01: #122530;
+  --color-dark-blue-02: #1b2f3e;
+  --color-black-blue:   #171436;
+
+  /* ============================================================
+   * PRIMITIVES — Paleta gráfica de pastel (pie charts)
+   * Figma: página "Paleta gráfica de pastel". El orden importa:
+   * chart-1 es el primer elemento de la gráfica. Del 6º elemento
+   * en adelante se agrupa en "Otros" con chart-6.
+   * ============================================================ */
+  --color-chart-1: #6e0011;
+  --color-chart-2: #a41d36;
+  --color-chart-3: #0f89d3;
+  --color-chart-4: #423670;
+  --color-chart-5: #cccccc;
+  --color-chart-6: #565a5c;
 
   /* ============================================================
    * PRIMITIVES — Spacing (base 4)
@@ -58,26 +109,34 @@
 
   /* ============================================================
    * PRIMITIVES — Radius
+   * Figma: Rounded/Rounded-SM 4 · Rounded-MD 10 · Rounded-LG 20
    * ============================================================ */
   --radius-none: 0;
-  --radius-xs: 2px;
   --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-md: 10px;
+  --radius-lg: 20px;
   --radius-pill: 999px;
 
   /* ============================================================
    * PRIMITIVES — Typography
+   * Figma: Font/family/primary-one = Poppins; Font/size/*; Font/weight/*
    * ============================================================ */
-  --font-family-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
 
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-md: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
+  --font-size-display-4: 48px;
+  --font-size-h4: 24px;
+  --font-size-h5: 20px;
+  --font-size-h6: 16px;
+  --font-size-parrafo: 16px;
+  --font-size-parrafo-sm: 14px;
+  --font-size-parrafo-xs: 12px;
+
+  /* Aliases por talla que consumen los componentes */
+  --font-size-xs: var(--font-size-parrafo-xs);
+  --font-size-sm: var(--font-size-parrafo-sm);
+  --font-size-md: var(--font-size-parrafo);
+  --font-size-lg: var(--font-size-h5);
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -89,49 +148,75 @@
   --line-height-relaxed: 1.75;
 
   /* ============================================================
+   * PRIMITIVES — Shadows
+   * Figma: Sombra-Per · Sombra Autolayout-MD · sombra de DS/Color Card
+   * ============================================================ */
+  --shadow-sm: 0 8px 16px rgba(200, 200, 200, 0.25);
+  --shadow-md: 0 0 24px rgba(200, 200, 200, 0.45);
+  --shadow-card:
+    0 25px 38px rgba(94, 94, 94, 0.07),
+    0 12.7px 16.6px rgba(94, 94, 94, 0.05),
+    0 5px 6.2px rgba(94, 94, 94, 0.04),
+    0 1.1px 2.2px rgba(94, 94, 94, 0.02);
+
+  /* ============================================================
    * SEMANTIC — Text
    * ============================================================ */
-  --color-text-primary:   var(--color-neutral-900);
-  --color-text-secondary: var(--color-neutral-500);
-  --color-text-disabled:  var(--color-neutral-300);
-  --color-text-on-brand:  var(--color-neutral-0);
-  --color-text-link:      var(--color-blue-500);
+  --color-text-primary:   var(--color-body);
+  --color-text-secondary: var(--color-secondary);
+  --color-text-disabled:  var(--color-gray-400);
+  --color-text-on-brand:  var(--color-white);
+  --color-text-link:      var(--color-tertiary);
 
   /* ============================================================
    * SEMANTIC — Surface
    * ============================================================ */
-  --color-surface-default: var(--color-neutral-0);
-  --color-surface-subtle:  var(--color-neutral-50);
-  --color-surface-inverse: var(--color-neutral-900);
+  --color-surface-default: var(--color-white);
+  --color-surface-subtle:  var(--color-background);
+  --color-surface-inverse: var(--color-dark-blue-01);
 
   /* ============================================================
    * SEMANTIC — Border
    * ============================================================ */
-  --color-border-default: var(--color-neutral-300);
-  --color-border-subtle:  var(--color-neutral-100);
-  --color-border-strong:  var(--color-neutral-500);
+  --color-border-default: var(--color-gray-300);
+  --color-border-subtle:  var(--color-gray-100);
+  --color-border-strong:  var(--color-gray-500);
 
   /* ============================================================
-   * SEMANTIC — Action (interactive) — Primary (brand red)
+   * SEMANTIC — Action (interactive) — Primary (Rojo INVEX)
+   * Figma solo define Light (disabled) y Dark (pressed); hover
+   * usa Dark y subtle se deriva del primario.
    * ============================================================ */
-  --color-action-primary-default: var(--color-red-500);
-  --color-action-primary-hover:   var(--color-red-600);
-  --color-action-primary-pressed: var(--color-red-700);
-  --color-action-primary-subtle:  var(--color-red-100);
+  --color-action-primary-default:  var(--color-primary);
+  --color-action-primary-hover:    var(--color-primary-dark);
+  --color-action-primary-pressed:  var(--color-primary-dark);
+  --color-action-primary-disabled: var(--color-primary-light);
+  --color-action-primary-subtle:   color-mix(in srgb, var(--color-primary) 8%, var(--color-white));
 
   /* ============================================================
-   * SEMANTIC — Action — Secondary (blue)
+   * SEMANTIC — Action — Secondary (Tertiary azul en Figma)
    * ============================================================ */
-  --color-action-secondary-default: var(--color-blue-500);
-  --color-action-secondary-hover:   var(--color-blue-600);
-  --color-action-secondary-pressed: var(--color-blue-700);
-  --color-action-secondary-subtle:  var(--color-blue-100);
+  --color-action-secondary-default: var(--color-tertiary);
+  --color-action-secondary-hover:   var(--color-tertiary-dark);
+  --color-action-secondary-pressed: var(--color-tertiary-dark);
+  --color-action-secondary-subtle:  var(--color-tertiary-light);
 
   /* ============================================================
    * SEMANTIC — Feedback
    * ============================================================ */
-  --color-feedback-success: var(--color-success-500);
-  --color-feedback-warning: var(--color-warning-500);
-  --color-feedback-danger:  var(--color-danger-500);
-  --color-feedback-info:    var(--color-info-500);
+  --color-feedback-success:        var(--color-success);
+  --color-feedback-success-subtle: var(--color-success-light);
+  --color-feedback-success-strong: var(--color-success-dark);
+
+  --color-feedback-warning:        var(--color-warning);
+  --color-feedback-warning-subtle: var(--color-warning-light);
+  --color-feedback-warning-strong: var(--color-warning-dark);
+
+  --color-feedback-danger:         var(--color-danger);
+  --color-feedback-danger-subtle:  var(--color-danger-light);
+  --color-feedback-danger-strong:  var(--color-danger-dark);
+
+  --color-feedback-info:           var(--color-info);
+  --color-feedback-info-subtle:    var(--color-info-light);
+  --color-feedback-info-strong:    var(--color-info-dark);
 }
