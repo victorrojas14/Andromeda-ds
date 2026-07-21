@@ -23,14 +23,50 @@ const intro: React.CSSProperties = {
   margin: '0 0 32px',
 }
 
-const meta: Meta = {
+const meta = {
   title: 'Fundamentos/Grid',
   component: Grid,
-  parameters: { layout: 'padded' },
-}
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component:
+          'Retícula del DS Andromeda (fundamento "Grid" de Figma): 12 columnas, gutter de 20px y contenedor de 1140px centrado. Las celdas se colocan con `GridCol` y su prop `span`.',
+      },
+    },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    columns: {
+      control: { type: 'number', min: 1, max: 12, step: 1 },
+      description: 'Cantidad de columnas de la retícula.',
+      table: { defaultValue: { summary: '12' } },
+    },
+    fluid: {
+      control: 'boolean',
+      description: 'Sin ancho máximo: ocupa todo el contenedor padre.',
+      table: { defaultValue: { summary: 'false' } },
+    },
+  },
+  args: {
+    columns: 12,
+    fluid: false,
+  },
+} satisfies Meta<typeof Grid>
 
 export default meta
-type Story = StoryObj
+
+type Story = StoryObj<typeof meta>
+
+export const Playground: Story = {
+  render: (args) => (
+    <Grid {...args}>
+      {Array.from({ length: args.columns ?? 12 }, (_, i) => (
+        <GridCol key={i} span={1} style={demoCol} />
+      ))}
+    </Grid>
+  ),
+}
 
 export const Reticula: Story = {
   name: 'Retícula',

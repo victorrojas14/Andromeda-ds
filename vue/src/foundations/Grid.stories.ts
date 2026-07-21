@@ -8,18 +8,55 @@ import { Grid, GridCol } from '../components/Grid'
  * contenedor de 1140px centrado en desktop.
  */
 
+const demoColStyle = 'height:60px;background:var(--color-secondary-light);'
+const introStyle =
+  'font-family:var(--font-family-sans);font-size:var(--font-size-md);line-height:var(--line-height-normal);color:var(--color-text-primary);max-width:900px;margin:0 0 32px;'
+
 const meta: Meta = {
   title: 'Fundamentos/Grid',
   component: Grid,
-  parameters: { layout: 'padded' },
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component:
+          'Retícula del DS Andromeda (fundamento "Grid" de Figma): 12 columnas, gutter de 20px y contenedor de 1140px centrado. Las celdas se colocan con `GridCol` y su prop `span`.',
+      },
+    },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    columns: {
+      control: { type: 'number', min: 1, max: 12, step: 1 },
+      description: 'Cantidad de columnas de la retícula.',
+      table: { defaultValue: { summary: '12' } },
+    },
+    fluid: {
+      control: 'boolean',
+      description: 'Sin ancho máximo: ocupa todo el contenedor padre.',
+      table: { defaultValue: { summary: 'false' } },
+    },
+  },
+  args: {
+    columns: 12,
+    fluid: false,
+  },
 }
 
 export default meta
 type Story = StoryObj
 
-const demoColStyle = 'height:60px;background:var(--color-secondary-light);'
-const introStyle =
-  'font-family:var(--font-family-sans);font-size:var(--font-size-md);line-height:var(--line-height-normal);color:var(--color-text-primary);max-width:900px;margin:0 0 32px;'
+export const Playground: Story = {
+  render: (args) => ({
+    components: { Grid, GridCol },
+    setup: () => ({ args, demoColStyle }),
+    template: `
+      <Grid v-bind="args">
+        <GridCol v-for="i in (args.columns || 12)" :key="i" :span="1" :style="demoColStyle" />
+      </Grid>
+    `,
+  }),
+}
 
 export const Reticula: Story = {
   name: 'Retícula',
