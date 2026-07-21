@@ -9,7 +9,7 @@ import { colors } from './colors'
  */
 
 const meta: Meta = {
-  title: 'Fundamentos/Colores Base',
+  title: 'Fundamentos/Colors/Colores Base',
   component: ColorCard,
   parameters: { layout: 'padded' },
 }

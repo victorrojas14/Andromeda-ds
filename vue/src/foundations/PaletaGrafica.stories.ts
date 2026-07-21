@@ -10,7 +10,7 @@ import { chartPalette, chartColor } from './colors'
  */
 
 const meta: Meta = {
-  title: 'Fundamentos/Paleta gráfica de pastel',
+  title: 'Fundamentos/Colors/Paleta gráfica de pastel',
   component: ColorCard,
   parameters: { layout: 'padded' },
 }

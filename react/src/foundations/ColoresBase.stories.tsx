@@ -26,7 +26,7 @@ const intro: React.CSSProperties = {
 }
 
 const meta: Meta = {
-  title: 'Fundamentos/Colores Base',
+  title: 'Fundamentos/Colors/Colores Base',
   component: ColorCard,
   parameters: { layout: 'padded' },
 }
