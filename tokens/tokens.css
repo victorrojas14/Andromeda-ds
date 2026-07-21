@@ -108,6 +108,17 @@
   --space-16: 64px;
 
   /* ============================================================
+   * PRIMITIVES — Grid
+   * Figma: fundamento "Grid" (node 3389:95): retícula de 12 columnas
+   * con gutter de 20px (Space-20) y contenedor de 1140px centrado
+   * (márgenes de 70px / Space-70 en desktop 1280).
+   * ============================================================ */
+  --grid-columns: 12;
+  --grid-gutter: 20px;
+  --grid-container-max: 1140px;
+  --grid-margin: 70px;
+
+  /* ============================================================
    * PRIMITIVES — Radius
    * Figma: Rounded/Rounded-SM 4 · Rounded-MD 10 · Rounded-LG 20
    * ============================================================ */

@@ -1,0 +1,26 @@
+/*
+ * Grid — Andromeda DS
+ * Retícula del fundamento "Grid" de Figma (node 3389:95):
+ * 12 columnas, gutter de 20px y contenedor de 1140px centrado.
+ * Este mismo archivo se usa desde el componente de React y el de Vue.
+ * Consume los tokens --grid-* definidos en tokens/tokens.css.
+ */
+
+.and-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--and-grid-columns, var(--grid-columns, 12)), minmax(0, 1fr));
+  gap: var(--grid-gutter, 20px);
+  width: 100%;
+  max-width: var(--grid-container-max, 1140px);
+  margin-inline: auto;
+}
+
+/* Sin límite de ancho: ocupa todo el contenedor padre. */
+.and-grid--fluid {
+  max-width: none;
+}
+
+.and-grid__col {
+  min-width: 0;
+  grid-column: span var(--and-col-span, 1) / span var(--and-col-span, 1);
+}
