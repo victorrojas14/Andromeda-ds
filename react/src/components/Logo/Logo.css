@@ -1,0 +1,25 @@
+/*
+ * Logo — Andromeda DS
+ * Este mismo archivo se usa desde el componente de React y el de Vue.
+ * El SVG usa currentColor: sin envolvente el color por defecto es el
+ * Rojo INVEX; dentro de la envolvente el logo es blanco sobre primario
+ * (página "Marcas Invex" de Figma).
+ */
+
+.and-logo {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  color: var(--color-primary);
+}
+
+.and-logo-envolvente {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+}
+
+.and-logo-envolvente .and-logo {
+  color: var(--color-white);
+}
