@@ -1,0 +1,10 @@
+/*
+ * Icon — Andromeda DS
+ * Este mismo archivo se usa desde el componente de React y el de Vue.
+ */
+
+.and-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
