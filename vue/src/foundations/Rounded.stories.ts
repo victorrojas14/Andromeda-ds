@@ -29,15 +29,46 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          'Escala de radios del DS Andromeda (tokens `--radius-*`): SM 4px, MD 10px, LG 20px y XL 50px, más `--radius-none` y `--radius-pill`.',
+          'Escala de radios del DS Andromeda (tokens `--radius-*`): SM 4px, MD 10px, LG 20px y XL 50px, más `--radius-none` y `--radius-pill`. Se consume como token: `border-radius: var(--radius-md)`.',
       },
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    radius: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'xl', 'pill'],
+      description: 'Token de radio aplicado (`--radius-*`).',
+      table: { defaultValue: { summary: 'md' } },
+    },
+    size: {
+      control: { type: 'number', min: 50, max: 300, step: 10 },
+      description: 'Tamaño del cuadrado de muestra en px.',
+      table: { defaultValue: { summary: '150' } },
+    },
+  },
+  args: {
+    radius: 'md',
+    size: 150,
+  },
 }
 
 export default meta
 type Story = StoryObj
+
+export const Playground: Story = {
+  render: (args) => ({
+    setup: () => ({ args, tokenLabelStyle }),
+    template: `
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div
+          :style="'width:' + args.size + 'px;height:' + args.size + 'px;background:var(--color-gray-300);border-radius:var(--radius-' + args.radius + ');'"
+        />
+        <span :style="tokenLabelStyle">border-radius: var(--radius-{{ args.radius }})</span>
+      </div>
+    `,
+  }),
+}
 
 export const Escala: Story = {
   render: () => ({
