@@ -121,6 +121,53 @@ export const Agrupados: Story = {
   }),
 }
 
+export const VarianteBotonGhost: Story = {
+  name: 'Variante — botón ghost',
+  render: () => ({
+    components: { Accordion, Button, Icon },
+    setup: () => ({ CONTENIDO }),
+    template: `
+      <div style="max-width:699px;">
+        <Accordion title="Título Acordeón">
+          <template #icon><Icon name="account-outline" :size="24" /></template>
+          <template #action>
+            <Button variant="primary" appearance="ghost" size="sm">
+              <template #leftIcon><Icon name="account-outline" /></template>
+              Default
+              <template #rightIcon><Icon name="account-outline" /></template>
+            </Button>
+          </template>
+          {{ CONTENIDO }}
+        </Accordion>
+      </div>
+    `,
+  }),
+}
+
+export const VarianteEstatus: Story = {
+  name: 'Variante — estatus',
+  render: () => ({
+    components: { Accordion, Icon },
+    setup: () => ({ CONTENIDO }),
+    template: `
+      <div style="max-width:699px;">
+        <Accordion title="Título Acordeón">
+          <template #icon><Icon name="account-outline" :size="24" /></template>
+          <template #action>
+            <span
+              style="display:inline-flex;align-items:center;gap:8px;min-height:33px;padding:0 var(--space-10);color:var(--color-feedback-success);font-family:var(--font-family-sans);font-size:var(--font-size-parrafo-sm);font-weight:var(--font-weight-medium);"
+            >
+              <Icon name="check-circle-outline" :size="20" />
+              HECHO
+            </span>
+          </template>
+          {{ CONTENIDO }}
+        </Accordion>
+      </div>
+    `,
+  }),
+}
+
 export const Items: Story = {
   name: 'Item Accordion',
   render: () => ({

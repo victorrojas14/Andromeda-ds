@@ -108,6 +108,63 @@ export const Agrupados: Story = {
   ),
 }
 
+export const VarianteBotonGhost: Story = {
+  name: 'Variante — botón ghost',
+  render: () => (
+    <div style={{ maxWidth: 699 }}>
+      <Accordion
+        title="Título Acordeón"
+        leftIcon={<Icon name="account-outline" size={24} />}
+        headerAction={
+          <Button
+            variant="primary"
+            appearance="ghost"
+            size="sm"
+            leftIcon={<Icon name="account-outline" />}
+            rightIcon={<Icon name="account-outline" />}
+          >
+            Default
+          </Button>
+        }
+      >
+        {CONTENIDO}
+      </Accordion>
+    </div>
+  ),
+}
+
+export const VarianteEstatus: Story = {
+  name: 'Variante — estatus',
+  render: () => (
+    <div style={{ maxWidth: 699 }}>
+      <Accordion
+        title="Título Acordeón"
+        leftIcon={<Icon name="account-outline" size={24} />}
+        headerAction={
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              minHeight: 33,
+              padding: '0 var(--space-10)',
+              color: 'var(--color-feedback-success)',
+              fontFamily: 'var(--font-family-sans)',
+              fontSize: 'var(--font-size-parrafo-sm)',
+              fontWeight: 'var(--font-weight-medium)' as never,
+            }}
+          >
+            <Icon name="check-circle-outline" size={20} />
+            HECHO
+          </span>
+        }
+      >
+        {CONTENIDO}
+      </Accordion>
+    </div>
+  ),
+}
+
 export const Items: Story = {
   name: 'Item Accordion',
   render: () => (
