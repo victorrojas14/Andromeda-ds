@@ -174,10 +174,36 @@
 
   /* ============================================================
    * PRIMITIVES — Shadows
-   * Figma: Sombra-Per · Sombra Autolayout-MD · sombra de DS/Color Card
+   * Figma: fundamento "Shading" (node 9236:1513), effect styles
+   * Sombra-*, Sombra-*2, Sombra-*3 y Sombra Autolayout-*.
    * ============================================================ */
-  --shadow-sm: 0 8px 16px rgba(200, 200, 200, 0.25);
-  --shadow-md: 0 0 24px rgba(200, 200, 200, 0.45);
+
+  /* Sombra 1 — centrada (offset 0,0) */
+  --shadow-sm: 0 0 10px 4px rgba(200, 200, 200, 0.25);
+  --shadow-md: 0 0 18px 8px rgba(200, 200, 200, 0.25);
+  --shadow-lg: 0 0 24px 12px rgba(200, 200, 200, 0.25);
+  --shadow-xl: 0 0 36px 18px rgba(200, 200, 200, 0.25);
+  --shadow-per: 0 8px 16px 0 rgba(200, 200, 200, 0.25);
+
+  /* Sombra 2 — proyectada abajo-derecha */
+  --shadow-sm-2: 4px 4px 10px 4px rgba(200, 200, 200, 0.25);
+  --shadow-md-2: 8px 8px 18px 8px rgba(200, 200, 200, 0.25);
+  --shadow-lg-2: 12px 12px 24px 12px rgba(200, 200, 200, 0.25);
+  --shadow-xl-2: 18px 18px 36px 18px rgba(200, 200, 200, 0.25);
+
+  /* Sombra 3 — proyectada abajo-izquierda */
+  --shadow-sm-3: -4px 4px 10px 4px rgba(200, 200, 200, 0.25);
+  --shadow-md-3: -8px 8px 18px 8px rgba(200, 200, 200, 0.25);
+  --shadow-lg-3: -12px 12px 24px 12px rgba(200, 200, 200, 0.25);
+  --shadow-xl-3: -18px 18px 36px 18px rgba(200, 200, 200, 0.25);
+
+  /* Sombra Autolayout — difusa, sin spread */
+  --shadow-autolayout-sm: 0 0 16px rgba(200, 200, 200, 0.45);
+  --shadow-autolayout-md: 0 0 24px rgba(200, 200, 200, 0.45);
+  --shadow-autolayout-lg: 0 0 34px rgba(200, 200, 200, 0.45);
+  --shadow-autolayout-xl: 0 0 56px rgba(200, 200, 200, 0.45);
+
+  /* Sombra de la card de documentación (DS/Color Card) */
   --shadow-card:
     0 25px 38px rgba(94, 94, 94, 0.07),
     0 12.7px 16.6px rgba(94, 94, 94, 0.05),
