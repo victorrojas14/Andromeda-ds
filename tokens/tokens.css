@@ -120,12 +120,14 @@
 
   /* ============================================================
    * PRIMITIVES — Radius
-   * Figma: Rounded/Rounded-SM 4 · Rounded-MD 10 · Rounded-LG 20
+   * Figma: fundamento "Rounded" (node 9236:1365):
+   * Rounded-SM 4 · Rounded-MD 10 · Rounded-LG 20 · Rounded-XL 50
    * ============================================================ */
   --radius-none: 0;
   --radius-sm: 4px;
   --radius-md: 10px;
   --radius-lg: 20px;
+  --radius-xl: 50px;
   --radius-pill: 999px;
 
   /* ============================================================
