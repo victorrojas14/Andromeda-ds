@@ -1,0 +1,53 @@
+/*
+ * Text — Andromeda DS
+ * Escala tipográfica del fundamento "Tipografía Web" / "Tipografía App"
+ * de Figma (Poppins; line-height 150%, letter-spacing 0).
+ * Este mismo archivo se usa desde el componente de React y el de Vue.
+ *
+ * Nota fiel a Figma: en los estilos Display, el peso "regular" usa
+ * ExtraLight (275) y "medium" usa Regular (400).
+ */
+
+.and-text {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  line-height: var(--line-height-normal);
+  letter-spacing: 0;
+  color: inherit;
+}
+
+/* ---- Variantes (tamaño) ---- */
+.and-text--display-1 { font-size: var(--font-size-display-1); }
+.and-text--display-2 { font-size: var(--font-size-display-2); }
+.and-text--display-3 { font-size: var(--font-size-display-3); }
+.and-text--display-4 { font-size: var(--font-size-display-4); }
+.and-text--h1 { font-size: var(--font-size-h1); }
+.and-text--h2 { font-size: var(--font-size-h2); }
+.and-text--h3 { font-size: var(--font-size-h3); }
+.and-text--h4 { font-size: var(--font-size-h4); }
+.and-text--h5 { font-size: var(--font-size-h5); }
+.and-text--h6 { font-size: var(--font-size-h6); }
+.and-text--parrafo { font-size: var(--font-size-parrafo); }
+.and-text--parrafo-sm { font-size: var(--font-size-parrafo-sm); }
+.and-text--parrafo-xs { font-size: var(--font-size-parrafo-xs); }
+.and-text--small-1 { font-size: var(--font-size-small-1); }
+.and-text--small-2 { font-size: var(--font-size-small-2); }
+
+/* ---- Pesos ---- */
+.and-text--regular { font-weight: var(--font-weight-regular); }
+.and-text--medium { font-weight: var(--font-weight-medium); }
+.and-text--semibold { font-weight: var(--font-weight-semibold); }
+
+/* Display: regular -> ExtraLight 275, medium -> Regular 400 (Figma) */
+.and-text--display-1.and-text--regular,
+.and-text--display-2.and-text--regular,
+.and-text--display-3.and-text--regular,
+.and-text--display-4.and-text--regular {
+  font-weight: 275;
+}
+.and-text--display-1.and-text--medium,
+.and-text--display-2.and-text--medium,
+.and-text--display-3.and-text--medium,
+.and-text--display-4.and-text--medium {
+  font-weight: var(--font-weight-regular);
+}

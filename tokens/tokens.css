@@ -135,13 +135,25 @@
   --font-family-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
 
+  /* Escala Web (páginas "Tipografía Web" 9236:1830 y "Tipografía App"
+   * 9252:792). Line-height 150% y letter-spacing 0 en toda la escala.
+   * En los estilos Display, "Regular" usa ExtraLight (275) y "Medium"
+   * usa Regular (400). */
+  --font-size-display-1: 72px;
+  --font-size-display-2: 64px;
+  --font-size-display-3: 56px;
   --font-size-display-4: 48px;
+  --font-size-h1: 40px;
+  --font-size-h2: 32px;
+  --font-size-h3: 28px;
   --font-size-h4: 24px;
   --font-size-h5: 20px;
   --font-size-h6: 16px;
   --font-size-parrafo: 16px;
   --font-size-parrafo-sm: 14px;
   --font-size-parrafo-xs: 12px;
+  --font-size-small-1: 10px;
+  --font-size-small-2: 8px;
 
   /* Aliases por talla que consumen los componentes */
   --font-size-xs: var(--font-size-parrafo-xs);
