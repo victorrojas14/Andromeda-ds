@@ -1,0 +1,150 @@
+/*
+ * Accordion — Andromeda DS
+ * Figma: component sets "Acordeon" (9259:1528) e "Item Accordion 2"
+ * (9259:1495) de la página Accordion.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-family-sans);
+}
+
+/* ---- Header (Titulo Acordeon) ---- */
+.and-accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  padding: var(--space-20);
+  background: var(--color-white);
+  border: none;
+  border-bottom: 0.5px solid var(--color-gray-300);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.and-accordion--mobile .and-accordion__header {
+  padding: var(--space-8) var(--space-16);
+}
+
+.and-accordion__lead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  flex: 1;
+  min-width: 0;
+  min-height: 33px;
+}
+
+.and-accordion__lead-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-primary);
+}
+
+.and-accordion__title {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-secondary-dark);
+}
+
+.and-accordion--mobile .and-accordion__title {
+  font-size: var(--font-size-parrafo-sm);
+}
+
+.and-accordion__action {
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.and-accordion__chevron {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-secondary-dark);
+}
+
+.and-accordion__header:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---- Panel (Contenido Acordeon) ---- */
+.and-accordion__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 100%;
+  padding: var(--space-30);
+  background: var(--color-background);
+  border: 0.5px solid var(--color-gray-300);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-size: var(--font-size-parrafo);
+  line-height: var(--line-height-normal);
+  color: var(--color-secondary-dark);
+}
+
+.and-accordion--mobile .and-accordion__panel {
+  padding: var(--space-16);
+  font-size: var(--font-size-parrafo-sm);
+}
+
+/* ============================================================
+ * AccordionItem (Item Accordion 2)
+ * ============================================================ */
+.and-accordion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  min-height: 52px;
+  padding: var(--space-10);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-autolayout-sm);
+  font-family: var(--font-family-sans);
+}
+
+.and-accordion-item__lead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  flex: 1;
+  min-width: 0;
+}
+
+.and-accordion-item__lead-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-primary);
+}
+
+.and-accordion-item__title {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+}
+
+.and-accordion-item--mobile .and-accordion-item__title {
+  font-size: var(--font-size-parrafo-sm);
+}
+
+.and-accordion-item__trail-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--color-body);
+}
