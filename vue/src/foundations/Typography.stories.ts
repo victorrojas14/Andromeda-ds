@@ -83,7 +83,7 @@ const meta: Meta = {
   args: {
     variant: 'h2',
     weight: 'regular',
-    default: 'Casi antes de saberlo, habíamos dejado el suelo',
+    default: 'Lo hacemos para el cliente, lo hacemos en grande y lo hacemos en equipo',
   },
 }
 

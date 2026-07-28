@@ -87,7 +87,7 @@ const meta = {
   args: {
     variant: 'h2',
     weight: 'regular',
-    children: 'Casi antes de saberlo, habíamos dejado el suelo',
+    children: 'Lo hacemos para el cliente, lo hacemos en grande y lo hacemos en equipo',
   },
 } satisfies Meta<typeof Text>
 
