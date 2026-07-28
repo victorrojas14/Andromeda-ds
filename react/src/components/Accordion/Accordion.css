@@ -29,8 +29,12 @@
   user-select: none;
 }
 
-.and-accordion--mobile .and-accordion__header {
-  padding: var(--space-8) var(--space-16);
+/* Responsive: en viewport mobile (< 768px) adopta el diseño Mobile
+ * de Figma automáticamente — es el mismo componente. */
+@media (max-width: 767px) {
+  .and-accordion__header {
+    padding: var(--space-8) var(--space-16);
+  }
 }
 
 .and-accordion__lead {
@@ -57,8 +61,10 @@
   color: var(--color-secondary-dark);
 }
 
-.and-accordion--mobile .and-accordion__title {
-  font-size: var(--font-size-parrafo-sm);
+@media (max-width: 767px) {
+  .and-accordion__title {
+    font-size: var(--font-size-parrafo-sm);
+  }
 }
 
 .and-accordion__action {
@@ -92,9 +98,11 @@
   color: var(--color-secondary-dark);
 }
 
-.and-accordion--mobile .and-accordion__panel {
-  padding: var(--space-16);
-  font-size: var(--font-size-parrafo-sm);
+@media (max-width: 767px) {
+  .and-accordion__panel {
+    padding: var(--space-16);
+    font-size: var(--font-size-parrafo-sm);
+  }
 }
 
 /* ============================================================
@@ -139,8 +147,10 @@
   color: var(--color-body);
 }
 
-.and-accordion-item--mobile .and-accordion-item__title {
-  font-size: var(--font-size-parrafo-sm);
+@media (max-width: 767px) {
+  .and-accordion-item__title {
+    font-size: var(--font-size-parrafo-sm);
+  }
 }
 
 .and-accordion-item__trail-icon {

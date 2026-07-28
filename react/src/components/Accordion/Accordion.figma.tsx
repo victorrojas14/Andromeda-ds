@@ -21,7 +21,8 @@ figma.connect(
     props: {
       title: figma.string('Texto Titulo'),
       open: figma.enum('Estado', { Abierto: true, Cerrado: false }),
-      size: figma.enum('Size', { Desktop: 'desktop', Mobile: 'mobile' }),
+      // La variante Size (Desktop/Mobile) no se mapea: el componente es
+      // responsive y adopta el diseño mobile según el viewport.
       // La property de swap del icono izquierdo se llama "Cambiar Icono
       // Der" en Figma (así está definida en el set; se respeta).
       leftIcon: figma.boolean('Mostrar Icono Izq', {
@@ -37,14 +38,8 @@ figma.connect(
         false: undefined,
       }),
     },
-    example: ({ title, open, size, leftIcon, headerAction }) => (
-      <Accordion
-        title={title}
-        defaultOpen={open}
-        size={size}
-        leftIcon={leftIcon}
-        headerAction={headerAction}
-      >
+    example: ({ title, open, leftIcon, headerAction }) => (
+      <Accordion title={title} defaultOpen={open} leftIcon={leftIcon} headerAction={headerAction}>
         Contenido del acordeón
       </Accordion>
     ),
@@ -57,7 +52,8 @@ figma.connect(
   {
     props: {
       title: figma.string('Ttitulo'),
-      size: figma.enum('Size', { Desktop: 'desktop', Mobile: 'mobile' }),
+      // La variante Size (Desktop/Mobile) no se mapea: el componente es
+      // responsive y adopta el diseño mobile según el viewport.
       leftIcon: figma.boolean('Mostrar Icono Izq', {
         true: figma.instance('Cambiar Icono Izq'),
         false: undefined,
@@ -67,8 +63,8 @@ figma.connect(
         false: <Icon name="chevron-down" size={24} />,
       }),
     },
-    example: ({ title, size, leftIcon, rightIcon }) => (
-      <AccordionItem title={title} size={size} leftIcon={leftIcon} rightIcon={rightIcon} />
+    example: ({ title, leftIcon, rightIcon }) => (
+      <AccordionItem title={title} leftIcon={leftIcon} rightIcon={rightIcon} />
     ),
   },
 )

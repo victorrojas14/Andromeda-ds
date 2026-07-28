@@ -2,13 +2,9 @@ import * as React from 'react'
 import './Accordion.css'
 import { Icon } from '../Icon'
 
-export type AccordionSize = 'desktop' | 'mobile'
-
 export interface AccordionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Título del header (Figma: "Texto Titulo"). */
   title: React.ReactNode
-  /** Variante de tamaño (Figma: Size Desktop/Mobile). */
-  size?: AccordionSize
   /** Estado abierto (controlado). */
   open?: boolean
   /** Estado inicial (no controlado). */
@@ -27,11 +23,11 @@ export interface AccordionProps extends Omit<React.HTMLAttributes<HTMLDivElement
  * Accordion — acordeón del DS Andromeda (Figma: component set "Acordeon").
  * Header blanco con título, icono opcional, acción opcional y chevron;
  * panel de contenido sobre fondo neutro. Soporta uso controlado (prop
- * `open`) o no controlado (`defaultOpen`).
+ * `open`) o no controlado (`defaultOpen`). Responsive: en viewport
+ * mobile (< 768px) adopta el diseño Mobile de Figma automáticamente.
  */
 export function Accordion({
   title,
-  size = 'desktop',
   open,
   defaultOpen = false,
   onToggle,
@@ -58,9 +54,7 @@ export function Accordion({
     }
   }
 
-  const classes = ['and-accordion', size === 'mobile' && 'and-accordion--mobile', className]
-    .filter(Boolean)
-    .join(' ')
+  const classes = ['and-accordion', className].filter(Boolean).join(' ')
 
   return (
     <div className={classes} {...rest}>
@@ -104,8 +98,6 @@ export function Accordion({
 export interface AccordionItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Título del item (Figma: "Ttitulo"). */
   title: React.ReactNode
-  /** Variante de tamaño (Figma: Size Desktop/Mobile). */
-  size?: AccordionSize
   /** Icono a la izquierda (Figma: "Mostrar Icono Izq" / "Cambiar Icono Izq"). */
   leftIcon?: React.ReactNode
   /**
@@ -118,22 +110,16 @@ export interface AccordionItemProps extends Omit<React.HTMLAttributes<HTMLDivEle
 /**
  * AccordionItem — fila tipo card del DS Andromeda (Figma: component set
  * "Item Accordion 2"): fondo blanco, radio md y sombra autolayout-sm.
+ * Responsive: en viewport mobile (< 768px) adopta el diseño Mobile.
  */
 export function AccordionItem({
   title,
-  size = 'desktop',
   leftIcon,
   rightIcon = <Icon name="chevron-down" size={24} />,
   className,
   ...rest
 }: AccordionItemProps) {
-  const classes = [
-    'and-accordion-item',
-    size === 'mobile' && 'and-accordion-item--mobile',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ')
+  const classes = ['and-accordion-item', className].filter(Boolean).join(' ')
 
   return (
     <div className={classes} {...rest}>

@@ -27,11 +27,6 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     title: { control: 'text', description: 'Título del header.' },
-    size: {
-      control: 'inline-radio',
-      options: ['desktop', 'mobile'],
-      description: 'Variante de tamaño (Figma: Size).',
-    },
     defaultOpen: {
       control: 'boolean',
       description: 'Estado inicial (Figma: Estado Abierto/Cerrado).',
@@ -39,7 +34,6 @@ const meta = {
   },
   args: {
     title: 'Título Acordeón',
-    size: 'desktop',
     defaultOpen: false,
   },
 } satisfies Meta<typeof Accordion>
@@ -50,8 +44,8 @@ type Story = StoryObj<typeof meta>
 
 export const Playground: Story = {
   render: (args) => (
-    <div style={{ maxWidth: args.size === 'mobile' ? 358 : 699 }}>
-      <Accordion {...args} key={`${args.size}-${args.defaultOpen}`}>
+    <div style={{ maxWidth: 699 }}>
+      <Accordion {...args} key={String(args.defaultOpen)}>
         {CONTENIDO}
       </Accordion>
     </div>
@@ -86,10 +80,12 @@ export const Completo: Story = {
 }
 
 export const Mobile: Story = {
+  name: 'Mobile (responsive)',
+  parameters: { viewport: { defaultViewport: 'mobile2' } },
   render: () => (
-    <div style={{ maxWidth: 358, display: 'flex', flexDirection: 'column' }}>
-      <Accordion title="Título Acordeón" size="mobile" leftIcon={<Icon name="account-outline" size={24} />} />
-      <Accordion title="Título Acordeón" size="mobile" defaultOpen>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Accordion title="Título Acordeón" leftIcon={<Icon name="account-outline" size={24} />} />
+      <Accordion title="Título Acordeón" defaultOpen>
         {CONTENIDO}
       </Accordion>
     </div>
@@ -176,14 +172,13 @@ export const Items: Story = {
       <div style={{ width: 350, display: 'flex', flexDirection: 'column', gap: 20 }}>
         <AccordionItem
           title="Título Acordeón"
-          size="mobile"
           leftIcon={
             <span style={{ color: 'var(--color-tertiary)', display: 'inline-flex' }}>
               <Icon name="account-outline" size={24} />
             </span>
           }
         />
-        <AccordionItem title="Título Acordeón" size="mobile" />
+        <AccordionItem title="Título Acordeón" />
       </div>
     </div>
   ),

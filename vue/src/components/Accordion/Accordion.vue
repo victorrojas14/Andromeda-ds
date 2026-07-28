@@ -8,13 +8,13 @@ import { Icon } from '../Icon'
  * "Acordeon"). Header blanco con título, icono opcional (slot #icon),
  * acción opcional (slot #action) y chevron; panel de contenido (slot
  * default) sobre fondo neutro. Soporta v-model:open o defaultOpen.
+ * Responsive: en viewport mobile (< 768px) adopta el diseño Mobile de
+ * Figma automáticamente.
  */
 
 interface AccordionProps {
   /** Título del header (Figma: "Texto Titulo"). */
   title: string
-  /** Variante de tamaño (Figma: Size Desktop/Mobile). */
-  size?: 'desktop' | 'mobile'
   /** Estado abierto (controlado vía v-model:open). */
   open?: boolean
   /** Estado inicial (no controlado). */
@@ -22,7 +22,6 @@ interface AccordionProps {
 }
 
 const props = withDefaults(defineProps<AccordionProps>(), {
-  size: 'desktop',
   open: undefined,
   defaultOpen: false,
 })
@@ -54,14 +53,10 @@ function onKeydown(event: KeyboardEvent) {
   }
 }
 
-const classes = computed(() => [
-  'and-accordion',
-  props.size === 'mobile' && 'and-accordion--mobile',
-])
 </script>
 
 <template>
-  <div :class="classes">
+  <div class="and-accordion">
     <div
       class="and-accordion__header"
       role="button"

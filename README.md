@@ -71,9 +71,9 @@ Los fundamentos del DS provienen de las páginas "Colores Base" y "Paleta gráfi
 
 Acordeón del DS (Figma: component sets **Acordeon** e **Item Accordion 2** de la página Accordion), en React y Vue bajo **Surfaces/Accordion** en Storybook:
 
-- **`Accordion`** — header blanco (padding `space-20` desktop / `space-8·16` mobile, borde inferior `gray-300`, radios `sm` superiores, título Poppins Medium `secondary-dark` 16/14px) con icono opcional, acción opcional (ej. Button ghost) y chevron; panel de contenido sobre `background` (padding `space-30`/`space-16`, radios `sm` inferiores). Uso controlado (`open`/`onToggle` en React, `v-model:open` en Vue) o no controlado (`defaultOpen`). Accesible: header con `role="button"`, `aria-expanded`, `aria-controls` y teclado (Enter/Espacio).
-- **`AccordionItem`** — fila tipo card (fondo blanco, radio `md`, sombra `autolayout-sm`, padding `space-10`, alto mínimo 52px, título Poppins Medium `body`), con icono izquierdo opcional y chevron derecho por defecto.
-- **Code Connect**: ambos component sets mapeados con sus properties reales (`Texto Titulo`/`Ttitulo`, `Estado`, `Size`, iconos y botón). Los sets "NO USAR" (deprecados en Figma) no se mapean a propósito.
+- **`Accordion`** — header blanco (borde inferior `gray-300`, radios `sm` superiores, título Poppins Medium `secondary-dark`) con icono opcional, acción opcional (ej. Button ghost) y chevron; panel de contenido sobre `background` con radios `sm` inferiores. **Responsive**: usa el diseño Desktop de Figma (padding `space-20`, título 16px, panel `space-30`) y en viewport mobile (< 768px) adopta automáticamente el diseño Mobile (padding `space-8·16`, título 14px, panel `space-16`) — no hay prop de tamaño. Uso controlado (`open`/`onToggle` en React, `v-model:open` en Vue) o no controlado (`defaultOpen`). Accesible: header con `role="button"`, `aria-expanded`, `aria-controls` y teclado (Enter/Espacio).
+- **`AccordionItem`** — fila tipo card (fondo blanco, radio `md`, sombra `autolayout-sm`, padding `space-10`, alto mínimo 52px, título Poppins Medium `body`), con icono izquierdo opcional y chevron derecho por defecto. Responsive con el mismo breakpoint.
+- **Code Connect**: ambos component sets mapeados con sus properties reales (`Texto Titulo`/`Ttitulo`, `Estado`, iconos y botón). La variante `Size` de Figma no se mapea: ambas resuelven al mismo componente responsive. Los sets "NO USAR" (deprecados en Figma) no se mapean a propósito.
 
 ## Button
 
