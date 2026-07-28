@@ -93,19 +93,41 @@
   --color-chart-6: #565a5c;
 
   /* ============================================================
-   * PRIMITIVES — Spacing (base 4)
+   * PRIMITIVES — Spacing
+   * Figma: fundamento "Spacing" (node 9461:3893), tokens Space-*
+   * con variables Desktop y Mobile. El nombre indica el valor
+   * desktop en px; --space-N-mobile es el equivalente mobile.
    * ============================================================ */
   --space-0: 0;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-30: 30px;
+  --space-40: 40px;
+  --space-50: 50px;
+  --space-70: 70px;
+  --space-90: 90px;
+
+  --space-8-mobile: 8px;
+  --space-10-mobile: 8px;
+  --space-16-mobile: 16px;
+  --space-20-mobile: 16px;
+  --space-24-mobile: 16px;
+  --space-30-mobile: 24px;
+  --space-40-mobile: 32px;
+  --space-50-mobile: 50px;
+  --space-70-mobile: 70px;
+  --space-90-mobile: 90px;
+
+  /* Aliases legacy (compat de componentes existentes; los valores 4 y
+   * 12 no existen en la escala de Figma — pendiente refactor Button) */
   --space-1: 4px;
-  --space-2: 8px;
+  --space-2: var(--space-8);
   --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
+  --space-4: var(--space-16);
+  --space-5: var(--space-20);
 
   /* ============================================================
    * PRIMITIVES — Grid
@@ -114,9 +136,9 @@
    * (márgenes de 70px / Space-70 en desktop 1280).
    * ============================================================ */
   --grid-columns: 12;
-  --grid-gutter: 20px;
+  --grid-gutter: var(--space-20, 20px);
   --grid-container-max: 1140px;
-  --grid-margin: 70px;
+  --grid-margin: var(--space-70, 70px);
 
   /* ============================================================
    * PRIMITIVES — Radius
