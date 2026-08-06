@@ -1,0 +1,59 @@
+/*
+ * Breadcrumbs — Andromeda DS
+ * Figma: component set "Breadcrumbs" (321:1142) de la página
+ * Breadcrumbs (el set define el ITEM; el contenedor los apila con
+ * gap de 10px como en los ejemplos de la página).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+  font-family: var(--font-family-sans);
+}
+
+.and-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.and-breadcrumb--active {
+  color: var(--color-primary);
+}
+
+.and-breadcrumb--active .and-breadcrumb__label {
+  border-bottom: 1px solid currentColor;
+}
+
+.and-breadcrumb__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* El primer item de la miga no lleva separador (Figma: ejemplos). */
+.and-breadcrumbs .and-breadcrumb:first-child .and-breadcrumb__icon {
+  display: none;
+}
+
+a.and-breadcrumb:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* Responsive: en viewport mobile (< 768px) adopta el diseño Mobile
+ * de Figma automáticamente (texto 12px). */
+@media (max-width: 767px) {
+  .and-breadcrumb {
+    font-size: var(--font-size-parrafo-xs);
+  }
+}

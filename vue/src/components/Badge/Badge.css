@@ -1,0 +1,100 @@
+/*
+ * Badge — Andromeda DS
+ * Figma: component set "Badge" (312:2496) y componente "Badge/Counter"
+ * (312:2515) de la página Badges.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  background: var(--color-info);
+  color: var(--color-white);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+/* ---- Tamaños (Figma: Tamaño Badge h1..h6) ---- */
+.and-badge--h1 {
+  height: 51px;
+  padding: 4px 14px;
+  font-size: var(--font-size-h2);
+}
+.and-badge--h2 {
+  height: 40px;
+  padding: 4px 12px;
+  font-size: var(--font-size-h4);
+}
+.and-badge--h3 {
+  height: 36px;
+  padding: 4px 10px;
+  font-size: var(--font-size-h5);
+}
+.and-badge--h4 {
+  height: 31px;
+  padding: 4px var(--space-8);
+  font-size: var(--font-size-h6);
+}
+.and-badge--h5 {
+  height: 23px;
+  padding: 4px var(--space-8);
+  font-size: var(--font-size-parrafo-xs);
+}
+.and-badge--h6 {
+  height: 20px;
+  padding: 4px var(--space-8);
+  font-size: var(--font-size-small-1);
+}
+
+/* ============================================================
+ * Badge/Counter — contador (standalone 20x20 y anidado escalado)
+ * ============================================================ */
+.and-badge-counter {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  min-width: 20px;
+  padding: 4px;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-parrafo);
+  text-align: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Escala del counter dentro de cada tamaño de Badge (Figma) */
+.and-badge--h2 .and-badge-counter {
+  height: 18px;
+  font-size: var(--font-size-parrafo-sm);
+}
+.and-badge--h3 .and-badge-counter {
+  height: 16px;
+  font-size: var(--font-size-parrafo-xs);
+}
+.and-badge--h4 .and-badge-counter {
+  height: 14px;
+  min-width: 16px;
+  font-size: var(--font-size-small-1);
+}
+.and-badge--h5 .and-badge-counter {
+  height: 12px;
+  min-width: 14px;
+  font-size: var(--font-size-small-2);
+}
+.and-badge--h6 .and-badge-counter {
+  height: 12px;
+  min-width: 14px;
+  font-size: var(--font-size-small-2);
+}

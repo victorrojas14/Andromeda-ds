@@ -43,6 +43,7 @@
    * ============================================================ */
   --color-white:      #ffffff; /* fondo modo light, texto en botones, iconos */
   --color-background: #f6f6f6; /* fondo de todos los portales */
+  --color-bg-now:     #f9f9fb; /* Figma: variable "bg-now" (fondo del Pill new) */
   --color-gray-100:   #ededed; /* fondos en tablas */
   --color-gray-200:   #e9e9e9; /* fondos en componentes */
   --color-gray-300:   #cccccc; /* contornos y textos en formularios */

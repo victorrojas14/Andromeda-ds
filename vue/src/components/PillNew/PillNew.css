@@ -1,0 +1,40 @@
+/*
+ * PillNew — Andromeda DS
+ * Figma: componente "Pill new" (13992:3512) de la página Badges.
+ * Etiqueta pill de 15px de alto para marcar elementos nuevos (por
+ * ejemplo, ancla sobre tabs). Este mismo archivo se usa desde los
+ * componentes de React y Vue. Consume tokens de tokens/tokens.css.
+ */
+
+.and-pill-new {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  height: 15px;
+  background: var(--color-bg-now);
+  border: 0.5px solid var(--color-gray-100);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-family-sans);
+  white-space: nowrap;
+}
+
+.and-pill-new__dot-box {
+  display: inline-flex;
+  align-items: center;
+  padding: 1.5px 4px;
+}
+
+.and-pill-new__dot {
+  width: 3.2px;
+  height: 3.2px;
+  border-radius: 50%;
+  background: var(--color-info);
+}
+
+.and-pill-new__label {
+  padding-right: 2px;
+  color: var(--color-info);
+  font-size: var(--font-size-small-1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}

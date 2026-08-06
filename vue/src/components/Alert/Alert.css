@@ -1,0 +1,154 @@
+/*
+ * Alert — Andromeda DS
+ * Figma: component sets "Alerta" (157:1859) y "Alertas con accion"
+ * (157:3460) de la página Alerts.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+/* ============================================================
+ * Alert (Alerta) — alerta en línea
+ * ============================================================ */
+.and-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-10) var(--space-20);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md-2);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo-sm);
+  line-height: var(--line-height-normal);
+}
+
+.and-alert--success {
+  background: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+.and-alert--warning {
+  background: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+.and-alert--danger {
+  background: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}
+.and-alert--info {
+  background: var(--color-info-light);
+  color: var(--color-info-dark);
+}
+
+.and-alert__lead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  padding-right: var(--space-20);
+}
+
+.and-alert__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+/* El icono de Info es alert-outline invertido, como en Figma. */
+.and-alert--info .and-alert__icon .and-icon {
+  transform: rotate(180deg);
+}
+
+.and-alert__message {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  flex-shrink: 0;
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.and-alert__message-divider {
+  width: 1px;
+  height: 30px;
+  background: currentColor;
+}
+
+.and-alert__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.and-alert__trail {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.and-alert__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.and-alert__close:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+ * AlertBlock (Alertas con accion) — alerta en bloque con título
+ * ============================================================ */
+.and-alert-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+  padding: var(--space-10) var(--space-20) var(--space-16);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md-2);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo-sm);
+  line-height: var(--line-height-normal);
+}
+
+.and-alert-block--success {
+  background: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+.and-alert-block--warning {
+  background: var(--color-warning-light);
+  color: var(--color-warning-dark);
+}
+.and-alert-block--info {
+  background: var(--color-info-light);
+  color: var(--color-info-dark);
+}
+
+.and-alert-block__title {
+  margin: 0;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-semibold);
+}
+
+.and-alert-block__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+.and-alert-block__body p {
+  margin: 0;
+}
+
+.and-alert-block__divider {
+  width: 100%;
+  height: 0.5px;
+  background: currentColor;
+}

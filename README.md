@@ -75,6 +75,26 @@ Acordeón del DS (Figma: component sets **Acordeon** e **Item Accordion 2** de l
 - **`AccordionItem`** — fila tipo card (fondo blanco, radio `md`, sombra `autolayout-sm`, padding `space-10`, alto mínimo 52px, título Poppins Medium `body`), con icono izquierdo opcional y chevron derecho por defecto. Responsive con el mismo breakpoint.
 - **Code Connect**: ambos component sets mapeados con sus properties reales (`Texto Titulo`/`Ttitulo`, `Estado`, iconos y botón). La variante `Size` de Figma no se mapea: ambas resuelven al mismo componente responsive. Los sets "NO USAR" (deprecados en Figma) no se mapean a propósito.
 
+## Alert
+
+Alertas del DS (Figma: sets **Alerta** y **Alertas con accion** de la página Alerts), bajo **Feedback/Alert** en Storybook. `Alert` (inline): fondo semántico `*-light`, textos/iconos en `*-dark`, radio `md`, sombra `--shadow-md-2`, mensaje destacado con divisor, acción opcional y botón de cerrar (auto-descarte + `onClose`/`@close`); variants success/warning/danger/info con iconos fieles (Info usa `alert-outline` rotado). `AlertBlock` (bloque): título h5 SemiBold por variant, cuerpo y footer con divisor de 0.5px (sin danger). Ambos sets mapeados con Code Connect.
+
+## Avatar
+
+Avatar circular (Figma: set **Avatar**), bajo **Data Display/Avatar**. El estado se deriva de las props: `src` (Foto), `initials` (Iniciales, tipografía 72/40/24/16 según tamaño) o placeholder de agregar foto (icono `camera-plus-outline`, texto solo en 200). Props `size` (40/60/100/200) y `color` (`rojo`/`blanco`), `role="img"` con `aria-label`. Code Connect con Size/Color/Estado mapeados.
+
+## Badge
+
+Badge (Figma: set **Badge** y componente **Badge/Counter** de la página Badges), bajo **Data Display/Badge**. Fondo Info, texto blanco Poppins Medium con `size` h1–h6 (alturas 51/40/36/31/23/20) y contador opcional `count` que escala con el badge; `BadgeCounter` standalone (20×20, fondo Secondary, SemiBold). Ambos mapeados con Code Connect.
+
+## Breadcrumbs
+
+Miga de pan (Figma: set **Breadcrumbs**), bajo **Navigation/Breadcrumbs**. `BreadcrumbItem`: separador `chevron-right` opcional + texto Regular — Default en `body`, Active en primario subrayado con `aria-current="page"`; `Breadcrumbs` (`nav`) los apila con gap 10px y oculta el separador del primero. Responsive: 16px → 12px bajo 768px (la variante Size de Figma no se mapea). Code Connect con Texto Categoria/Estado/Mostrar Icono.
+
+## PillNew
+
+Etiqueta "Nuevo" (Figma: componente **Pill new** de la página Badges), bajo **Data Display/PillNew**. Pill de 47×15 con fondo `--color-bg-now` (#F9F9FB, variable de Figma agregada a los tokens), borde 0.5px `gray-100`, punto y texto en Info 10px Medium. Sin props en Figma; el texto es reemplazable por children/slot. Conectado con Code Connect.
+
 ## Button
 
 Button unifica los ~20 component sets fragmentados de Figma (`btn/primary-SM`, `btn/ghost-primary-MD`, etc.) en una única API:

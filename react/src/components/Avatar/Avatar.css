@@ -1,0 +1,98 @@
+/*
+ * Avatar — Andromeda DS
+ * Figma: component set "Avatar" (9274:15849) de la página Avatar.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-avatar {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-10);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  flex-shrink: 0;
+  font-family: var(--font-family-sans);
+  user-select: none;
+}
+
+/* ---- Colores (Figma: Color Rojo/Blanco) ---- */
+.and-avatar--rojo {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.and-avatar--blanco {
+  background: var(--color-white);
+  color: var(--color-primary);
+}
+
+/* ---- Tamaños (Figma: Size 40/60/100/200) ---- */
+.and-avatar--40 {
+  width: 40px;
+  height: 40px;
+}
+.and-avatar--60 {
+  width: 60px;
+  height: 60px;
+}
+.and-avatar--100 {
+  width: 100px;
+  height: 100px;
+}
+.and-avatar--200 {
+  width: 200px;
+  height: 200px;
+}
+
+/* ---- Iniciales (Poppins Regular, escala por tamaño) ---- */
+.and-avatar__initials {
+  font-weight: var(--font-weight-regular);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.and-avatar--40 .and-avatar__initials {
+  font-size: var(--font-size-h6);
+}
+.and-avatar--60 .and-avatar__initials {
+  font-size: var(--font-size-h4);
+}
+.and-avatar--100 .and-avatar__initials {
+  font-size: var(--font-size-h1);
+}
+.and-avatar--200 .and-avatar__initials {
+  font-size: var(--font-size-display-1);
+}
+
+/* ---- Placeholder (Figma: Estado Default) ---- */
+.and-avatar__placeholder-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* "Agregar foto de perfil" solo existe en el tamaño 200 (Figma). */
+.and-avatar__label {
+  display: none;
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  white-space: pre-line;
+}
+
+.and-avatar--200 .and-avatar__label {
+  display: block;
+}
+
+/* ---- Foto (Figma: Estado Foto) ---- */
+.and-avatar__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-pill);
+}
