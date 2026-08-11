@@ -1,0 +1,88 @@
+/*
+ * Carousel — Andromeda DS
+ * Figma: component set "Carousel" (505:1000) y dots "Ellipse 4"
+ * (175:4739) de la página Carousel.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ *
+ * Responsive: el ancho es fluido (100% del contenedor) y el alto fijo
+ * de 400px, como muestran los ejemplos de la página "Carousel 2".
+ */
+
+.and-carousel {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  font-family: var(--font-family-sans);
+}
+
+.and-carousel__track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.and-carousel__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- Flechas (icon/arrow-left / arrow-right 24, en primario) ---- */
+.and-carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.and-carousel__arrow--prev {
+  left: 0;
+}
+
+.and-carousel__arrow--next {
+  right: 24px;
+}
+
+.and-carousel__arrow:focus-visible,
+.and-carousel__dot:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---- Dots (Ellipse 4: Default secondary, Hover/activo primario) ---- */
+.and-carousel__dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--space-10);
+}
+
+.and-carousel__dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-secondary);
+  cursor: pointer;
+}
+
+.and-carousel__dot:hover,
+.and-carousel__dot--active {
+  background: var(--color-primary);
+}

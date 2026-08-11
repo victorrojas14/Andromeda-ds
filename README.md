@@ -101,6 +101,10 @@ Cards del DS (Figma: página **Cards**, frames "Card Photo" y "Card Action"), ba
 
 Las cards de Figma son frames de documentación sin componentes publicados en la librería, por lo que el Code Connect queda preparado (comentado en `Card.figma.*`) para activarse cuando se publiquen.
 
+## Carousel
+
+Carrusel de imágenes (Figma: component set **Carousel** y dots **Ellipse 4** de la página Carousel), bajo **Data Display/Carousel**. Un solo componente sin variante responsive: alto fijo de 400px y **ancho fluido** que se adapta al contenedor (el comportamiento de la página "Carousel 2", con ejemplos a 288/670/800px). Flechas `arrow-left`/`arrow-right` en primario (izquierda al borde, derecha con inset de 24px, como el master) con vuelta en los extremos, y dots de 10px (activo/hover en primario, resto `secondary`) centrados a 16px del fondo. Uso controlado (`index`/`onIndexChange` en React, `v-model:index` en Vue) o no controlado (`defaultIndex`). Ambos sets mapeados con Code Connect (Number→`defaultIndex`; los dots muestran el snippet del Carousel completo).
+
 ## PillNew
 
 Etiqueta "Nuevo" (Figma: componente **Pill new** de la página Badges), bajo **Data Display/PillNew**. Pill de 47×15 con fondo `--color-bg-now` (#F9F9FB, variable de Figma agregada a los tokens), borde 0.5px `gray-100`, punto y texto en Info 10px Medium. Sin props en Figma; el texto es reemplazable por children/slot. Conectado con Code Connect.
