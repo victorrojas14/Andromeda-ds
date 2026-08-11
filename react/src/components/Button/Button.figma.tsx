@@ -18,8 +18,10 @@ import { Button } from './Button'
  *   - btn/ghost-primary-SM tiene el typo "Camciar Icono Der".
  *   - Los ghosts no tienen estado Pressed.
  *   - btn/secondary-MD no tiene properties: se mapea con un ejemplo fijo.
- *   - No se mapean btn/Rounded-* ni btn/Mis-Productos: tienen otra
- *     anatomía y tendrán su propio componente.
+ *   - btn/Rounded-*, btn/Mis-Productos y btn-buy/btn-sell tienen otra
+ *     anatomía: se mapean en ButtonVariants.figma.tsx a sus propios
+ *     componentes (ButtonRounded, ButtonRoundedCard,
+ *     ButtonMisProductos, ButtonTrade).
  *
  * Cuando termine el refactor del DS (un único component set Button con
  * properties variant/appearance/size), borrá todas estas llamadas y

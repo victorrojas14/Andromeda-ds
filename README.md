@@ -91,6 +91,17 @@ Badge (Figma: set **Badge** y componente **Badge/Counter** de la página Badges)
 
 Miga de pan (Figma: set **Breadcrumbs**), bajo **Navigation/Breadcrumbs**. `BreadcrumbItem`: separador `chevron-right` opcional + texto Regular — Default en `body`, Active en primario subrayado con `aria-current="page"`; `Breadcrumbs` (`nav`) los apila con gap 10px y oculta el separador del primero. Responsive: 16px → 12px bajo 768px (la variante Size de Figma no se mapea). Code Connect con Texto Categoria/Estado/Mostrar Icono.
 
+## Button variants
+
+Variantes de botón (Figma: página **Buttons variants**), bajo **Actions/Button variants**, todas usando el componente `Icon` del DS y con el Estado Hover de Figma implementado vía `:hover`:
+
+- **`ButtonRounded`** (btn/Rounded-LG) — borde 2px `gray-300` con radio 40, icono superior (default `android`) y fila icono/texto/icono (texto h5 en `secondary-light`); hover: borde `tertiary`, texto `secondary-dark` y sombra `autolayout-md`. Sin texto queda la variante cuadrada de solo icono (72×72 exacto).
+- **`ButtonRoundedCard`** (btn/Rounded-MD, 240×101) — título h5 en `body` + contenido 14 en `secondary-light`, mismo hover.
+- **`ButtonMisProductos`** (btn/Mis-Productos, 226×48) — pill `radius-xl` en `secondary-dark` con `view-cozy-rounded` + texto Medium blanco + `chevron-down`; hover negro pleno, disabled `gray-200`/`gray-300`.
+- **`ButtonTrade`** (btn-buy/btn-sell, 150×44) — `variant="buy"` en `success` con `arrow_buy` o `variant="sell"` en `danger-dark` con `arrow_sell`; hover o prop `selected` proyectan sombra del mismo color (`aria-pressed`).
+
+Los 5 component sets publicados están mapeados con Code Connect en `ButtonVariants.figma.*` con sus properties reales.
+
 ## Card
 
 Cards del DS (Figma: página **Cards**, frames "Card Photo" y "Card Action"), bajo **Surfaces/Card** en Storybook:

@@ -1,2 +1,6 @@
 export { default as Button } from './Button.vue'
 export type { ButtonVariant, ButtonAppearance, ButtonSize } from './Button.vue'
+export { default as ButtonRounded } from './ButtonRounded.vue'
+export { default as ButtonRoundedCard } from './ButtonRoundedCard.vue'
+export { default as ButtonMisProductos } from './ButtonMisProductos.vue'
+export { default as ButtonTrade } from './ButtonTrade.vue'

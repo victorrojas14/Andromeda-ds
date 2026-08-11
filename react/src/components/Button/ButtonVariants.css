@@ -1,0 +1,207 @@
+/*
+ * Button variants — Andromeda DS
+ * Figma: página "Buttons variants" (9336:23778), component sets
+ * btn/Rounded-LG (82:2870), btn/Rounded-MD (82:3021),
+ * btn/Mis-Productos (5637:1553), btn-buy (8471:1337) y
+ * btn-sell (8471:1346).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * El Estado Hover de Figma se implementa con :hover (no es prop).
+ */
+
+/* ============================================================
+ * ButtonRounded (btn/Rounded-LG): icono superior + fila
+ * icono/texto/icono. Sin texto ni iconos laterales queda la
+ * variante cuadrada de solo icono (72×72).
+ * ============================================================ */
+.and-btn-rounded {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  /* Figma dibuja el stroke por dentro: 22px + 2px de borde = 24px */
+  padding: calc(var(--space-24) - 2px);
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-300);
+  border-radius: 40px;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-secondary-light);
+  cursor: pointer;
+  text-align: center;
+}
+
+.and-btn-rounded:hover {
+  border-color: var(--color-tertiary);
+  color: var(--color-secondary-dark);
+  box-shadow: var(--shadow-autolayout-md);
+}
+
+.and-btn-rounded:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+.and-btn-rounded__row {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.and-btn-rounded__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.and-btn-rounded__label {
+  white-space: nowrap;
+}
+
+/* ============================================================
+ * ButtonRoundedCard (btn/Rounded-MD): título + contenido
+ * ============================================================ */
+.and-btn-rounded-card {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  align-items: center;
+  justify-content: center;
+  /* Figma dibuja el stroke por dentro: 18px + 2px de borde = 20px */
+  padding: calc(var(--space-20) - 2px);
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-300);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  text-align: left;
+}
+
+.and-btn-rounded-card:hover {
+  border-color: var(--color-tertiary);
+  box-shadow: var(--shadow-autolayout-md);
+}
+
+.and-btn-rounded-card:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+.and-btn-rounded-card__title {
+  width: 100%;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-btn-rounded-card__content {
+  width: 100%;
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-secondary-light);
+  line-height: var(--line-height-normal);
+}
+
+/* ============================================================
+ * ButtonMisProductos (btn/Mis-Productos)
+ * ============================================================ */
+.and-btn-productos {
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--space-10) var(--space-24);
+  background: var(--color-secondary-dark);
+  border: none;
+  border-radius: var(--radius-xl);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+/* Hover de Figma: negro pleno (no hay token; valor literal del set) */
+.and-btn-productos:hover:not(:disabled) {
+  background: #000000;
+}
+
+.and-btn-productos:disabled {
+  background: var(--color-gray-200);
+  color: var(--color-gray-300);
+  cursor: default;
+}
+
+.and-btn-productos:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+.and-btn-productos__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.and-btn-productos__label {
+  white-space: nowrap;
+}
+
+/* ============================================================
+ * ButtonTrade (btn-buy / btn-sell)
+ * ============================================================ */
+.and-btn-trade {
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 150px;
+  padding: var(--space-10) var(--space-24);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.and-btn-trade--buy {
+  background: var(--color-success);
+}
+
+.and-btn-trade--sell {
+  background: var(--color-danger-dark);
+}
+
+.and-btn-trade--buy:hover,
+.and-btn-trade--buy.and-btn-trade--selected {
+  box-shadow: 0 4px 7px var(--color-success);
+}
+
+.and-btn-trade--sell:hover,
+.and-btn-trade--sell.and-btn-trade--selected {
+  box-shadow: 0 4px 7px var(--color-danger-dark);
+}
+
+.and-btn-trade:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+.and-btn-trade__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.and-btn-trade__label {
+  white-space: nowrap;
+}
