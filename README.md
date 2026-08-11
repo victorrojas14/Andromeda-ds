@@ -109,6 +109,17 @@ Carrusel de imágenes (Figma: component set **Carousel** y dots **Ellipse 4** de
 
 Separador (Figma: componentes **Divider** y **Divider 10px–90px** de la página Dividers), bajo **Layout/Divider**. Línea de 1px en `gray-300` renderizada como `<hr>`, con prop `spacing` (0/10/20/30/40/50/70/90) que aplica el espaciado vertical de la escala Spacing a cada lado vía `margin-block: var(--space-N)`. Los 7 componentes publicados están mapeados con Code Connect (el "Divider 30px" existe en la página pero no está publicado; el componente igual soporta `spacing={30}`).
 
+## Footer
+
+Pie de página (Figma: componentes **Footer Desktop** 1440×471 y **Footer Mobile** 375×421 de la página Footer), bajo **Layout/Footer**. Fondo `secondary` con padding 40/60 (30 en mobile), títulos SemiBold 16 y links Regular 14 en blanco:
+
+- **Menú editable**: prop `columns` (array de `{ title, links: [{ label, href }] }`) — de 1 a 4 columnas, con textos y URLs modificables y posibilidad de agregar más items/subitems.
+- **Columna "Síguenos" opcional** (prop `social`): iconos de Facebook/X/Instagram (con URLs vía `socialLinks`) y logos regulatorios Buró de Entidades Financieras, CONDUSEF e IPAB (assets SVG incluidos en el paquete).
+- **Barra inferior**: logo INVEX en blanco (reutiliza el componente `Logo`) + `copyright` editable, separados por línea blanca superior.
+- **Responsive** (un solo componente): en <1024px adopta el diseño Footer Mobile — columnas apiladas **colapsables con chevron** y barra inferior en columna (cubre tablet 744 y mobile 375).
+
+Ambos componentes publicados están mapeados con Code Connect al mismo Footer responsive.
+
 ## PillNew
 
 Etiqueta "Nuevo" (Figma: componente **Pill new** de la página Badges), bajo **Data Display/PillNew**. Pill de 47×15 con fondo `--color-bg-now` (#F9F9FB, variable de Figma agregada a los tokens), borde 0.5px `gray-100`, punto y texto en Info 10px Medium. Sin props en Figma; el texto es reemplazable por children/slot. Conectado con Code Connect.

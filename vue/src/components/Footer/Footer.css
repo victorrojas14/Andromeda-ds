@@ -1,0 +1,204 @@
+/*
+ * Footer — Andromeda DS
+ * Figma: componentes "Footer Desktop" (735:11855, 1440×471) y
+ * "Footer Mobile" (735:11856, 375×421) de la página Footer.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ *
+ * Responsive: un solo componente. Desktop (≥1024px): columnas en fila,
+ * listas siempre visibles. Tablet/Mobile (<1024px): columnas apiladas
+ * colapsables con chevron (el diseño "Footer Mobile", que en la página
+ * también se muestra a 744px para tablet).
+ */
+
+.and-footer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-30);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-40) 60px;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  font-family: var(--font-family-sans);
+}
+
+/* ---- Columnas del menú ---- */
+.and-footer__columns {
+  display: flex;
+  gap: var(--space-30);
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+.and-footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  flex: 1;
+  min-width: 0;
+}
+
+.and-footer__column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+.and-footer__column-title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-white);
+  line-height: var(--line-height-normal);
+}
+
+.and-footer__chevron {
+  display: none;
+  flex-shrink: 0;
+  color: var(--color-white);
+}
+
+.and-footer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+.and-footer__list a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.and-footer__list a:hover {
+  text-decoration: underline;
+}
+
+.and-footer__list a:focus-visible,
+.and-footer__column-header:focus-visible,
+.and-footer__icons a:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/* ---- Columna Síguenos (iconos + logos regulatorios) ---- */
+.and-footer__social {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.and-footer__icons {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.and-footer__icons a {
+  display: inline-flex;
+}
+
+.and-footer__icons img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.and-footer__logos {
+  display: flex;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.and-footer__logos img {
+  display: block;
+  height: 34px;
+  width: auto;
+}
+
+/* ---- Barra inferior (logo INVEX + copyright) ---- */
+.and-footer__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: var(--space-20);
+  border-top: 1px solid var(--color-white);
+}
+
+.and-footer .and-logo {
+  color: var(--color-white);
+}
+
+.and-footer__copyright {
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-regular);
+  text-align: right;
+  line-height: var(--line-height-normal);
+}
+
+/* ---- Desktop: sin colapso ---- */
+@media (min-width: 1024px) {
+  .and-footer__column-header {
+    pointer-events: none;
+  }
+}
+
+/* ---- Tablet / Mobile (<1024px): diseño Footer Mobile ---- */
+@media (max-width: 1023px) {
+  .and-footer {
+    padding: var(--space-30);
+  }
+
+  .and-footer__columns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .and-footer__column-header {
+    cursor: pointer;
+  }
+
+  .and-footer__chevron {
+    display: inline-flex;
+  }
+
+  .and-footer__list,
+  .and-footer__social {
+    display: none;
+  }
+
+  .and-footer__column--open .and-footer__list,
+  .and-footer__column--open .and-footer__social {
+    display: flex;
+  }
+
+  .and-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-20);
+  }
+
+  .and-footer__copyright {
+    text-align: left;
+  }
+}
