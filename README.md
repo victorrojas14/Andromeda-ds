@@ -105,6 +105,10 @@ Las cards de Figma son frames de documentación sin componentes publicados en la
 
 Carrusel de imágenes (Figma: component set **Carousel** y dots **Ellipse 4** de la página Carousel), bajo **Data Display/Carousel**. Un solo componente sin variante responsive: alto fijo de 400px y **ancho fluido** que se adapta al contenedor (el comportamiento de la página "Carousel 2", con ejemplos a 288/670/800px). Flechas `arrow-left`/`arrow-right` en primario (izquierda al borde, derecha con inset de 24px, como el master) con vuelta en los extremos, y dots de 10px (activo/hover en primario, resto `secondary`) centrados a 16px del fondo. Uso controlado (`index`/`onIndexChange` en React, `v-model:index` en Vue) o no controlado (`defaultIndex`). Ambos sets mapeados con Code Connect (Number→`defaultIndex`; los dots muestran el snippet del Carousel completo).
 
+## Divider
+
+Separador (Figma: componentes **Divider** y **Divider 10px–90px** de la página Dividers), bajo **Layout/Divider**. Línea de 1px en `gray-300` renderizada como `<hr>`, con prop `spacing` (0/10/20/30/40/50/70/90) que aplica el espaciado vertical de la escala Spacing a cada lado vía `margin-block: var(--space-N)`. Los 7 componentes publicados están mapeados con Code Connect (el "Divider 30px" existe en la página pero no está publicado; el componente igual soporta `spacing={30}`).
+
 ## PillNew
 
 Etiqueta "Nuevo" (Figma: componente **Pill new** de la página Badges), bajo **Data Display/PillNew**. Pill de 47×15 con fondo `--color-bg-now` (#F9F9FB, variable de Figma agregada a los tokens), borde 0.5px `gray-100`, punto y texto en Info 10px Medium. Sin props en Figma; el texto es reemplazable por children/slot. Conectado con Code Connect.

@@ -1,0 +1,37 @@
+/*
+ * Divider — Andromeda DS
+ * Figma: componentes "Divider" y "Divider 10-90px" (página Dividers):
+ * línea de 1px en gray-300 con espaciado vertical de la escala
+ * Spacing a cada lado.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ */
+
+.and-divider {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--color-gray-300);
+}
+
+/* ---- Espaciados (Figma: Divider Npx = N de la escala Spacing) ---- */
+.and-divider--10 {
+  margin-block: var(--space-10);
+}
+.and-divider--20 {
+  margin-block: var(--space-20);
+}
+.and-divider--30 {
+  margin-block: var(--space-30);
+}
+.and-divider--40 {
+  margin-block: var(--space-40);
+}
+.and-divider--50 {
+  margin-block: var(--space-50);
+}
+.and-divider--70 {
+  margin-block: var(--space-70);
+}
+.and-divider--90 {
+  margin-block: var(--space-90);
+}
