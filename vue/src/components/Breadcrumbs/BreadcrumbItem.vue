@@ -5,12 +5,17 @@ import { Icon } from '../Icon'
 
 /*
  * BreadcrumbItem — item de la miga (Figma: component set "Breadcrumbs"):
- * separador chevron-right opcional + texto Regular en `body` (Default)
- * o primario subrayado (Active).
+ * separador chevron-right opcional + texto Regular. Los items
+ * navegables van en Active (primario subrayado, con link); el último
+ * (página actual) va en Default: color `body`, sin link.
  */
 
 interface BreadcrumbItemProps {
-  /** Página actual (Figma: Estado Active); se resalta en primario con subrayado. */
+  /**
+   * Item navegable (Figma: Estado Active): primario con subrayado.
+   * El último item (la página actual) va sin `active` y sin `href`:
+   * texto en `body`, sin link y con `aria-current="page"`.
+   */
   active?: boolean
   /** Muestra el separador chevron-right (Figma: "Mostrar Icono"). */
   icon?: boolean
@@ -24,7 +29,7 @@ const props = withDefaults(defineProps<BreadcrumbItemProps>(), {
   href: undefined,
 })
 
-const isLink = computed(() => Boolean(props.href) && !props.active)
+const isLink = computed(() => Boolean(props.href))
 const classes = computed(() => ['and-breadcrumb', props.active && 'and-breadcrumb--active'])
 </script>
 
@@ -33,7 +38,7 @@ const classes = computed(() => ['and-breadcrumb', props.active && 'and-breadcrum
     :is="isLink ? 'a' : 'span'"
     :class="classes"
     :href="isLink ? href : undefined"
-    :aria-current="active ? 'page' : undefined"
+    :aria-current="!isLink && !active ? 'page' : undefined"
   >
     <span v-if="icon" class="and-breadcrumb__icon" aria-hidden="true">
       <Icon name="chevron-right" :size="24" />

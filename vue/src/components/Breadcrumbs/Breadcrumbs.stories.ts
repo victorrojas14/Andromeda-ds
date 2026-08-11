@@ -15,14 +15,14 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          'Miga de pan del DS Andromeda (Figma: "Breadcrumbs"). `BreadcrumbItem` es el item del set (separador chevron-right opcional + texto Regular; Active en primario subrayado y con `aria-current`); `Breadcrumbs` los apila con gap de 10px y oculta el separador del primero. Responsive: en viewport mobile (< 768px) el texto pasa de 16px a 12px.',
+          'Miga de pan del DS Andromeda (Figma: "Breadcrumbs"). `BreadcrumbItem` es el item del set (separador chevron-right opcional + texto Regular; los navegables en Active: primario subrayado con link; el último en `body` sin link y con `aria-current`); `Breadcrumbs` los apila con gap de 10px y oculta el separador del primero. Responsive: en viewport mobile (< 768px) el texto pasa de 16px a 12px.',
       },
     },
   },
   tags: ['autodocs'],
   argTypes: {
     default: { control: 'text', description: 'Texto de la categoría (Figma: "Texto Categoria").' },
-    active: { control: 'boolean', description: 'Página actual (Figma: Estado Active).' },
+    active: { control: 'boolean', description: 'Item navegable (Figma: Estado Active): primario subrayado.' },
     icon: { control: 'boolean', description: 'Separador chevron-right (Figma: "Mostrar Icono").' },
   },
   args: {
@@ -49,9 +49,9 @@ export const Navegacion: Story = {
     components: { Breadcrumbs, BreadcrumbItem },
     template: `
       <Breadcrumbs>
-        <BreadcrumbItem href="/inicio">Inicio</BreadcrumbItem>
-        <BreadcrumbItem href="/inversiones">Inversiones</BreadcrumbItem>
-        <BreadcrumbItem active>Fondos de inversión</BreadcrumbItem>
+        <BreadcrumbItem active href="/inicio">Inicio</BreadcrumbItem>
+        <BreadcrumbItem active href="/inversiones">Inversiones</BreadcrumbItem>
+        <BreadcrumbItem>Fondos de inversión</BreadcrumbItem>
       </Breadcrumbs>
     `,
   }),
@@ -64,9 +64,9 @@ export const Mobile: Story = {
     components: { Breadcrumbs, BreadcrumbItem },
     template: `
       <Breadcrumbs>
-        <BreadcrumbItem href="/inicio">Inicio</BreadcrumbItem>
-        <BreadcrumbItem href="/inversiones">Inversiones</BreadcrumbItem>
-        <BreadcrumbItem active>Fondos de inversión</BreadcrumbItem>
+        <BreadcrumbItem active href="/inicio">Inicio</BreadcrumbItem>
+        <BreadcrumbItem active href="/inversiones">Inversiones</BreadcrumbItem>
+        <BreadcrumbItem>Fondos de inversión</BreadcrumbItem>
       </Breadcrumbs>
     `,
   }),
