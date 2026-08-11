@@ -91,6 +91,16 @@ Badge (Figma: set **Badge** y componente **Badge/Counter** de la página Badges)
 
 Miga de pan (Figma: set **Breadcrumbs**), bajo **Navigation/Breadcrumbs**. `BreadcrumbItem`: separador `chevron-right` opcional + texto Regular — Default en `body`, Active en primario subrayado con `aria-current="page"`; `Breadcrumbs` (`nav`) los apila con gap 10px y oculta el separador del primero. Responsive: 16px → 12px bajo 768px (la variante Size de Figma no se mapea). Code Connect con Texto Categoria/Estado/Mostrar Icono.
 
+## Card
+
+Cards del DS (Figma: página **Cards**, frames "Card Photo" y "Card Action"), bajo **Surfaces/Card** en Storybook:
+
+- **`CardPhoto`** — card con imagen, título h5 SemiBold, descripción en `secondary` y acción (ej. Button ghost "Leer más"). **Una sola card** con prop `horizontal`: en desktop pone la imagen a la izquierda (274px, gap 30) y **bajo 768px vuelve automáticamente al diseño vertical** (imagen 212px arriba) — no hay variante mobile separada. Fondo blanco, radio `md`, sombra `autolayout-sm`.
+- **`CardAction`** — fecha con separador `gray-300`, título h4 Medium y acción a lo ancho (padding `space-30`, gap `space-20`, borde `background`, sombra `lg-2`).
+- **`CardContact`** — contacto centrado: título h4 SemiBold, correo `mailto:` en primario (h5) y contenido libre con `<strong>` en Medium (sombra `md-2`).
+
+Las cards de Figma son frames de documentación sin componentes publicados en la librería, por lo que el Code Connect queda preparado (comentado en `Card.figma.*`) para activarse cuando se publiquen.
+
 ## PillNew
 
 Etiqueta "Nuevo" (Figma: componente **Pill new** de la página Badges), bajo **Data Display/PillNew**. Pill de 47×15 con fondo `--color-bg-now` (#F9F9FB, variable de Figma agregada a los tokens), borde 0.5px `gray-100`, punto y texto en Info 10px Medium. Sin props en Figma; el texto es reemplazable por children/slot. Conectado con Code Connect.

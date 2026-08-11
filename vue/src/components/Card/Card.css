@@ -1,0 +1,177 @@
+/*
+ * Card — Andromeda DS
+ * Figma: página "Cards" (9343:9376): "Card Photo" vertical (536:8556)
+ * y horizontal (536:8557), "Card Action" (541:8593) y card de
+ * contacto (541:8608).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+/* ============================================================
+ * CardPhoto — card con imagen (vertical | horizontal responsive)
+ * Horizontal solo en desktop: bajo 768px vuelve al diseño vertical.
+ * ============================================================ */
+.and-card-photo {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-30);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-autolayout-sm);
+  font-family: var(--font-family-sans);
+}
+
+.and-card-photo__image {
+  display: block;
+  width: 100%;
+  height: 212px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.and-card-photo__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: 0 var(--space-20) var(--space-20);
+  min-width: 0;
+}
+
+.and-card-photo__title {
+  margin: 0;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-card-photo__text {
+  margin: 0;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.and-card-photo__action {
+  display: flex;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .and-card-photo--horizontal {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .and-card-photo--horizontal .and-card-photo__image {
+    width: 274px;
+    height: auto;
+    align-self: stretch;
+  }
+
+  .and-card-photo--horizontal .and-card-photo__body {
+    flex: 1;
+    padding: var(--space-20) var(--space-20) var(--space-20) 0;
+  }
+}
+
+/* ============================================================
+ * CardAction — fecha, título y acción (Figma: Card Action 541:8593)
+ * ============================================================ */
+.and-card-action {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-30);
+  background: var(--color-white);
+  border: 1px solid var(--color-background);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg-2);
+  font-family: var(--font-family-sans);
+}
+
+.and-card-action__date {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-8);
+  border-bottom: 1px solid var(--color-gray-300);
+  font-size: var(--font-size-parrafo-xs);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.and-card-action__title {
+  margin: 0;
+  width: 100%;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-card-action__action {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.and-card-action__action > * {
+  width: 100%;
+}
+
+/* ============================================================
+ * CardContact — contacto centrado (Figma: Card Action 541:8608)
+ * ============================================================ */
+.and-card-contact {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-30);
+  background: var(--color-white);
+  border: 1px solid var(--color-background);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md-2);
+  font-family: var(--font-family-sans);
+  text-align: center;
+}
+
+.and-card-contact__title {
+  margin: 0;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-card-contact__email {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-primary);
+  text-decoration: none;
+  line-height: var(--line-height-normal);
+}
+
+.and-card-contact__body {
+  margin: 0;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-card-contact__body strong,
+.and-card-contact__body b {
+  font-weight: var(--font-weight-medium);
+}
