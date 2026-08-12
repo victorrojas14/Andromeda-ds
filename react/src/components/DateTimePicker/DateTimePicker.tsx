@@ -6,6 +6,8 @@ import './DateTimePicker.css'
 
 export interface DateTimePickerProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  /** Variante de los calendarios internos (Calendar: Primary flechas / Secondary dropdowns) */
+  variant?: 'primary' | 'secondary'
   /** Label del campo inicial (Figma: "Seleccionar fecha de inicio") */
   startLabel?: string
   /** Label del campo final (Figma: "Seleccionar fecha de fin") */
@@ -48,6 +50,7 @@ export const countBusinessDays = (start: Date, end: Date): number => {
 }
 
 export function DateTimePicker({
+  variant = 'primary',
   startLabel = 'Seleccionar fecha de inicio',
   endLabel = 'Seleccionar fecha de fin',
   placeholder = 'dd/mm/aaaa',
@@ -126,7 +129,7 @@ export function DateTimePicker({
         <div className="and-dtp__column">
           {renderField(startLabel, startDate, startActive)}
           <Calendar
-            variant="primary"
+            variant={variant}
             value={null}
             year={leftView[0]}
             month={leftView[1]}
@@ -140,7 +143,7 @@ export function DateTimePicker({
         <div className="and-dtp__column">
           {renderField(endLabel, endDate, endActive)}
           <Calendar
-            variant="primary"
+            variant={variant}
             value={null}
             year={rightView[0]}
             month={rightView[1]}

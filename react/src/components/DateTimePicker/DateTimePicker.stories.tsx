@@ -7,6 +7,11 @@ const meta: Meta<typeof DateTimePicker> = {
   component: DateTimePicker,
   parameters: { layout: 'padded' },
   argTypes: {
+    variant: {
+      control: 'inline-radio',
+      options: ['primary', 'secondary'],
+      description: 'Variante de los calendarios internos (flechas / dropdowns Mes-Año)',
+    },
     startLabel: { control: 'text' },
     endLabel: { control: 'text' },
     placeholder: { control: 'text' },
@@ -40,6 +45,10 @@ type Story = StoryObj<typeof DateTimePicker>
 
 export const Empty: Story = {
   args: {},
+}
+
+export const Secondary: Story = {
+  args: { variant: 'secondary', defaultStart: '2026-07-18', defaultEnd: '2026-08-15' },
 }
 
 export const HalfCompleted: Story = {

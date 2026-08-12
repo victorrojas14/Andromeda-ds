@@ -21,6 +21,8 @@ import './DateTimePicker.css'
  */
 
 interface DateTimePickerProps {
+  /** Variante de los calendarios internos (Calendar: Primary flechas / Secondary dropdowns). */
+  variant?: 'primary' | 'secondary'
   /** Label del campo inicial (Figma: "Seleccionar fecha de inicio"). */
   startLabel?: string
   /** Label del campo final (Figma: "Seleccionar fecha de fin"). */
@@ -37,6 +39,7 @@ interface DateTimePickerProps {
 }
 
 withDefaults(defineProps<DateTimePickerProps>(), {
+  variant: 'primary',
   startLabel: 'Seleccionar fecha de inicio',
   endLabel: 'Seleccionar fecha de fin',
   placeholder: 'dd/mm/aaaa',
@@ -115,7 +118,7 @@ const onApply = () => {
         </div>
         <div :class="['and-dtp__line', startActive && 'and-dtp__line--active']" />
         <Calendar
-          variant="primary"
+          :variant="variant"
           model-value=""
           :year="leftView[0]"
           :month="leftView[1]"
@@ -138,7 +141,7 @@ const onApply = () => {
         </div>
         <div :class="['and-dtp__line', endActive && 'and-dtp__line--active']" />
         <Calendar
-          variant="primary"
+          :variant="variant"
           model-value=""
           :year="rightView[0]"
           :month="rightView[1]"
