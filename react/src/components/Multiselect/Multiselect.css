@@ -28,7 +28,7 @@
   justify-content: flex-end;
   gap: 4px; /* gap crudo del diseño; 4px no existe en la escala Spacing */
   width: 100%;
-  min-height: 48px;
+  height: 48px;
   padding: 4px 12px;
   background: var(--color-white);
   border: 1px solid var(--color-gray-300);
@@ -71,10 +71,35 @@
   display: flex;
   gap: 4px; /* gap crudo del diseño; 4px no existe en la escala Spacing */
   align-items: center;
-  overflow: hidden;
-  padding-top: 18px;
-  padding-bottom: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 14px;
+  padding-bottom: 0;
   align-self: stretch;
+}
+
+/* Scroll horizontal para ver los chips que no caben (estilo Scroll del DS).
+ * Nota: en Chrome no se usan scrollbar-width/scrollbar-color porque anulan
+ * los estilos ::-webkit-scrollbar y fuerzan la barra clásica de ~15px. */
+.and-multiselect__chips::-webkit-scrollbar {
+  height: 4px;
+}
+
+.and-multiselect__chips::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.and-multiselect__chips::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+/* Firefox no soporta ::-webkit-scrollbar; ahí sí usamos las estándar */
+@supports (-moz-appearance: none) {
+  .and-multiselect__chips {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-300) transparent;
+  }
 }
 
 .and-multiselect__chip {
