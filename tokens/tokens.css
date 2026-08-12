@@ -226,6 +226,10 @@
   --shadow-autolayout-lg: 0 0 34px rgba(200, 200, 200, 0.45);
   --shadow-autolayout-xl: 0 0 56px rgba(200, 200, 200, 0.45);
 
+  /* Figma: variable "cards / shadow 1" (#555E6F52, 0 4 8) — card del
+   * TimeLapse Calendar / Date Picker */
+  --shadow-cards-1: 0 4px 8px rgba(85, 94, 111, 0.32);
+
   /* Sombra de la card de documentación (DS/Color Card) */
   --shadow-card:
     0 25px 38px rgba(94, 94, 94, 0.07),

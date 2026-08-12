@@ -1,0 +1,229 @@
+/*
+ * Calendar — Andromeda DS
+ * Figma: página "Forms", componente "Calendario--Form" (128:2669) y set
+ * "NumeroCalendario" (9516:6331) con estados Default/Disabled/Selected/
+ * Weekend/Current day/timelapse. Documentación "Calendar" (9516:6174):
+ * variante Primary (flechas + vistas de año/mes al hacer click en el
+ * título) y Secondary (dropdowns de Mes y Año).
+ * Fluido/responsivo: el panel toma el ancho del contenedor y las celdas
+ * se reparten con flex (como las instancias de 45.71px de Figma).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-calendar {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 200px;
+  padding: var(--space-10);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-autolayout-sm);
+  font-family: var(--font-family-sans);
+}
+
+/* ---- Header primary: ‹ TÍTULO › ---- */
+.and-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.and-calendar__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+.and-calendar__nav:disabled {
+  color: var(--color-gray-300);
+  cursor: default;
+}
+
+.and-calendar__title {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.and-calendar__nav:focus-visible,
+.and-calendar__title:focus-visible,
+.and-calendar__cell:focus-visible,
+.and-calendar__select:focus-visible,
+.and-calendar__select-option:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
+/* ---- Header secondary: dropdowns Mes / Año ---- */
+.and-calendar__selects {
+  display: flex;
+  gap: var(--space-10);
+  align-items: center;
+  width: 100%;
+}
+
+.and-calendar__select-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.and-calendar__select {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary-light);
+  cursor: pointer;
+  text-align: left;
+}
+
+.and-calendar__select-panel {
+  box-sizing: border-box;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  gap: 1px;
+  align-items: stretch;
+  padding: var(--space-10);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-autolayout-sm);
+}
+
+.and-calendar__select-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) var(--color-background);
+}
+
+.and-calendar__select-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.and-calendar__select-list::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-calendar__select-list::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+.and-calendar__select-option {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 10px;
+  background: var(--color-white);
+  border: none;
+  border-bottom: 1px solid var(--color-gray-300);
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+  cursor: pointer;
+  text-align: left;
+}
+
+.and-calendar__select-option--selected {
+  color: var(--color-tertiary);
+}
+
+/* ---- Grids ---- */
+.and-calendar__row {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ---- Celda (NumeroCalendario): min 40x30 + padding 6 ---- */
+.and-calendar__cell {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  min-height: 33px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+  text-align: center;
+  cursor: pointer;
+}
+
+.and-calendar__cell:disabled {
+  cursor: default;
+}
+
+/* Encabezado de días de la semana: Poppins Medium */
+.and-calendar__cell--weekday {
+  font-weight: var(--font-weight-medium);
+  cursor: default;
+}
+
+/* Estados del set NumeroCalendario */
+.and-calendar__cell--disabled {
+  color: var(--color-gray-300);
+}
+
+.and-calendar__cell--weekend {
+  color: var(--color-tertiary-dark);
+  opacity: 0.5;
+}
+
+.and-calendar__cell--current {
+  color: var(--color-tertiary);
+}
+
+.and-calendar__cell--timelapse {
+  background: var(--color-tertiary-light);
+}
+
+.and-calendar__cell--selected {
+  background: var(--color-tertiary);
+  color: var(--color-white);
+  opacity: 1;
+}
