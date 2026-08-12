@@ -1,0 +1,322 @@
+/*
+ * Multiselect — Andromeda DS
+ * Figma: página "Forms", set "Multiselect dropdown" (13299:2287,
+ * documentación "Dropdown checkbox left" 13012:8197). Estados: Enable,
+ * Disable, Expanded empty, Single/One/Multiple/Partial/All-selected.
+ * Chips "Pill" (13357:3885) en el trigger, panel Dropdown--full--new
+ * con buscador (Input busqueda), fila "Seleccionar todo" e items con
+ * checkbox a la izquierda (Item Opcion New).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-multiselect {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 200px;
+  font-family: var(--font-family-sans);
+}
+
+/* ---- Trigger ---- */
+.and-multiselect__trigger {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px; /* gap crudo del diseño; 4px no existe en la escala Spacing */
+  width: 100%;
+  min-height: 48px;
+  padding: 4px 12px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: var(--color-body);
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Label en reposo (sin selección): 16px centrada, como el Input */
+.and-multiselect__label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-parrafo);
+  color: var(--color-secondary-light);
+  pointer-events: none;
+  white-space: nowrap;
+  transition: top 0.15s ease, font-size 0.15s ease, transform 0.15s ease;
+}
+
+/* Con selección o abierto: label flotada 12px arriba */
+.and-multiselect--float .and-multiselect__label {
+  top: 4px;
+  transform: none;
+  font-size: var(--font-size-parrafo-xs);
+}
+
+.and-multiselect--open .and-multiselect__label {
+  color: var(--color-body);
+}
+
+/* ---- Chips seleccionados (Pill) ---- */
+.and-multiselect__chips {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 4px; /* gap crudo del diseño; 4px no existe en la escala Spacing */
+  align-items: center;
+  overflow: hidden;
+  padding-top: 18px;
+  padding-bottom: 2px;
+  align-self: stretch;
+}
+
+.and-multiselect__chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-10);
+  flex-shrink: 0;
+  padding: 0 7px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 2px;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary-light);
+  white-space: nowrap;
+  min-height: 21px;
+}
+
+.and-multiselect__chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-secondary-light);
+  cursor: pointer;
+}
+
+.and-multiselect__chip-remove:focus-visible,
+.and-multiselect__clear:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 1px;
+}
+
+/* Espaciador que ocupa el lugar de los chips cuando no hay selección */
+.and-multiselect__placeholder {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Limpiar todo (icon/close/20) ---- */
+.and-multiselect__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+.and-multiselect__chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-body);
+}
+
+.and-multiselect__line {
+  height: 2px;
+  width: 100%;
+  background: var(--color-secondary-light);
+}
+
+.and-multiselect--open .and-multiselect__line {
+  background: var(--color-tertiary);
+}
+
+.and-multiselect__trigger:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---- Disable: fondo background, sin borde, textos gray-300 ---- */
+.and-multiselect--disabled .and-multiselect__trigger {
+  background: var(--color-background);
+  border-color: var(--color-background);
+  cursor: default;
+}
+
+.and-multiselect--disabled .and-multiselect__label,
+.and-multiselect--disabled .and-multiselect__chevron {
+  color: var(--color-gray-300);
+}
+
+.and-multiselect--disabled .and-multiselect__line {
+  background: var(--color-gray-300);
+}
+
+/* ---- Panel (Dropdown--full--new) ---- */
+.and-multiselect__panel {
+  box-sizing: border-box;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-10);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-autolayout-sm);
+}
+
+/* ---- Buscador (Input busqueda) ---- */
+.and-multiselect__search {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  width: 100%;
+  padding: 9.5px 10px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 5px;
+  color: var(--color-secondary-light);
+}
+
+.and-multiselect__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+}
+
+.and-multiselect__search-input::placeholder {
+  color: var(--color-secondary-light);
+}
+
+/* ---- Items (Item Opcion New, checkbox a la izquierda) ---- */
+.and-multiselect__option {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  min-height: 44px;
+  padding: 0 10px;
+  background: var(--color-white);
+  border: none;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+  cursor: pointer;
+  text-align: left;
+}
+
+/* "Seleccionar todo" no lleva separador; los items de la lista sí */
+.and-multiselect__list .and-multiselect__option {
+  border-bottom: 1px solid var(--color-gray-300);
+}
+
+.and-multiselect__option:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
+.and-multiselect__option-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Checkbox 20px: borde body en reposo, tertiary marcado ---- */
+.and-multiselect__check {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: var(--color-white);
+  border: 1px solid var(--color-body);
+  border-radius: var(--radius-sm);
+  color: var(--color-tertiary);
+}
+
+.and-multiselect__check--checked {
+  border-color: var(--color-tertiary);
+}
+
+/* ---- Lista con scroll (Scroll 8px) ---- */
+.and-multiselect__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) var(--color-background);
+}
+
+.and-multiselect__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.and-multiselect__list::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-multiselect__list::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+/* ---- Sin resultados (No results) ---- */
+.and-multiselect__empty {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  height: 102px;
+  width: 100%;
+  padding: 9.5px 33px;
+  background: var(--color-background);
+  border-radius: 5px;
+  color: var(--color-secondary);
+}
+
+.and-multiselect__empty-text {
+  font-size: var(--font-size-small-1);
+  text-align: center;
+  line-height: var(--line-height-normal);
+}
