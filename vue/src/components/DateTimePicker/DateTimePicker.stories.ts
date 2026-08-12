@@ -23,30 +23,41 @@ const meta: Meta<typeof DateTimePicker> = {
     applyLabel: { control: 'text' },
     clearLabel: { control: 'text' },
     disablePast: { control: 'boolean' },
+    defaultOpen: { control: 'boolean', description: 'Renderiza la card abierta desde el inicio' },
   },
   decorators: [
-    () => ({ template: '<div style="max-width: 660px;"><story /></div>' }),
+    () => ({ template: '<div style="max-width: 660px; min-height: 620px;"><story /></div>' }),
   ],
 }
 
 export default meta
 type Story = StoryObj<typeof DateTimePicker>
 
-export const Empty: Story = {
+export const Cerrado: Story = {
+  name: 'Cerrado (trigger)',
   args: {},
 }
 
+export const Empty: Story = {
+  args: { defaultOpen: true },
+}
+
 export const Secondary: Story = {
-  args: { variant: 'secondary', start: '2026-07-18', end: '2026-08-15' },
+  args: {
+    variant: 'secondary',
+    start: '2026-07-18',
+    end: '2026-08-15',
+    defaultOpen: true,
+  },
 }
 
 export const HalfCompleted: Story = {
   name: 'Half completed',
-  args: { start: '2026-07-18' },
+  args: { start: '2026-07-18', defaultOpen: true },
 }
 
 export const Completed: Story = {
-  args: { start: '2026-07-18', end: '2026-08-15' },
+  args: { start: '2026-07-18', end: '2026-08-15', defaultOpen: true },
 }
 
 export const SinContador: Story = {

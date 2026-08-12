@@ -1,4 +1,10 @@
-import { useState, type HTMLAttributes } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type HTMLAttributes,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from 'react'
 import { Button } from '../Button'
 import { Calendar, toDate, type CalendarValue } from '../Calendar'
 import { Icon } from '../Icon'
@@ -30,6 +36,8 @@ export interface DateTimePickerProps
   onClear?: () => void
   /** Deshabilita días anteriores a hoy en ambos calendarios */
   disablePast?: boolean
+  /** Renderiza la card abierta desde el inicio */
+  defaultOpen?: boolean
 }
 
 const formatDate = (date: Date | null) =>
@@ -66,13 +74,16 @@ export function DateTimePicker({
   onApply,
   onClear,
   disablePast = false,
+  defaultOpen = false,
   className = '',
   ...rest
 }: DateTimePickerProps) {
+  const [open, setOpen] = useState(defaultOpen)
   const [innerStart, setInnerStart] = useState<Date | null>(toDate(defaultStart))
   const [innerEnd, setInnerEnd] = useState<Date | null>(toDate(defaultEnd))
   const startDate = start !== undefined ? toDate(start) : innerStart
   const endDate = end !== undefined ? toDate(end) : innerEnd
+  const rootRef = useRef<HTMLDivElement>(null)
 
   const base = startDate ?? new Date()
   const [leftView, setLeftView] = useState<[number, number]>([
@@ -85,6 +96,22 @@ export function DateTimePicker({
     rightBase.getMonth(),
   ])
 
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
   const commit = (s: Date | null, e: Date | null) => {
     if (start === undefined) setInnerStart(s)
     if (end === undefined) setInnerEnd(e)
@@ -92,9 +119,14 @@ export function DateTimePicker({
   }
 
   const pick = (date: Date) => {
-    if (!startDate || date < startDate) commit(date, endDate && date < endDate ? endDate : null)
-    else if (!endDate) commit(startDate, date)
-    else commit(date, null)
+    if (!startDate || date < startDate) {
+      commit(date, endDate && date < endDate ? endDate : null)
+    } else if (!endDate) {
+      commit(startDate, date)
+      setOpen(false) // rango completo: se cierra el calendario
+    } else {
+      commit(date, null)
+    }
   }
 
   const complete = !!startDate && !!endDate
@@ -120,68 +152,112 @@ export function DateTimePicker({
     )
   }
 
-  const startActive = !startDate && !endDate
-  const endActive = !!startDate && !endDate
+  const startActive = open && !startDate && !endDate
+  const endActive = open && !!startDate && !endDate
+
+  const toggleOpen = () => setOpen((v) => !v)
+  const onTriggerKeyDown = (e: ReactKeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      toggleOpen()
+    }
+  }
 
   return (
-    <div className={['and-dtp', className].filter(Boolean).join(' ')} {...rest}>
-      <div className="and-dtp__columns">
-        <div className="and-dtp__column">
-          {renderField(startLabel, startDate, startActive)}
-          <Calendar
-            variant={variant}
-            value={null}
-            year={leftView[0]}
-            month={leftView[1]}
-            onViewChange={(y, m) => setLeftView([y, m])}
-            rangeStart={startDate}
-            rangeEnd={endDate}
-            disablePast={disablePast}
-            onChange={(date) => pick(date)}
-          />
-        </div>
-        <div className="and-dtp__column">
-          {renderField(endLabel, endDate, endActive)}
-          <Calendar
-            variant={variant}
-            value={null}
-            year={rightView[0]}
-            month={rightView[1]}
-            onViewChange={(y, m) => setRightView([y, m])}
-            rangeStart={startDate}
-            rangeEnd={endDate}
-            disablePast={disablePast}
-            onChange={(date) => pick(date)}
-          />
-        </div>
-      </div>
-      <div className="and-dtp__footer">
-        <span className="and-dtp__count">
-          {showBusinessDays && complete ? `${businessDays} días hábiles` : ''}
-        </span>
-        <Button
-          variant="primary"
-          appearance="ghost"
-          size="sm"
-          onClick={() => {
-            commit(null, null)
-            onClear?.()
-          }}
+    <div
+      ref={rootRef}
+      className={['and-dtp', className].filter(Boolean).join(' ')}
+      {...rest}
+    >
+      <div className="and-dtp__fields">
+        <div
+          className="and-dtp__trigger-col"
+          role="button"
+          tabIndex={0}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          onClick={toggleOpen}
+          onKeyDown={onTriggerKeyDown}
         >
-          {clearLabel}
-        </Button>
-        {showApplyButton && (
-          <Button
-            variant="primary"
-            appearance="solid"
-            size="sm"
-            disabled={!complete}
-            onClick={() => complete && onApply?.(startDate as Date, endDate as Date)}
-          >
-            {applyLabel}
-          </Button>
-        )}
+          {renderField(startLabel, startDate, startActive)}
+        </div>
+        <div
+          className="and-dtp__trigger-col"
+          role="button"
+          tabIndex={0}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          onClick={toggleOpen}
+          onKeyDown={onTriggerKeyDown}
+        >
+          {renderField(endLabel, endDate, endActive)}
+        </div>
       </div>
+      {open && (
+        <div className="and-dtp__panel" role="dialog" aria-label={startLabel}>
+          <div className="and-dtp__columns">
+            <div className="and-dtp__column">
+              {renderField(startLabel, startDate, startActive)}
+              <Calendar
+                variant={variant}
+                value={null}
+                year={leftView[0]}
+                month={leftView[1]}
+                onViewChange={(y, m) => setLeftView([y, m])}
+                rangeStart={startDate}
+                rangeEnd={endDate}
+                disablePast={disablePast}
+                onChange={(date) => pick(date)}
+              />
+            </div>
+            <div className="and-dtp__column">
+              {renderField(endLabel, endDate, endActive)}
+              <Calendar
+                variant={variant}
+                value={null}
+                year={rightView[0]}
+                month={rightView[1]}
+                onViewChange={(y, m) => setRightView([y, m])}
+                rangeStart={startDate}
+                rangeEnd={endDate}
+                disablePast={disablePast}
+                onChange={(date) => pick(date)}
+              />
+            </div>
+          </div>
+          <div className="and-dtp__footer">
+            <span className="and-dtp__count">
+              {showBusinessDays && complete ? `${businessDays} días hábiles` : ''}
+            </span>
+            <Button
+              variant="primary"
+              appearance="ghost"
+              size="sm"
+              onClick={() => {
+                commit(null, null)
+                onClear?.()
+              }}
+            >
+              {clearLabel}
+            </Button>
+            {showApplyButton && (
+              <Button
+                variant="primary"
+                appearance="solid"
+                size="sm"
+                disabled={!complete}
+                onClick={() => {
+                  if (!complete) return
+                  onApply?.(startDate as Date, endDate as Date)
+                  setOpen(false)
+                }}
+              >
+                {applyLabel}
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

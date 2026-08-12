@@ -13,15 +13,56 @@
 
 .and-dtp {
   box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-family-sans);
+}
+
+/* Trigger: los dos Form-MD visibles con el calendario cerrado
+ * (Figma: "1. Calendario sin abrir") */
+.and-dtp__fields {
+  display: flex;
+  gap: var(--space-10);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.and-dtp__trigger-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.and-dtp__trigger-col .and-dtp__field {
+  cursor: pointer;
+}
+
+.and-dtp__trigger-col:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* Card abierta (Figma: "2. Apertura de calendario"): se encima sobre
+ * los inputs del trigger, con sus propios Form-MD arriba de cada
+ * calendario, contador y botones */
+.and-dtp__panel {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   gap: var(--space-20);
-  width: 100%;
   padding: var(--space-16);
   background: var(--color-white);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-cards-1);
-  font-family: var(--font-family-sans);
 }
 
 .and-dtp__columns {
