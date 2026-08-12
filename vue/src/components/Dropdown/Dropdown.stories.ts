@@ -14,7 +14,7 @@ const OPCIONES = [
 ]
 
 const meta: Meta<typeof Dropdown> = {
-  title: 'Componentes/Dropdown',
+  title: 'Forms/Dropdown',
   component: Dropdown,
   parameters: { layout: 'padded' },
   argTypes: {
