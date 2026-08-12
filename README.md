@@ -131,6 +131,10 @@ Pie de página (Figma: componentes **Footer Desktop** 1440×471 y **Footer Mobil
 
 Ambos componentes publicados están mapeados con Code Connect al mismo Footer responsive.
 
+## Input
+
+Campo de formulario (Figma: sets **Form-SM/MD/LG** de la página Forms), bajo **Forms/Input**. Patrón de **label flotante**: en reposo la etiqueta ocupa el centro (16px `secondary-light`; 14px en SM) y con foco o valor sube a 12px `secondary-dark`. Caja con borde `gray-300`, radios superiores `sm` y **línea inferior de 2px** que cambia por estado: `secondary-light` en reposo, **`tertiary` con foco**, **`danger` en error**, `gray-300` en disabled/readonly. Los 7 Estados de Figma se mapean así: Default/Normal/Active son dinámicos (vacío/con valor/foco); `error` cubre Error y "No llenado" (con string se muestra como asistencia en danger); `disabled` nativo; `readonly` es "Llenado-Bloqueado" (fondo neutro, textos `gray-500`). Tamaños con cajas de **40/48/61px**, texto de asistencia opcional y cualquier icono del DS a la derecha (`icon`/slot `#icon`). **`InputPassword`**: variante con icono `eye-outline` que alterna a `eye-off-outline` y des/enmascara el campo (type password ↔ text, con `aria-label`/`aria-pressed`). Soporta uso controlado y `v-model`. Los 3 sets publicados están mapeados con Code Connect (en Form-SM el swap del icono se llama "sear", typo real de Figma).
+
 ## PillNew
 
 Etiqueta "Nuevo" (Figma: componente **Pill new** de la página Badges), bajo **Data Display/PillNew**. Pill de 47×15 con fondo `--color-bg-now` (#F9F9FB, variable de Figma agregada a los tokens), borde 0.5px `gray-100`, punto y texto en Info 10px Medium. Sin props en Figma; el texto es reemplazable por children/slot. Conectado con Code Connect.

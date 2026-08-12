@@ -1,0 +1,202 @@
+/*
+ * Input — Andromeda DS
+ * Figma: component sets Form-SM (579:992), Form-MD (576:6870) y
+ * Form-LG (578:7307) de la página Forms.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ *
+ * Estados de Figma -> comportamiento del componente:
+ *   Default      -> vacío sin foco (label flotante en reposo)
+ *   Normal       -> con valor sin foco (label arriba)
+ *   Active       -> con foco (línea tertiary)
+ *   Error        -> prop error (línea y asistencia en danger)
+ *   No llenado   -> error + vacío (label en reposo, línea danger)
+ *   Disabled     -> disabled nativo
+ *   Llenado-Bloqueado -> readonly (fondo neutro, textos gray-500)
+ */
+
+.and-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  font-family: var(--font-family-sans);
+}
+
+.and-input__form {
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  width: 100%;
+}
+
+.and-input__box {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: var(--color-body);
+  cursor: text;
+}
+
+.and-input__control {
+  flex: 1;
+  min-width: 0;
+  padding: 18px 0 4px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+}
+
+.and-input__control::placeholder {
+  color: var(--color-gray-400);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.and-input--float .and-input__control::placeholder {
+  opacity: 1;
+}
+
+.and-input__label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-parrafo);
+  color: var(--color-secondary-light);
+  pointer-events: none;
+  white-space: nowrap;
+  transition: top 0.15s ease, font-size 0.15s ease, transform 0.15s ease;
+}
+
+.and-input--float .and-input__label {
+  top: 4px;
+  transform: none;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-secondary-dark);
+}
+
+.and-input__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+button.and-input__icon {
+  cursor: pointer;
+}
+
+button.and-input__icon:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+.and-input__line {
+  height: 2px;
+  width: 100%;
+  background: var(--color-secondary-light);
+}
+
+.and-input:focus-within .and-input__line {
+  background: var(--color-tertiary);
+}
+
+.and-input__assist {
+  margin: 0;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-secondary);
+  line-height: var(--line-height-normal);
+}
+
+/* ---- Tamaños ---- */
+.and-input--sm .and-input__box {
+  min-height: 40px;
+}
+
+.and-input--sm .and-input__control {
+  padding: 14px 0 2px;
+  font-size: var(--font-size-parrafo-sm);
+}
+
+.and-input--sm .and-input__label {
+  font-size: var(--font-size-parrafo-sm);
+}
+
+.and-input--sm.and-input--float .and-input__label {
+  font-size: var(--font-size-parrafo-xs);
+}
+
+.and-input--lg .and-input__box {
+  min-height: 61px;
+}
+
+.and-input--lg .and-input__control {
+  padding: 24px 0 8px;
+}
+
+/* ---- Error / No llenado ---- */
+.and-input--error .and-input__line,
+.and-input--error:focus-within .and-input__line {
+  background: var(--color-danger);
+}
+
+.and-input--error .and-input__assist {
+  color: var(--color-danger);
+}
+
+/* ---- Llenado-Bloqueado (readonly) ---- */
+.and-input--locked .and-input__box {
+  background: var(--color-background);
+  border-color: var(--color-background);
+  color: var(--color-gray-500);
+  cursor: default;
+}
+
+.and-input--locked .and-input__control {
+  color: var(--color-gray-500);
+}
+
+.and-input--locked .and-input__label,
+.and-input--locked.and-input--float .and-input__label {
+  color: var(--color-gray-500);
+}
+
+.and-input--locked .and-input__line,
+.and-input--locked:focus-within .and-input__line {
+  background: var(--color-gray-300);
+}
+
+/* ---- Disabled ---- */
+.and-input--disabled .and-input__box {
+  background: var(--color-background);
+  border-color: var(--color-background);
+  color: var(--color-gray-300);
+  cursor: default;
+}
+
+.and-input--disabled .and-input__label,
+.and-input--disabled.and-input--float .and-input__label {
+  color: var(--color-gray-300);
+}
+
+.and-input--disabled .and-input__line,
+.and-input--disabled:focus-within .and-input__line {
+  background: var(--color-gray-300);
+}
