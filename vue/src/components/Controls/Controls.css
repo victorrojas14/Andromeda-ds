@@ -1,0 +1,206 @@
+/*
+ * Controls (Switch / Checkbox / RadioButton) — Andromeda DS
+ * Figma: página "Forms", sets "Switch atom" (1151:3067), "Switch"
+ * (576:6645), "CheckBox" (576:6686) y "RadioButton" (576:6657);
+ * documentación "Controls" (9477:7741).
+ * Estados por set: Switch On/Off/On Disabled/Off Disabled (disabled =
+ * atom al 50%); CheckBox On/Off/On-Disabled/Off-Disabled/On-Multiple;
+ * RadioButton On/Off/On-Disabled/Off-Disabled.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+/* ---- Base compartida: fila control + label ---- */
+.and-control {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.and-control--disabled {
+  cursor: default;
+}
+
+.and-control__label {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* Input nativo oculto (accesibilidad de checkbox/radio) */
+.and-control__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.and-control__input:focus-visible + .and-control__box {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* Área de golpe de 32px del checkbox/radio (Figma: forms 32x32) */
+.and-control__box {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+/* ---- Switch (atom 40x24, knob blanco 16px, sombra cards-1) ---- */
+.and-switch {
+  gap: var(--space-10);
+}
+
+.and-switch__track {
+  box-sizing: border-box;
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-gray-300);
+  box-shadow: var(--shadow-cards-1);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.and-switch__track:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+.and-switch__knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  box-shadow: var(--shadow-cards-1);
+  transition: left 0.15s ease;
+}
+
+.and-switch--on .and-switch__track {
+  background: var(--color-tertiary);
+}
+
+.and-switch--on .and-switch__knob {
+  left: 20px;
+}
+
+/* Disabled: el atom completo al 50% (Figma: opacity 0.5) */
+.and-switch--disabled .and-switch__track {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---- Checkbox (caja 20px radius sm dentro de área de 32) ---- */
+.and-checkbox {
+  gap: 4px; /* gap crudo del diseño; 4px no existe en la escala Spacing */
+}
+
+.and-checkbox__mark {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--color-white);
+  border: 1px solid var(--color-body);
+  border-radius: var(--radius-sm);
+  color: var(--color-tertiary);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.and-checkbox--checked .and-checkbox__mark {
+  border-color: var(--color-tertiary);
+  box-shadow: var(--shadow-cards-1);
+}
+
+/* On-Disabled: fondo gray-100, contorno y palomita gray-400 */
+.and-checkbox--checked.and-checkbox--disabled .and-checkbox__mark {
+  background: var(--color-gray-100);
+  border-color: var(--color-gray-400);
+  color: var(--color-gray-400);
+  box-shadow: none;
+}
+
+/* Off-Disabled: relleno secondary-light al 50%, label secondary-light */
+.and-checkbox--disabled:not(.and-checkbox--checked) .and-checkbox__mark {
+  background: var(--color-secondary-light);
+  border-color: var(--color-gray-300);
+  opacity: 0.5;
+}
+
+.and-checkbox--disabled:not(.and-checkbox--checked) {
+  color: var(--color-secondary-light);
+}
+
+/* ---- RadioButton (círculo 20px, punto 12px) ---- */
+.and-radio {
+  gap: 4px; /* gap crudo del diseño; 4px no existe en la escala Spacing */
+  color: var(--color-secondary-dark);
+}
+
+.and-radio__mark {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--color-white);
+  border: 1px solid var(--color-body);
+  border-radius: var(--radius-pill);
+  transition: border-color 0.15s ease;
+}
+
+.and-radio__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-tertiary);
+}
+
+.and-radio--checked .and-radio__mark {
+  border-color: var(--color-tertiary);
+  box-shadow: var(--shadow-cards-1);
+}
+
+/* On-Disabled: aro y punto gray-300, label secondary-light */
+.and-radio--checked.and-radio--disabled .and-radio__mark {
+  border-color: var(--color-gray-300);
+}
+
+.and-radio--checked.and-radio--disabled .and-radio__dot {
+  background: var(--color-gray-300);
+}
+
+/* Off-Disabled: círculo relleno gray-300 */
+.and-radio--disabled:not(.and-radio--checked) .and-radio__mark {
+  background: var(--color-gray-300);
+  border-color: var(--color-gray-300);
+}
+
+.and-radio--disabled {
+  color: var(--color-secondary-light);
+}

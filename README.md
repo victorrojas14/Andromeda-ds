@@ -120,6 +120,16 @@ Carrusel de imágenes (Figma: component set **Carousel** y dots **Ellipse 4** de
 
 Separador (Figma: componentes **Divider** y **Divider 10px–90px** de la página Dividers), bajo **Layout/Divider**. Línea de 1px en `gray-300` renderizada como `<hr>`, con prop `spacing` (0/10/20/30/40/50/70/90) que aplica el espaciado vertical de la escala Spacing a cada lado vía `margin-block: var(--space-N)`. Los 7 componentes publicados están mapeados con Code Connect (el "Divider 30px" existe en la página pero no está publicado; el componente igual soporta `spacing={30}`).
 
+## Controls (Switch / Checkbox / RadioButton)
+
+Controles de formulario (Figma: sets **Switch atom**, **Switch**, **CheckBox** y **RadioButton** de la página Forms; documentación "Controls"), bajo **Forms/Controls** — tres componentes que comparten base: fila `label + control` de 16px con texto opcional (prop `label` = "Texto"; omitirla equivale a "Mostrar Texto" off) y área de golpe de 32px en checkbox/radio, con inputs nativos ocultos para accesibilidad.
+
+- **Switch**: atom de 40×24 (track pill `tertiary` on / `gray-300` off con sombra `cards-1`, knob blanco de 16px que se desliza 4↔20px), `role="switch"`; estados On/Off Disabled = atom al 50%.
+- **Checkbox**: caja de 20px radio `sm` — Off borde `body`; On borde y palomita `tertiary` con sombra `cards-1`; On-Disabled fondo `gray-100` con contorno/palomita `gray-400`; Off-Disabled relleno `secondary-light` al 50% con label `secondary-light`. El estado **On-Multiple** de Figma comparte el visual de On (listas de selección múltiple).
+- **RadioButton**: círculo de 20px con punto `tertiary` de 12px — labels en `secondary-dark` y estados disabled en `gray-300`/`secondary-light`; soporta grupos vía `name`/`value` (v-model del grupo en Vue).
+
+Controlados/no controlados en React y `v-model` en Vue; los labels hacen wrap (fluidos/responsivos). Los 4 sets publicados están mapeados con Code Connect (Texto, Mostrar Texto y Estado → `label`/`checked`/`disabled`).
+
 ## Calendar
 
 Calendario (Figma: componente **Calendario--Form** y set **NumeroCalendario** de la página Forms; documentación "Calendar"), bajo **Forms/Calendar**. Panel blanco con borde `gray-300`, radio `sm`, padding 10 y sombra `autolayout-sm`; celdas de 33px (mín. 40×30 + padding 6) que se reparten con flex, por lo que el calendario es **fluido/responsivo**. Encabezado de días "Dom..Sab" en Poppins Medium y los 6 estados del set NumeroCalendario resueltos por fecha: Default (`body`), **Disabled** (`gray-300`, con `disablePast` para días anteriores a hoy), **Selected** (fondo `tertiary`, texto blanco), **Weekend** (`tertiary-dark` al 50%), **Current day** (`tertiary`) y **timelapse** (fondo `tertiary-light`, para rangos vía `rangeStart`/`rangeEnd`). Dos variantes de header: **Primary** — flechas ‹ › y título "JULIO 2023" clickeable que abre la vista de **años** (grid 4×4 paginable) y luego **meses** (grid 4×3 ENE..DIC), como la secuencia de la documentación; **Secondary** — dos dropdowns de **Mes** y **Año** (items de 44px con scroll de 8px, sin flechas). `value`/`onChange` en React y `v-model` ('YYYY-MM-DD') en Vue. El componente y el set publicados están mapeados con Code Connect.
