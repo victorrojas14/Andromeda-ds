@@ -44,12 +44,11 @@ export const Playground: Story = {
     content: 'Ejemplo',
     position: 'top',
     theme: 'light',
-    open: true,
   },
 }
 
 export const Posiciones: Story = {
-  name: 'Posiciones (dark)',
+  name: 'Posiciones (abiertos para comparar)',
   render: () => ({
     components: { Tooltip, Button },
     template: `
@@ -87,7 +86,6 @@ export const Rich: Story = {
         content="La referencia númerica ayuda a identificar tu pago, automáticamente se llena con la fecha actual, pero puedes cambiarlo por otro número de hasta 7 dígitos."
         position="top"
         theme="light"
-        :open="true"
       >
         <Button variant="primary" appearance="solid" size="md">Objetivo</Button>
       </RichTooltip>
@@ -106,7 +104,6 @@ export const RichDark: Story = {
         position="bottom"
         theme="dark"
         :show-button-right="false"
-        :open="true"
       >
         <Button variant="primary" appearance="solid" size="md">Objetivo</Button>
       </RichTooltip>

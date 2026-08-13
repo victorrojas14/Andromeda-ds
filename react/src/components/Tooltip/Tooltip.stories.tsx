@@ -39,7 +39,6 @@ export const Playground: Story = {
     content: 'Ejemplo',
     position: 'top',
     theme: 'light',
-    open: true,
     children: (
       <Button variant="primary" appearance="solid" size="md">
         Pasa el mouse
@@ -49,7 +48,7 @@ export const Playground: Story = {
 }
 
 export const Posiciones: Story = {
-  name: 'Posiciones (dark)',
+  name: 'Posiciones (abiertos para comparar)',
   render: () => (
     <div style={{ display: 'flex', gap: 100 }}>
       {(['top', 'bottom', 'left', 'right'] as const).map((pos) => (
@@ -82,7 +81,6 @@ export const Rich: StoryObj<typeof RichTooltip> = {
       content="La referencia númerica ayuda a identificar tu pago, automáticamente se llena con la fecha actual, pero puedes cambiarlo por otro número de hasta 7 dígitos."
       position="top"
       theme="light"
-      open
     >
       <Button variant="primary" appearance="solid" size="md">
         Objetivo
@@ -100,7 +98,6 @@ export const RichDark: StoryObj<typeof RichTooltip> = {
       position="bottom"
       theme="dark"
       showButtonRight={false}
-      open
     >
       <Button variant="primary" appearance="solid" size="md">
         Objetivo
