@@ -226,6 +226,15 @@
   --shadow-autolayout-lg: 0 0 34px rgba(200, 200, 200, 0.45);
   --shadow-autolayout-xl: 0 0 56px rgba(200, 200, 200, 0.45);
 
+  /* Figma: variables "Color/Estatus/*" — colores del componente Status
+   * (Item_Estatus_v1/v2) con sus fondos tenues de la variante pill */
+  --color-estatus-morado: #902dd7;
+  --color-estatus-naranja: #ca3500;
+  --color-estatus-magenta: #c7005c;
+  --color-estatus-morado-light: #f4e0ff;
+  --color-estatus-naranja-light: #ffedd4;
+  --color-estatus-magenta-light: #fde7f4;
+
   /* Figma: variable "Color/Neutros/Blanket" (#000000B2) — overlay del
    * Blanket bajo los modales */
   --color-blanket: rgba(0, 0, 0, 0.7);

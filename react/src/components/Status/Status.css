@@ -1,0 +1,58 @@
+/*
+ * Status — Andromeda DS
+ * Figma: página "Status", sets "Item_Estatus_v1" (729:6550, punto +
+ * texto con padding 10) e "Item_Estatus_v2" (11856:307, pill con
+ * fondo tenue, radio 50, px 10 / py 4); documentación "Item status"
+ * (11856:341). Punto de 8px, texto de 12px Medium en el color del
+ * estado. Estados: verde (Éxito/Activo), gris (Inactivo), azul
+ * (En progreso/Información), amarillo (Pendiente/Advertencia), rojo
+ * (Error/Fallido), morado (Revisión), naranja (Advertencia leve) y
+ * magenta (Personalizado/Especial).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-10);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  /* color por estado (texto y punto via currentColor) */
+  color: var(--color-success);
+}
+
+.and-status__dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+}
+
+/* ---- Colores por estado ---- */
+.and-status--gris { color: var(--color-secondary-light); }
+.and-status--azul { color: var(--color-info); }
+.and-status--amarillo { color: var(--color-warning-dark); }
+.and-status--rojo { color: var(--color-danger); }
+.and-status--morado { color: var(--color-estatus-morado); }
+.and-status--naranja { color: var(--color-estatus-naranja); }
+.and-status--magenta { color: var(--color-estatus-magenta); }
+
+/* ---- Variante v2: pill con fondo tenue ---- */
+.and-status--pill {
+  padding: 4px var(--space-10);
+  border-radius: 50px;
+  background: var(--color-success-light);
+}
+
+.and-status--pill.and-status--gris { background: var(--color-gray-200); }
+.and-status--pill.and-status--azul { background: var(--color-info-light); }
+.and-status--pill.and-status--amarillo { background: var(--color-warning-light); }
+.and-status--pill.and-status--rojo { background: var(--color-danger-light); }
+.and-status--pill.and-status--morado { background: var(--color-estatus-morado-light); }
+.and-status--pill.and-status--naranja { background: var(--color-estatus-naranja-light); }
+.and-status--pill.and-status--magenta { background: var(--color-estatus-magenta-light); }
