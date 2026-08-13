@@ -1,0 +1,352 @@
+/*
+ * InputGroup — Andromeda DS
+ * Figma: página "Forms", set "Input group" (13305:3395, documentación
+ * 13305:2746) con estados Close/Open (web) y Mobile-default/
+ * Mobile-selected. Un solo componente responsivo: en desktop es
+ * [Categorías ▾][Buscar][botón primary] con dropdown de categorías
+ * (patrón Dropdown--full--new); en <768px adopta el diseño mobile
+ * (13305:3403): input Form-SM + botón SM y las categorías como chips
+ * horizontales con scroll invisible arrastrable con el mouse.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-ig {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 200px;
+  font-family: var(--font-family-sans);
+}
+
+.and-ig__bar {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ---- Segmento Categorías (Form-MD, 200px en desktop) ---- */
+.and-ig__category {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.and-ig__category-trigger {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-10);
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-bottom: none;
+  border-radius: var(--radius-sm) 0 0 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.and-ig__category-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-parrafo);
+  color: var(--color-secondary-light);
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 48px);
+}
+
+.and-ig__chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-body);
+}
+
+/* ---- Segmento Buscar (Form-MD fluido) ---- */
+.and-ig__search {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.and-ig__search-box {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-left: none;
+  border-bottom: none;
+}
+
+.and-ig__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo);
+  color: var(--color-body);
+}
+
+.and-ig__search-input::placeholder {
+  color: var(--color-secondary-light);
+}
+
+/* ---- Líneas inferiores de 2px ---- */
+.and-ig__line {
+  height: 2px;
+  width: 100%;
+  background: var(--color-secondary-light);
+}
+
+.and-ig--open .and-ig__category .and-ig__line {
+  background: var(--color-tertiary);
+}
+
+/* ---- Botón buscar (btn/primary-MD, 60x49) ---- */
+.and-ig__button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 60px;
+  height: 49px;
+  padding: 10px 0;
+  background: var(--color-action-primary-default);
+  border: none;
+  border-radius: 0 var(--radius-sm) 0 0;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.and-ig__button:hover {
+  background: var(--color-action-primary-hover);
+}
+
+.and-ig__category-trigger:focus-visible,
+.and-ig__button:focus-visible,
+.and-ig__option:focus-visible,
+.and-ig__chip:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
+/* ---- Panel de categorías (Dropdown--full--new, 200px) ---- */
+.and-ig__panel {
+  box-sizing: border-box;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-10);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-autolayout-sm);
+}
+
+.and-ig__panel-search {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  width: 100%;
+  padding: 9.5px 10px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 5px;
+  color: var(--color-secondary-light);
+}
+
+.and-ig__panel-search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+}
+
+.and-ig__panel-search-input::placeholder {
+  color: var(--color-secondary-light);
+}
+
+.and-ig__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) var(--color-background);
+}
+
+.and-ig__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.and-ig__list::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-ig__list::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+.and-ig__option {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 10px;
+  background: var(--color-white);
+  border: none;
+  border-bottom: 1px solid var(--color-gray-300);
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+  cursor: pointer;
+  text-align: left;
+}
+
+.and-ig__option--selected {
+  background: var(--color-background);
+}
+
+.and-ig__empty {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  height: 102px;
+  width: 100%;
+  padding: 9.5px 33px;
+  background: var(--color-background);
+  border-radius: 5px;
+  color: var(--color-secondary);
+}
+
+.and-ig__empty-text {
+  font-size: var(--font-size-small-1);
+  text-align: center;
+  line-height: var(--line-height-normal);
+}
+
+/* ---- Chips de categorías (solo mobile) ---- */
+.and-ig__chips {
+  display: none;
+}
+
+.and-ig__chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 5px 12px;
+  background: var(--color-gray-100);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.and-ig__chip--selected {
+  background: var(--color-gray-200);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ============================================================
+ * Responsivo (<768px): diseño Mobile-default / Mobile-selected
+ * ============================================================ */
+@media (max-width: 767px) {
+  .and-ig {
+    gap: var(--space-8);
+  }
+
+  /* El segmento Categorías desaparece; quedan input SM + botón SM */
+  .and-ig__category {
+    display: none;
+  }
+
+  .and-ig__search-box {
+    min-height: 40px;
+    border-left: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-sm) 0 0 0;
+  }
+
+  .and-ig__search-input {
+    font-size: var(--font-size-parrafo-sm);
+  }
+
+  .and-ig__button {
+    width: 44px;
+    height: 41px;
+    padding: 6px 0;
+  }
+
+  /* En mobile el botón usa icon/search/24 (btn/primary-SM) */
+  .and-ig__button svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Chips horizontales con scroll invisible, arrastrable con el mouse */
+  .and-ig__chips {
+    display: flex;
+    gap: 6px; /* gap crudo del diseño; 6px no existe en la escala Spacing */
+    align-items: flex-start;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox: sin barra */
+    cursor: grab;
+  }
+
+  .and-ig__chips::-webkit-scrollbar {
+    display: none; /* Chrome/Safari: sin barra */
+  }
+
+  .and-ig__chips--dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+}
