@@ -91,7 +91,7 @@ export const TablaEjemplo: Story = {
             <Icon name="search" :size="24" />
           </span>
           <span v-else-if="column.key === 'opciones'" style="display: inline-flex; color: var(--color-primary);">
-            <Icon name="menu-vertical" :size="24" />
+            <Icon name="menu-dots-vertical" :size="24" />
           </span>
         </template>
       </Table>

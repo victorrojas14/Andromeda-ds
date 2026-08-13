@@ -113,6 +113,12 @@
   background: var(--color-background);
 }
 
+/* Los botones de la librería dentro de celdas van a una línea y la
+ * celda respeta su ancho (el layout auto de la tabla no los parte) */
+.and-table__td .and-btn {
+  white-space: nowrap;
+}
+
 /* Columna de selección (checkbox de la librería, 80px) */
 .and-table__check-cell {
   width: 80px;

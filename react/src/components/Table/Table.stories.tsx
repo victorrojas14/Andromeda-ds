@@ -168,7 +168,7 @@ export const TablaEjemplo: Story = {
           width: 80,
           render: () => (
             <span style={{ display: 'inline-flex', color: 'var(--color-primary)' }}>
-              <Icon name="menu-vertical" size={24} />
+              <Icon name="menu-dots-vertical" size={24} />
             </span>
           ),
         },
