@@ -1,0 +1,123 @@
+/*
+ * Paginator — Andromeda DS
+ * Figma: página "Pagination" (9402:4876), sets "Paginador" (3574:815,
+ * Size=Desktop 40px | Mobile con texto abajo), "NumerosPaginador-1"
+ * (175:4701, 40x40 desktop) y "NumerosPaginador-2" (175:4758, 28x28
+ * mobile). Texto "Mostrando N de M páginas" 14px body a la izquierda
+ * (ocultable), controles con iconos de la librería
+ * (arrow-collapse-left/right y chevrons) y botones Ant./números/Sig.
+ * — el activo con fondo primary y texto blanco; los deshabilitados al
+ * 50%. Responsivo: en <768px los botones pasan a 28x28 y el texto
+ * baja centrado (Size=Mobile).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  font-family: var(--font-family-sans);
+}
+
+.and-paginator__text {
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+}
+
+.and-paginator__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  margin-left: auto;
+}
+
+.and-paginator__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+/* Botón de página (NumerosPaginador-1: 40x40, radio 4, 16px Medium) */
+.and-paginator__page {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 33px;
+  width: 40px;
+  max-width: 48px;
+  min-height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+  cursor: pointer;
+  text-align: center;
+}
+
+.and-paginator__page:hover:not(:disabled):not(.and-paginator__page--active) {
+  background: var(--color-gray-100);
+}
+
+.and-paginator__page--active {
+  background: var(--color-primary);
+  color: var(--color-white);
+  cursor: default;
+}
+
+/* Ant. / Sig. usan el mismo botón pero pueden ser más anchos */
+.and-paginator__page--label {
+  width: auto;
+  max-width: none;
+  padding: 0 4px;
+}
+
+.and-paginator__nav:disabled,
+.and-paginator__page:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.and-paginator__nav:focus-visible,
+.and-paginator__page:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---- Responsivo (<768px): Size=Mobile — 28x28 y texto abajo ---- */
+@media (max-width: 767px) {
+  .and-paginator {
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: var(--space-10);
+  }
+
+  .and-paginator__text {
+    text-align: center;
+  }
+
+  .and-paginator__controls {
+    margin-left: 0;
+  }
+
+  .and-paginator__page {
+    min-width: 24px;
+    width: 28px;
+    min-height: 28px;
+    font-size: var(--font-size-parrafo-sm);
+  }
+}

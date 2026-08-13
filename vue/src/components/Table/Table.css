@@ -1,0 +1,138 @@
+/*
+ * Table — Andromeda DS
+ * Figma: página "Tables" (9811:37509), sets "Título Columna"
+ * (14121:1560, Desktop 55px | Movil 40px), "Item Columna" (138:1658,
+ * Default/Select × Izq/Centrado/Der × Desktop 50px | Mobile 36px) y
+ * "Table items" (13661:10043, celdas con componentes de la librería).
+ * Un solo componente responsivo: en <768px el header y las celdas
+ * adoptan las alturas del diseño Movil y la tabla puede desplazarse
+ * horizontalmente. Encabezados ordenables asc/desc con el icono
+ * unfold en primary. Las filas alternas usan el estado Select
+ * (fondo background), como la "Tabla ejemplo".
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) var(--color-background);
+}
+
+.and-table-wrap::-webkit-scrollbar {
+  height: 8px;
+}
+
+.and-table-wrap::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+.and-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-family-sans);
+  background: var(--color-white);
+}
+
+/* ---- Título Columna (header 55px desktop / 40 movil) ---- */
+.and-table__th {
+  box-sizing: border-box;
+  height: 55px;
+  min-width: 80px;
+  padding: 0 6px 0 var(--space-10);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-200);
+  font-size: var(--font-size-parrafo-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-secondary-light);
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.and-table__th--left { text-align: left; }
+.and-table__th--right { text-align: right; }
+
+.and-table__th-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-10);
+  max-width: 100%;
+}
+
+/* Header ordenable: botón con el icono unfold en primary */
+.and-table__sort {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.and-table__sort:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---- Item Columna (celdas 50px desktop / 36 movil) ---- */
+.and-table__td {
+  box-sizing: border-box;
+  height: 50px;
+  min-width: 80px;
+  /* py 6 para que las celdas con componentes (Table items) mantengan
+   * los 50px de fila; las de texto centran vía height */
+  padding: 6px var(--space-10);
+  background: var(--color-white);
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-body);
+  text-align: left;
+}
+
+.and-table__td--center { text-align: center; }
+.and-table__td--right { text-align: right; }
+
+/* Estado Select: filas alternas / seleccionadas con fondo background */
+.and-table__tr--select .and-table__td {
+  background: var(--color-background);
+}
+
+.and-table--zebra tbody tr:nth-child(odd) .and-table__td {
+  background: var(--color-background);
+}
+
+/* Columna de selección (checkbox de la librería, 80px) */
+.and-table__check-cell {
+  width: 80px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.and-table__check-cell .and-control {
+  vertical-align: middle;
+}
+
+/* ---- Responsivo (<768px): alturas del diseño Movil ---- */
+@media (max-width: 767px) {
+  .and-table__th {
+    height: 40px;
+  }
+
+  .and-table__td {
+    height: 36px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+}
