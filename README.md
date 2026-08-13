@@ -79,6 +79,10 @@ Acordeón del DS (Figma: component sets **Acordeon** e **Item Accordion 2** de l
 
 Alertas del DS (Figma: sets **Alerta** y **Alertas con accion** de la página Alerts), bajo **Feedback/Alert** en Storybook. `Alert` (inline): fondo semántico `*-light`, textos/iconos en `*-dark`, radio `md`, sombra `--shadow-md-2`, mensaje destacado con divisor, acción opcional y botón de cerrar (auto-descarte + `onClose`/`@close`); variants success/warning/danger/info con iconos fieles (Info usa `alert-outline` rotado). `AlertBlock` (bloque): título h5 SemiBold por variant, cuerpo y footer con divisor de 0.5px (sin danger). Ambos sets mapeados con Code Connect.
 
+## Loading
+
+Spinner de carga (Figma: set **Loading** de la página Loading, variantes `Color=Red|White` y `Property 1=1..4`), bajo **Feedback/Loading**. Ocho puntos de radio decreciente (15 → 2.5) con la **geometría exacta del frame 1** de Figma en un lienzo de 100×100; las variantes Property 1=1..4 son los frames de la animación (el patrón rotado), así que el **movimiento** se reproduce rotando el SVG en pasos de 45° (`steps(8)`, 0.8s, infinito) — equivalente al flipbook de 4 frames — y se detiene con `prefers-reduced-motion`. Props: `color` (`red` = `--color-primary` | `white`, para fondos oscuros como en la documentación Claro/Oscuro), `size` en px (100 por defecto, escala limpia por viewBox) y `label` accesible (`role="status"`). El set publicado está mapeado con Code Connect (Color → `color`; los frames son la animación). React y Vue.
+
 ## Avatar
 
 Avatar circular (Figma: set **Avatar**), bajo **Data Display/Avatar**. El estado se deriva de las props: `src` (Foto), `initials` (Iniciales, tipografía 72/40/24/16 según tamaño) o placeholder de agregar foto (icono `camera-plus-outline`, texto solo en 200). Props `size` (40/60/100/200) y `color` (`rojo`/`blanco`), `role="img"` con `aria-label`. Code Connect con Size/Color/Estado mapeados.

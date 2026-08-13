@@ -1,0 +1,38 @@
+/*
+ * Loading — Andromeda DS
+ * Figma: página "Loading" (9378:2134), set "Loading" (1151:23851) con
+ * variantes Color=Red|White y Property 1=1..4 (los 4 frames de la
+ * animación: el patrón de 8 puntos decrecientes rotando en sentido
+ * horario). El movimiento se logra rotando el SVG del frame 1 en
+ * pasos de 45° (steps(8) = los 4 frames de Figma × 2 posiciones).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+.and-loading--white {
+  color: var(--color-white);
+}
+
+.and-loading__svg {
+  display: block;
+  animation: and-loading-spin 0.8s steps(8, end) infinite;
+}
+
+@keyframes and-loading-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Sin movimiento para usuarios con reduced motion (queda el frame 1) */
+@media (prefers-reduced-motion: reduce) {
+  .and-loading__svg {
+    animation: none;
+  }
+}
