@@ -1,0 +1,178 @@
+/*
+ * Modal + LabelBadge — Andromeda DS
+ * Figma: página "Pop up / Modals" (9407:13212), set "Modal" (191:2221)
+ * con Tamano=Modal-SM|MD|LG e Icon=Default|CIrcle illustration, y set
+ * "Label Badge" (191:2664) con Estado=Success|Warning|Info|Danger.
+ * Card blanca (radius 10, padding 20, gap 20, sombra autolayout-md);
+ * SM (350px) centrado con footer en columna; MD (576px) y LG (992px)
+ * alineados a la izquierda con footer en fila. Se monta sobre el
+ * componente Blanket. Botones e iconos de la propia librería.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+/* ---- Label Badge ---- */
+.and-label-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  background: var(--color-success);
+  color: var(--color-white);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo-xs);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.and-label-badge--warning {
+  background: var(--color-warning);
+  color: var(--color-body);
+}
+
+.and-label-badge--info {
+  background: var(--color-info);
+}
+
+.and-label-badge--danger {
+  background: var(--color-danger);
+}
+
+/* Wrapper transparente para el modo inline (Vue) */
+.and-modal-inline {
+  display: contents;
+}
+
+/* ---- Modal ---- */
+.and-modal {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  width: 576px;
+  max-width: 100%;
+  padding: var(--space-20);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-autolayout-md);
+  font-family: var(--font-family-sans);
+}
+
+.and-modal--sm {
+  width: 350px;
+}
+
+.and-modal--lg {
+  width: 992px;
+}
+
+.and-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  min-height: 24px;
+}
+
+/* Sin badge, la X se va a la derecha */
+.and-modal__header-spacer {
+  flex: 1;
+}
+
+.and-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+.and-modal__close:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---- Icono top (Default: 72px; check success por defecto) ---- */
+.and-modal__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: var(--color-success);
+}
+
+/* Circle illustration: aro de 100px con borde 6px (chart-4 #423670) */
+.and-modal__circle {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background: var(--color-white);
+  border: 6px solid var(--color-chart-4);
+  border-radius: var(--radius-pill);
+  color: var(--color-chart-4);
+}
+
+/* ---- Título y cuerpo ---- */
+.and-modal__title {
+  margin: 0;
+  width: 100%;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-modal__body {
+  width: 100%;
+  font-size: var(--font-size-parrafo);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-modal__body p {
+  margin: 0 0 1em;
+}
+
+.and-modal__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Footer con botones del DS ---- */
+.and-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+/* ---- SM: centrado y footer en columna (primary arriba) ---- */
+.and-modal--sm .and-modal__title {
+  font-size: var(--font-size-h5);
+  text-align: center;
+}
+
+.and-modal--sm .and-modal__body {
+  font-size: var(--font-size-parrafo-sm);
+  text-align: center;
+}
+
+/* column-reverse: el primary (Der) queda arriba y el ghost (Izq) abajo */
+.and-modal--sm .and-modal__footer {
+  flex-direction: column-reverse;
+  gap: var(--space-20);
+  align-items: stretch;
+}
+
+.and-modal--sm .and-modal__footer .and-btn {
+  width: 100%;
+}

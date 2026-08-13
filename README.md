@@ -91,6 +91,14 @@ Avatar circular (Figma: set **Avatar**), bajo **Data Display/Avatar**. El estado
 
 Badge (Figma: set **Badge** y componente **Badge/Counter** de la página Badges), bajo **Data Display/Badge**. Fondo Info, texto blanco Poppins Medium con `size` h1–h6 (alturas 51/40/36/31/23/20) y contador opcional `count` que escala con el badge; `BadgeCounter` standalone (20×20, fondo Secondary, SemiBold). Ambos mapeados con Code Connect.
 
+## Blanket
+
+Overlay (Figma: página "Blanket con Modal", rectángulo con la variable **Color/Neutros/Blanket** `#000000B2` — nuevo token `--color-blanket`), bajo **Overlays/Blanket**. Capa que cubre el viewport (o solo su contenedor con `fixed=false`), centra su contenido y dispara `onClose`/`@close` al hacer click directo sobre el overlay. Es la base del componente Modal. El Blanket no está publicado como componente en Figma (es un rectángulo con la variable), así que su Code Connect queda preparado en comentario.
+
+## Modal
+
+Modal (Figma: set **Modal** de la página Pop up / Modals con `Tamano=Modal-SM|MD|LG` e `Icon=Default|CIrcle illustration`, y set **Label Badge**), bajo **Overlays/Modal**, montado **sobre el Blanket** (o inline con `blanket=false`). Card blanca de radio 10, padding y gap 20 y sombra `autolayout-md`; tamaños **SM 350** (título H5 y cuerpo 14 centrados, footer en columna con el primary arriba y botones al 100%), **MD 576** y **LG 992** (título H4 24, cuerpo 16, footer en fila con gap 24). Header con **LabelBadge** — componente propio exportado con los **4 estados** de Figma: `success`/`info`/`danger` (texto blanco) y `warning` (texto `body`), 12px SemiBold con padding 8/4 — y X de cierre. **Icono superior de la librería** (`icon` = cualquier nombre del registro, 72px, `success` por defecto con `baseline-check-circle`; `iconVariant="circle"` lo envuelve en el aro de 100px con borde de 6px `--color-chart-4` del set Cicle-illustration). **Todo es ocultable por props**, espejo de las de Figma: `showBadge` (Mostrar Aviso), `showIcon` (Mostrar Icono Top), `showTitle`, `showText`, `showLeftButton`/`showRightButton` (Mostrar Boton Izq/Der) — los botones **reutilizan el Button del DS** (ghost y solid primary MD). Cierra con la X, click fuera (Blanket) o los callbacks de los botones. Los 2 sets publicados están mapeados con Code Connect en React y Vue.
+
 ## Breadcrumbs
 
 Miga de pan (Figma: set **Breadcrumbs**), bajo **Navigation/Breadcrumbs**. `BreadcrumbItem`: separador `chevron-right` opcional + texto Regular — Default en `body`, Active en primario subrayado con `aria-current="page"`; `Breadcrumbs` (`nav`) los apila con gap 10px y oculta el separador del primero. Responsive: 16px → 12px bajo 768px (la variante Size de Figma no se mapea). Code Connect con Texto Categoria/Estado/Mostrar Icono.

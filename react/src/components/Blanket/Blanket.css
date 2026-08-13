@@ -1,0 +1,26 @@
+/*
+ * Blanket — Andromeda DS
+ * Figma: página "Blanket con Modal" (9644:42917), rectángulo "Blanket"
+ * (579:1505) con la variable Color/Neutros/Blanket (#000000B2).
+ * Overlay que cubre la pantalla (o su contenedor con `fixed=false`)
+ * y centra su contenido; lo usa el componente Modal.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-blanket {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-20);
+  background: var(--color-blanket);
+  overflow-y: auto;
+}
+
+/* Cubre solo a su contenedor (position: relative del padre) */
+.and-blanket--contained {
+  position: absolute;
+}
