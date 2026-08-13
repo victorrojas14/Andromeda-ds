@@ -1,0 +1,262 @@
+/*
+ * DropdownMultipleList — Andromeda DS
+ * Figma: página "Forms", set "DropDown-lista-multiple" (9574:4161,
+ * documentación "Dropdown multiple-list" 9516:6575) con estados
+ * Default / Active / Seleccion; item "Item Opcion Cuenta/Saldo"
+ * (552:1493) y trigger seleccionado "Form datos cuenta selected"
+ * (579:1154). Trigger con anatomía Form-LG (caja de 60px, borde de
+ * 0.5px secondary-light) y línea inferior de 2px que cambia por
+ * estado: gray-400 default, tertiary abierto, secondary-light con
+ * selección. Fluido/responsivo (ancho del contenedor).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-dml {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 200px;
+  font-family: var(--font-family-sans);
+}
+
+/* ---- Trigger Default (Form-LG) ---- */
+.and-dml__trigger {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-10);
+  width: 100%;
+  min-height: 60px;
+  padding: 10px 14px;
+  background: var(--color-white);
+  border: 0.5px solid var(--color-secondary-light);
+  border-bottom: none;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: var(--color-body);
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.and-dml__label {
+  position: absolute;
+  left: 14px;
+  top: 6px;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-secondary-dark);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.and-dml__placeholder {
+  flex: 1;
+  min-width: 0;
+  padding-top: 14px;
+  font-size: var(--font-size-parrafo);
+  color: var(--color-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.and-dml__chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-body);
+}
+
+/* ---- Trigger Seleccion (Form datos cuenta selected) ---- */
+.and-dml__trigger--selected {
+  padding: 6px 14px;
+  border: 1px solid var(--color-gray-300);
+  border-bottom: none;
+  justify-content: space-between;
+}
+
+/* Datos de cuenta en dos líneas (compartido por trigger e items) */
+.and-dml__data {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-parrafo);
+}
+
+.and-dml__data-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+.and-dml__data-name,
+.and-dml__data-balance {
+  color: var(--color-body);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.and-dml__data-balance {
+  text-align: right;
+}
+
+.and-dml__data-account {
+  color: var(--color-secondary-light);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Línea inferior de 2px por estado ---- */
+.and-dml__line {
+  height: 2px;
+  width: 100%;
+  background: var(--color-gray-400);
+}
+
+.and-dml--open .and-dml__line {
+  background: var(--color-tertiary);
+}
+
+.and-dml--selected:not(.and-dml--open) .and-dml__line {
+  background: var(--color-secondary-light);
+}
+
+.and-dml__trigger:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---- Panel (Dropdown--scroll--selct) ---- */
+.and-dml__panel {
+  box-sizing: border-box;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: var(--space-10);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-autolayout-sm);
+}
+
+/* ---- Buscador (Input busqueda, envuelto con py 10) ---- */
+.and-dml__search-wrap {
+  padding: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.and-dml__search {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  width: 100%;
+  padding: 9.5px 10px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 5px;
+  color: var(--color-secondary-light);
+}
+
+.and-dml__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+}
+
+.and-dml__search-input::placeholder {
+  color: var(--color-secondary-light);
+}
+
+/* ---- Lista con scroll (8px) ---- */
+.and-dml__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 244px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) var(--color-background);
+}
+
+.and-dml__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.and-dml__list::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-dml__list::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+/* ---- Item Opcion Cuenta/Saldo ---- */
+.and-dml__option {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 32px;
+  padding: 6px 10px;
+  background: var(--color-white);
+  border: none;
+  border-bottom: 1px solid var(--color-gray-300);
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.and-dml__option:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
+/* ---- Sin resultados (No results) ---- */
+.and-dml__empty {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  align-items: center;
+  justify-content: center;
+  height: 102px;
+  width: 100%;
+  padding: 9.5px 33px;
+  background: var(--color-background);
+  border-radius: 5px;
+  color: var(--color-secondary);
+}
+
+.and-dml__empty-text {
+  font-size: var(--font-size-small-1);
+  text-align: center;
+  line-height: var(--line-height-normal);
+}
