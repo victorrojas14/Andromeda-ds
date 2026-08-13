@@ -1,0 +1,155 @@
+/*
+ * Tooltip + RichTooltip — Andromeda DS
+ * Figma: página "Tooltips" (9454:21135), sets "Tooltips" (731:121,
+ * Theme=Light|Dark × Direction=Top|Right|Bottom|Left) y "Rich Tooltip"
+ * (12679:284, Tipo=Light/Dark × Top/Bottom/Left/Right + Show Buttons /
+ * Show Button Right). La Direction de Figma es el lado de la flecha
+ * (apunta al target); la prop `position` del componente es el lado
+ * donde aparece el tooltip respecto al elemento envuelto.
+ * Globo: 12px, radius 4 y padding 8/4 (simple) o radius 10 y padding
+ * 16 con título Medium y botones ghost-secondary del DS (rich);
+ * flecha de 10x5; sombra autolayout-sm como drop-shadow; tema Light
+ * (blanco/body) o Dark (secondary-dark/blanco). Se integra envolviendo
+ * cualquier componente de la librería.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+/* ---- Wrapper que envuelve al componente objetivo ---- */
+.and-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+}
+
+/* ---- Cuerpo flotante (flecha + globo) ---- */
+.and-tooltip {
+  position: absolute;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  filter: drop-shadow(0 0 8px rgba(200, 200, 200, 0.45));
+  pointer-events: none;
+}
+
+/* El rich tooltip sí es interactivo (botones) */
+.and-tooltip--rich {
+  pointer-events: auto;
+}
+
+/* Posición estricta respecto al target, centrado en el eje contrario */
+.and-tooltip--top {
+  flex-direction: column;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.and-tooltip--bottom {
+  flex-direction: column-reverse;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.and-tooltip--left {
+  flex-direction: row;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.and-tooltip--right {
+  flex-direction: row-reverse;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ---- Globo (Globo texto) ---- */
+.and-tooltip__bubble {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 254px;
+  padding: 4px 8px;
+  background: var(--color-white);
+  border-radius: var(--radius-sm);
+  color: var(--color-body);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-parrafo-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  width: max-content;
+  text-align: left;
+}
+
+/* ---- Flecha (Globo texto arrow, 10x5) ---- */
+.and-tooltip__arrow {
+  flex-shrink: 0;
+  width: 10px;
+  height: 5px;
+  background: var(--color-white);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+
+.and-tooltip--bottom .and-tooltip__arrow {
+  transform: rotate(180deg);
+}
+
+.and-tooltip--left .and-tooltip__arrow,
+.and-tooltip--right .and-tooltip__arrow {
+  width: 5px;
+  height: 10px;
+}
+
+.and-tooltip--left .and-tooltip__arrow {
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
+}
+
+.and-tooltip--right .and-tooltip__arrow {
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+
+/* ---- Tema Dark (secondary-dark + texto blanco) ---- */
+.and-tooltip--dark .and-tooltip__bubble {
+  background: var(--color-secondary-dark);
+  color: var(--color-white);
+}
+
+.and-tooltip--dark .and-tooltip__arrow {
+  background: var(--color-secondary-dark);
+}
+
+/* ---- Rich tooltip (globo de 254px, radius 10, padding 16) ---- */
+.and-tooltip--rich .and-tooltip__bubble {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-8);
+  width: 254px;
+  max-width: 320px;
+  padding: var(--space-16);
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.and-tooltip__title {
+  margin: 0;
+  padding-bottom: 2px;
+  width: 100%;
+  font-size: var(--font-size-parrafo-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.and-tooltip__text {
+  margin: 0;
+  width: 100%;
+}
+
+.and-tooltip__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-20);
+  width: 100%;
+}
