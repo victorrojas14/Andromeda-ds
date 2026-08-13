@@ -1,0 +1,319 @@
+/*
+ * FileUpload — Andromeda DS
+ * Figma: página "Forms", set "Carga de documento" (8189:4095,
+ * documentación "Upload file" 9516:8476) con estados Default/Hover/
+ * Completado/Carga-Masiva/Error-Por-Peso/Error-No-Compatible; fila
+ * "Cargando-Archivo" (8189:4237, Cargando/Completado) e icono
+ * "Icono-CargaDocumento" (8189:4212, pastilla de color por tipo).
+ * Card blanca (radius 10, padding 20, gap 20, sombra autolayout-md)
+ * usable inline en cualquier div o como modal (prop `modal`).
+ * Botones: componentes Button del DS (ghost/solid primary MD y
+ * outline SM). Este mismo archivo se usa desde React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+/* ---- Modal opcional ---- */
+.and-fu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-20);
+  background: rgba(34, 34, 34, 0.5);
+}
+
+.and-fu-backdrop .and-fu {
+  max-width: 576px;
+}
+
+/* Wrapper transparente para el modo inline (Vue) */
+.and-fu-inline {
+  display: contents;
+}
+
+/* ---- Card ---- */
+.and-fu {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  width: 100%;
+  padding: var(--space-20);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-autolayout-md);
+  font-family: var(--font-family-sans);
+}
+
+.and-fu__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+.and-fu__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+  line-height: var(--line-height-normal);
+}
+
+.and-fu__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+.and-fu__close:focus-visible,
+.and-fu__dropzone:focus-visible,
+.and-fu__row-action:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
+
+.and-fu__subtitle {
+  margin: 0;
+  width: 100%;
+  font-size: var(--font-size-parrafo);
+  color: var(--color-body);
+}
+
+.and-fu__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+/* ---- Dropzone (Adjuntar archivo) ---- */
+.and-fu__dropzone {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-50) var(--space-30);
+  background: var(--color-white);
+  border: 2px dashed var(--color-gray-300);
+  border-radius: var(--radius-md);
+  color: var(--color-body);
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Estado Hover (arrastrando encima): borde tertiary */
+.and-fu__dropzone--drag {
+  border-color: var(--color-tertiary);
+  color: var(--color-tertiary);
+}
+
+.and-fu__dropzone-title {
+  margin: 0;
+  width: 100%;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+}
+
+.and-fu__dropzone--drag .and-fu__dropzone-title {
+  color: var(--color-tertiary);
+}
+
+.and-fu__dropzone-hint {
+  margin: 0;
+  width: 100%;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-secondary-light);
+}
+
+/* "Elegir archivo": Button outline SM del DS con los colores
+ * secondary-light que marca el set (btn/primary-Outline-SM gris) */
+.and-fu__choose.and-btn {
+  border-color: var(--color-secondary-light);
+  color: var(--color-secondary-light);
+}
+
+/* ---- Mensajes de error (Error-Por-Peso / Error-No-Compatible) ---- */
+.and-fu__error {
+  margin: 0;
+  width: 100%;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-danger);
+}
+
+/* ---- Fila de archivo (Cargando-Archivo) ---- */
+.and-fu__row {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+  padding: var(--space-10);
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-fu__row-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+.and-fu__row-info {
+  display: flex;
+  gap: var(--space-20);
+  align-items: center;
+  min-width: 0;
+}
+
+.and-fu__row-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.and-fu__row-name {
+  margin: 0;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.and-fu__row-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.and-fu__row-size {
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-gray-400);
+  white-space: nowrap;
+}
+
+.and-fu__row-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-secondary);
+}
+
+.and-fu__row-status--loading svg {
+  animation: and-fu-spin 1s linear infinite;
+}
+
+@keyframes and-fu-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.and-fu__row-status--done {
+  color: var(--color-secondary);
+}
+
+.and-fu__row-status--done svg {
+  color: var(--color-success);
+}
+
+.and-fu__row-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+/* ---- Barra de progreso (BasicProgress) ---- */
+.and-fu__progress {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.and-fu__progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--color-tertiary);
+  border-radius: var(--radius-sm);
+  transition: width 0.2s ease;
+}
+
+/* ---- Icono de tipo de archivo (Icono-CargaDocumento) ---- */
+.and-fu__ficon {
+  position: relative;
+  flex-shrink: 0;
+  width: 56.75px;
+  height: 52.9px;
+}
+
+.and-fu__ficon-sheet {
+  position: absolute;
+  inset: 0 0 0 26.29%;
+  width: 73.71%;
+  height: 100%;
+}
+
+.and-fu__ficon-label {
+  box-sizing: border-box;
+  position: absolute;
+  top: 45.36%;
+  right: 29.52%;
+  bottom: 16.83%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--color-danger);
+  color: var(--color-white);
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}
+
+.and-fu__ficon-label--success {
+  background: var(--color-success);
+}
+
+.and-fu__ficon-label--info {
+  background: var(--color-info);
+}
+
+/* ---- Footer con botones del DS ---- */
+.and-fu__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-24);
+  width: 100%;
+}
