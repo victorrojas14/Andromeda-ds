@@ -130,7 +130,9 @@
   vertical-align: middle;
 }
 
-/* ---- Responsivo (<768px): alturas del diseño Movil ---- */
+/* ---- Responsivo (<768px): medidas exactas del diseño Movil ----
+ * Título Columna Movil: 40px. Item Columna Mobile: min 36x40,
+ * padding 8 y texto de 12px (parrafo-xs). */
 @media (max-width: 767px) {
   .and-table__th {
     height: 40px;
@@ -138,7 +140,8 @@
 
   .and-table__td {
     height: 36px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    min-width: 40px;
+    padding: var(--space-8);
+    font-size: var(--font-size-parrafo-xs);
   }
 }
