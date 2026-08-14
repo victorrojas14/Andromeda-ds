@@ -116,6 +116,7 @@
   padding: 4px 3px;
   background: var(--color-gray-200);
   border-radius: 8px; /* radio crudo del diseño; 8 no existe en la escala Rounded */
+  font-family: var(--font-family-sans); /* Poppins estricto en los segmentos */
 }
 
 .and-tabs--segmented .and-tabs__segment {

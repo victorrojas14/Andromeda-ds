@@ -18,6 +18,12 @@ const meta: Meta<typeof Tabs> = {
       options: ['primary', 'secondary'],
       description: 'Color del subrayado (Figma: Active primary/Active secundary)',
     },
+    icon: { control: 'text', description: 'Icono de la librería para todos los tabs' },
+    iconPosition: {
+      control: 'inline-radio',
+      options: ['left', 'right', 'both'],
+      description: 'Lado del icono: izquierdo, derecho o ambos',
+    },
   },
 }
 
@@ -42,6 +48,20 @@ export const PrimaryConIconos: Story = {
       { label: 'Texto Tab', disabled: true },
     ],
   },
+}
+
+export const PosicionDeIcono: Story = {
+  name: 'Posición de icono (left / right / both)',
+  render: () => ({
+    components: { Tabs },
+    template: `
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <Tabs variant="primary" icon="account-outline" icon-position="left" :items="['Texto Tab', 'Texto Tab']" />
+        <Tabs variant="primary" icon="account-outline" icon-position="right" :items="['Texto Tab', 'Texto Tab']" />
+        <Tabs variant="primary" icon="account-outline" icon-position="both" :items="['Texto Tab', 'Texto Tab']" />
+      </div>
+    `,
+  }),
 }
 
 export const ActiveSecundary: Story = {

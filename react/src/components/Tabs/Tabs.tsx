@@ -25,6 +25,10 @@ export interface TabsProps
   variant?: 'primary' | 'secondary'
   /** Color del subrayado activo del primary (Figma: Active primary/Active secundary) */
   activeStyle?: 'primary' | 'secondary'
+  /** Icono de la librería aplicado a todos los tabs del primary */
+  icon?: AndIconName
+  /** Lado donde va el icono: izquierdo, derecho o ambos */
+  iconPosition?: 'left' | 'right' | 'both'
 }
 
 const toItems = (items: Array<string | TabItem>): TabItem[] =>
@@ -37,6 +41,8 @@ export function Tabs({
   onChange,
   variant = 'primary',
   activeStyle = 'primary',
+  icon,
+  iconPosition = 'both',
   className = '',
   ...rest
 }: TabsProps) {
@@ -81,6 +87,16 @@ export function Tabs({
   const renderIcon = (name?: AndIconName): ReactNode =>
     name ? <Icon name={name} size={24} /> : null
 
+  // `icon` + `iconPosition` aplican a todos los tabs; el item puede
+  // sobreescribir con sus propios iconLeft/iconRight
+  const leftIconOf = (tab: TabItem) =>
+    tab.iconLeft ??
+    (icon && (iconPosition === 'left' || iconPosition === 'both') ? icon : undefined)
+
+  const rightIconOf = (tab: TabItem) =>
+    tab.iconRight ??
+    (icon && (iconPosition === 'right' || iconPosition === 'both') ? icon : undefined)
+
   return (
     <div
       className={[
@@ -109,9 +125,9 @@ export function Tabs({
           onClick={() => select(i)}
         >
           <span className="and-tabs__tab-inner">
-            {renderIcon(tab.iconLeft)}
+            {renderIcon(leftIconOf(tab))}
             {tab.label}
-            {renderIcon(tab.iconRight)}
+            {renderIcon(rightIconOf(tab))}
           </span>
           <span className="and-tabs__bar" aria-hidden="true" />
         </button>

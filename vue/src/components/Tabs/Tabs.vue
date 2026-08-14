@@ -32,11 +32,17 @@ interface TabsProps {
   variant?: 'primary' | 'secondary'
   /** Color del subrayado activo (Figma: Active primary/Active secundary). */
   activeStyle?: 'primary' | 'secondary'
+  /** Icono de la librería aplicado a todos los tabs del primary. */
+  icon?: AndIconName
+  /** Lado donde va el icono: izquierdo, derecho o ambos. */
+  iconPosition?: 'left' | 'right' | 'both'
 }
 
 const props = withDefaults(defineProps<TabsProps>(), {
   variant: 'primary',
   activeStyle: 'primary',
+  icon: undefined,
+  iconPosition: 'both',
 })
 
 const model = defineModel<number>({ default: 0 })
@@ -54,6 +60,20 @@ const select = (index: number) => {
   model.value = index
   emit('change', index, tabs.value[index])
 }
+
+// `icon` + `iconPosition` aplican a todos los tabs; el item puede
+// sobreescribir con sus propios iconLeft/iconRight
+const leftIconOf = (tab: TabItem) =>
+  tab.iconLeft ??
+  (props.icon && (props.iconPosition === 'left' || props.iconPosition === 'both')
+    ? props.icon
+    : undefined)
+
+const rightIconOf = (tab: TabItem) =>
+  tab.iconRight ??
+  (props.icon && (props.iconPosition === 'right' || props.iconPosition === 'both')
+    ? props.icon
+    : undefined)
 </script>
 
 <template>
@@ -90,9 +110,9 @@ const select = (index: number) => {
       @click="select(i)"
     >
       <span class="and-tabs__tab-inner">
-        <Icon v-if="tab.iconLeft" :name="tab.iconLeft" :size="24" />
+        <Icon v-if="leftIconOf(tab)" :name="leftIconOf(tab)!" :size="24" />
         {{ tab.label }}
-        <Icon v-if="tab.iconRight" :name="tab.iconRight" :size="24" />
+        <Icon v-if="rightIconOf(tab)" :name="rightIconOf(tab)!" :size="24" />
       </span>
       <span class="and-tabs__bar" aria-hidden="true" />
     </button>
