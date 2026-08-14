@@ -1,0 +1,175 @@
+/*
+ * Tabs — Andromeda DS
+ * Figma: página "Tabs" — set "Tabs-1" (175:4777, tab primary con
+ * subrayado: Estado Default/Disabled/Active primary/Active secundary
+ * × Size Desktop 44px/Mobile 41px) y sets "Tab secundario"
+ * (14033:4376, segmented control con Quantity 2..5 × Desktop 48px/
+ * Mobile 46px) y "Tab-atom" (14031:9608).
+ * Un solo componente responsivo: en <768px el primary usa texto de
+ * 14px con iconos de 20px (Size=Mobile) y el secundario pierde el
+ * ancho mínimo y se desplaza horizontalmente (Scroll de 8px).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+/* ============ Variante primary (Tabs-1) ============ */
+.and-tabs {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  font-family: var(--font-family-sans);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-300) var(--color-background);
+}
+
+.and-tabs::-webkit-scrollbar {
+  height: 8px;
+}
+
+.and-tabs::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-tabs::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+.and-tabs__tab {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 80px;
+  padding: 0 var(--space-10);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.and-tabs__tab-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  padding: var(--space-10) 0 6px;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5; /* 24px/21px -> alturas exactas 44 (desktop) / 41 (mobile) */
+  color: var(--color-secondary);
+  white-space: nowrap;
+}
+
+.and-tabs__tab-inner svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Barra inferior de 4px (transparente en Default) */
+.and-tabs__bar {
+  height: 4px;
+  width: 100%;
+  background: transparent;
+}
+
+/* Active primary: texto body + barra primary */
+.and-tabs__tab--active .and-tabs__tab-inner {
+  color: var(--color-body);
+}
+
+.and-tabs__tab--active .and-tabs__bar {
+  background: var(--color-primary);
+}
+
+/* Active secundary: barra tertiary */
+.and-tabs--secondary-style .and-tabs__tab--active .and-tabs__bar {
+  background: var(--color-tertiary);
+}
+
+/* Disabled: fondo blanco y textos gray-400 */
+.and-tabs__tab:disabled {
+  background: var(--color-white);
+  cursor: default;
+}
+
+.and-tabs__tab:disabled .and-tabs__tab-inner {
+  color: var(--color-gray-400);
+}
+
+.and-tabs__tab:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
+/* ============ Variante secondary (Tab secundario) ============ */
+.and-tabs--segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  width: auto;
+  max-width: 100%;
+  padding: 4px 3px;
+  background: var(--color-gray-200);
+  border-radius: 8px; /* radio crudo del diseño; 8 no existe en la escala Rounded */
+}
+
+.and-tabs--segmented .and-tabs__segment {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 40px;
+  min-width: 150px;
+  padding: 8px 17px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.and-tabs--segmented .and-tabs__segment--active {
+  background: var(--color-white);
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.1))
+    drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+.and-tabs--segmented .and-tabs__segment:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
+/* ============ Responsivo (<768px): diseño Mobile ============ */
+@media (max-width: 767px) {
+  /* Tabs-1 Mobile: 41px (texto 14, iconos 20) */
+  .and-tabs__tab-inner {
+    font-size: var(--font-size-parrafo-sm);
+  }
+
+  .and-tabs__tab-inner svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Tab secundario Mobile: 46px, sin ancho mínimo y con scroll */
+  .and-tabs--segmented {
+    padding: 3px;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .and-tabs--segmented .and-tabs__segment {
+    min-width: 0;
+    flex: 1;
+  }
+}
