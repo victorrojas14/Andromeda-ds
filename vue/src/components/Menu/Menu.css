@@ -297,6 +297,145 @@
   outline-offset: -2px;
 }
 
+/* ============ Menu Estatus (ItemMenu_Estatus, 3379:2647) ============
+ * Cards de sección con estatus: min-h 57, padding 10, radio 10, borde
+ * 1px y sombra Sombra-Per; icono izq 24 (Cambiar Icono Izq, default
+ * file-document-outline) + Titulo seccion 14 Medium + Estatus seccion
+ * 12 Regular + chevron derecho 24. Estados: Default (borde background,
+ * título secondary, estatus secondary-light), Estatus todos / Completo
+ * (borde tertiary, título body, estatus tertiary; Completo cambia el
+ * icono por baseline-check-circle), Activa (fondo tertiary, contenido
+ * blanco, sin estatus) y Deshabilitada (gray-400 al 60%). */
+.and-menu-estatus {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 100%;
+  font-family: var(--font-family-sans);
+}
+
+.and-menu-estatus__item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  min-height: 57px;
+  /* Figma: padding 10 con stroke de 1px por dentro → 9 + 1 de borde */
+  padding: 9px;
+  background: var(--color-white);
+  border: 1px solid var(--color-background);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-per);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.and-menu-estatus__body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  flex: 1;
+  min-width: 0;
+}
+
+.and-menu-estatus__body svg {
+  flex-shrink: 0;
+}
+
+.and-menu-estatus__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-secondary);
+}
+
+.and-menu-estatus__texts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.and-menu-estatus__title {
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.and-menu-estatus__status {
+  height: 16px;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-secondary-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.and-menu-estatus__chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--color-tertiary);
+}
+
+/* Estado=Estatus todos y Estado=Completo */
+.and-menu-estatus__item--todos,
+.and-menu-estatus__item--completo {
+  border-color: var(--color-tertiary);
+}
+
+.and-menu-estatus__item--todos .and-menu-estatus__icon,
+.and-menu-estatus__item--completo .and-menu-estatus__icon {
+  color: var(--color-tertiary);
+}
+
+.and-menu-estatus__item--todos .and-menu-estatus__title,
+.and-menu-estatus__item--completo .and-menu-estatus__title {
+  color: var(--color-body);
+}
+
+.and-menu-estatus__item--todos .and-menu-estatus__status,
+.and-menu-estatus__item--completo .and-menu-estatus__status {
+  color: var(--color-tertiary);
+}
+
+/* Estado=Activa */
+.and-menu-estatus__item--activa {
+  background: var(--color-tertiary);
+  border-color: var(--color-tertiary);
+}
+
+.and-menu-estatus__item--activa .and-menu-estatus__icon,
+.and-menu-estatus__item--activa .and-menu-estatus__title,
+.and-menu-estatus__item--activa .and-menu-estatus__chevron {
+  color: var(--color-white);
+}
+
+/* Estado=Deshabilitada */
+.and-menu-estatus__item--deshabilitada {
+  box-shadow: var(--shadow-autolayout-sm);
+  opacity: 0.6;
+  cursor: default;
+}
+
+.and-menu-estatus__item--deshabilitada .and-menu-estatus__icon,
+.and-menu-estatus__item--deshabilitada .and-menu-estatus__title,
+.and-menu-estatus__item--deshabilitada .and-menu-estatus__status,
+.and-menu-estatus__item--deshabilitada .and-menu-estatus__chevron {
+  color: var(--color-gray-400);
+}
+
+.and-menu-estatus__item:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
 /* ============ Responsivo: <768px muestra el diseño mobile ============ */
 @media (max-width: 767px) {
   .and-menu {
