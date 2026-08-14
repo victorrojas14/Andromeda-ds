@@ -7,20 +7,16 @@ const meta: Meta<typeof Menu> = {
   component: Menu,
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    items: { control: 'object', description: 'Items (strings o { label, showIcon })' },
+    items: {
+      control: 'object',
+      description: 'Items (strings o { label, icon, showLeftIcon, showIcon })',
+    },
     active: { control: 'number', description: 'Índice activo (controlado)' },
     defaultActive: { control: 'number' },
-    userName: { control: 'text', description: 'Mobile (Figma: "Nombre Usuario")' },
-    userInitials: { control: 'text', description: 'Mobile (Figma: "Iniciales")' },
-    lastAccess: { control: 'text', description: 'Mobile: texto de último acceso' },
-    showUser: { control: 'boolean', description: 'Barra de usuario en mobile' },
-    showProductsButton: { control: 'boolean', description: 'Botón Mis productos en mobile' },
-    open: { control: 'boolean', description: 'Menú mobile expandido (controlado)' },
+    open: { control: 'boolean', description: 'Menú mobile Abierto/Cerrado (controlado)' },
     defaultOpen: { control: 'boolean', description: 'Estado inicial Abierto/Cerrado del mobile' },
     onChange: { action: 'change' },
     onOpenChange: { action: 'openChange' },
-    onProductsClick: { action: 'productsClick' },
-    onUserClick: { action: 'userClick' },
   },
 }
 
@@ -40,9 +36,7 @@ export const Playground: Story = {
       'Ayuda',
     ],
     defaultActive: 0,
-    userName: 'Nombre Usuario',
-    userInitials: 'NU',
-    lastAccess: 'Último acceso: 08/05/2023 10:25 a.m.',
+    defaultOpen: true,
   },
 }
 
@@ -56,6 +50,22 @@ export const ConIconos: Story = {
       { label: 'Menú' },
       { label: 'Menú' },
     ],
+  },
+}
+
+export const MenuLateral: Story = {
+  name: 'Menú lateral (ejemplo mobile)',
+  args: {
+    items: [
+      { label: 'Inicio', icon: 'home-outline' },
+      { label: 'Monitor de flujos', icon: 'monitoring' },
+      { label: 'Emisiones de ventanilla', icon: 'file-document-outline' },
+      { label: 'Emisiones bursátiles', icon: 'chart' },
+      { label: 'Reportes', icon: 'file-document-multiple-outline', showIcon: true },
+      { label: 'Utilerías', icon: 'tools' },
+    ],
+    defaultActive: 3,
+    defaultOpen: true,
   },
 }
 

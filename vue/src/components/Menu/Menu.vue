@@ -1,50 +1,42 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import ButtonMisProductos from '../Button/ButtonMisProductos.vue'
 import Icon from '../Icon/Icon.vue'
+import type { AndIconName } from '../Icon/icons'
 import './Menu.css'
 
 /*
  * Menu — DS Andromeda (Figma: página Menu — set "Item Menu" 751:132
  * con Texto/Mostrar Icono/Estado Default-Active, barra "Menu Desktop"
- * 751:182 de 70px con sombra md-2, y para mobile "Top Menu Mobile"
- * 751:579 + botón Mis productos del DS + "Menu Mobile" 2944:2982 con
- * items de 60px). Un solo componente responsivo: en <768px la barra
- * desktop se oculta y se muestra el diseño mobile (9435:21661).
- * v-model con el índice activo; v-model:open con el estado
- * Abierto/Cerrado del menú mobile (colapsa al hacer clic en el
- * chevron, el nombre de usuario o el botón Mis productos).
+ * 751:182 de 70px con sombra md-2, y para mobile el set "Menu Movil y
+ * Lateral" 2943:768 con Estado Abierto 250px / Cerrado 84px e items
+ * "Item menu mobile" 2943:1384). Un solo componente responsivo: en
+ * <768px la barra desktop se oculta y se muestra el menú lateral del
+ * diseño mobile (9435:21661). v-model con el índice activo;
+ * v-model:open con el Estado Abierto/Cerrado (el chevron superior
+ * colapsa el menú a solo iconos).
  */
 
 export interface MenuItem {
   /** Texto del item (Figma: "Texto"). */
   label: string
-  /** Muestra el chevron down/up (Figma: "Mostrar Icono"). */
+  /** Icono izquierdo en mobile (Figma: "Cambiar Icono"; default account-outline). */
+  icon?: AndIconName
+  /** Muestra el icono izquierdo en mobile (Figma: "Mostrar Icono Izq"). */
+  showLeftIcon?: boolean
+  /**
+   * Muestra el chevron: down/up en la barra desktop (Figma: "Mostrar
+   * Icono") y chevron-down a la derecha en mobile ("Mostrar Icono Der",
+   * indica submenú).
+   */
   showIcon?: boolean
 }
 
 interface MenuProps {
-  /** Items del menú (strings u objetos con showIcon). */
+  /** Items del menú (strings u objetos con icono/chevron). */
   items: Array<string | MenuItem>
-  /** Nombre del usuario (mobile, Figma: "Nombre Usuario"). */
-  userName?: string
-  /** Iniciales del avatar (mobile, Figma: "Iniciales"). */
-  userInitials?: string
-  /** Texto de último acceso (mobile). */
-  lastAccess?: string
-  /** Muestra la barra de usuario en mobile (Top Menu Mobile). */
-  showUser?: boolean
-  /** Muestra el botón Mis productos del DS en mobile. */
-  showProductsButton?: boolean
 }
 
-const props = withDefaults(defineProps<MenuProps>(), {
-  userName: 'Nombre Usuario',
-  userInitials: 'NU',
-  lastAccess: '',
-  showUser: true,
-  showProductsButton: true,
-})
+const props = defineProps<MenuProps>()
 
 const model = defineModel<number>({ default: 0 })
 
@@ -53,8 +45,6 @@ const open = defineModel<boolean>('open', { default: true })
 
 const emit = defineEmits<{
   change: [index: number, item: MenuItem]
-  productsClick: []
-  userClick: []
 }>()
 
 const menuItems = computed<MenuItem[]>(() =>
@@ -64,16 +54,6 @@ const menuItems = computed<MenuItem[]>(() =>
 const select = (index: number) => {
   model.value = index
   emit('change', index, menuItems.value[index])
-}
-
-const toggleOpen = () => {
-  open.value = !open.value
-  emit('userClick')
-}
-
-const onProducts = () => {
-  open.value = false
-  emit('productsClick')
 }
 </script>
 
@@ -102,43 +82,31 @@ const onProducts = () => {
       </div>
     </div>
 
-    <!-- Menú mobile (Top Menu Mobile + Mis productos + Menu Mobile) -->
-    <div class="and-menu-mobile">
-      <div v-if="showUser" class="and-menu-mobile__user">
-        <button type="button" class="and-menu-mobile__user-info" @click="toggleOpen">
-          <span class="and-menu-mobile__initials" aria-hidden="true">{{ userInitials }}</span>
-          <div class="and-menu-mobile__user-texts">
-            <span class="and-menu-mobile__user-name">{{ userName }}</span>
-            <span v-if="lastAccess" class="and-menu-mobile__user-access">{{ lastAccess }}</span>
-          </div>
-        </button>
-        <button
-          type="button"
-          class="and-menu-mobile__user-chevron"
-          :aria-label="open ? 'Colapsar menú' : 'Expandir menú'"
-          :aria-expanded="open"
-          @click="toggleOpen"
-        >
-          <Icon :name="open ? 'chevron-up' : 'chevron-down'" :size="24" />
-        </button>
-      </div>
-      <template v-if="open">
-        <div v-if="showProductsButton" class="and-menu-mobile__products">
-          <ButtonMisProductos @click="onProducts" />
-        </div>
-        <div class="and-menu-mobile__list">
-          <button
-            v-for="(item, i) in menuItems"
-            :key="i"
-            type="button"
-            :class="['and-menu-mobile__item', i === model && 'and-menu-mobile__item--active']"
-            :aria-current="i === model ? 'page' : undefined"
-            @click="select(i)"
-          >
-            {{ item.label }}
-          </button>
-        </div>
-      </template>
+    <!-- Menú mobile / lateral (Menu Movil y Lateral) -->
+    <div :class="['and-menu-mobile', !open && 'and-menu-mobile--cerrado']">
+      <button
+        type="button"
+        class="and-menu-mobile__toggle"
+        :aria-label="open ? 'Colapsar menú' : 'Expandir menú'"
+        :aria-expanded="open"
+        @click="open = !open"
+      >
+        <Icon :name="open ? 'chevron-left' : 'chevron-right'" :size="24" />
+      </button>
+      <button
+        v-for="(item, i) in menuItems"
+        :key="i"
+        type="button"
+        :class="['and-menu-mobile__item', i === model && 'and-menu-mobile__item--active']"
+        :aria-current="i === model ? 'page' : undefined"
+        :aria-label="!open ? item.label : undefined"
+        :title="!open ? item.label : undefined"
+        @click="select(i)"
+      >
+        <Icon v-if="item.showLeftIcon ?? true" :name="item.icon ?? 'account-outline'" :size="24" />
+        <span v-if="open" class="and-menu-mobile__item-label">{{ item.label }}</span>
+        <Icon v-if="open && item.showIcon" name="chevron-down" :size="24" />
+      </button>
     </div>
   </nav>
 </template>

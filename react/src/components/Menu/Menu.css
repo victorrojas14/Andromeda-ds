@@ -3,11 +3,11 @@
  * Figma: página "Menu" — set "Item Menu" (751:132, Estado
  * Default/Active con Texto y Mostrar Icono), barra "Menu Desktop"
  * (751:182, 70px, borde inferior gray-100 y sombra md-2), y para
- * mobile "Top Menu Mobile" (751:579), botón Mis productos (reutiliza
- * el ButtonMisProductos del DS) y "Menu Mobile" (2944:2982,
- * Estado=Abierto con items de 60px). Un solo componente responsivo:
- * en <768px la barra desktop se oculta y se muestra el diseño mobile
- * (9435:21661) con usuario, botón y lista.
+ * mobile el set "Menu Movil y Lateral" (2943:768, Estado
+ * Abierto 250px / Cerrado 84px) con items "Item menu mobile"
+ * (2943:1384). Un solo componente responsivo: en <768px la barra
+ * desktop se oculta y se muestra el menú lateral del diseño mobile
+ * (9435:21661).
  * Este mismo archivo se usa desde los componentes de React y Vue.
  * Consume únicamente tokens de tokens/tokens.css.
  */
@@ -76,114 +76,31 @@
   outline-offset: -2px;
 }
 
-/* ============ Menú mobile (Menu Mobile, Estado=Abierto) ============ */
+/* ============ Menú mobile / lateral (Menu Movil y Lateral) ============
+ * Set 2943:768 — Estado=Abierto (250px, padding lateral 20) y
+ * Estado=Cerrado (84px, padding lateral 10, solo iconos). Arriba el
+ * Icono Cerrar/Abrir (chevron); items = "Item menu mobile" 2943:1384:
+ * min-h 60, padding 20, gap 10, radio 10, icono izq 24 + texto 14
+ * Medium secondary + chevron-down opcional. Hover = fondo primary con
+ * texto blanco; Active = fondo background con texto body. */
 .and-menu-mobile {
+  box-sizing: border-box;
   display: none;
   flex-direction: column;
-  gap: 1px;
-  width: 100%;
+  align-items: center;
+  gap: var(--space-10);
+  width: 250px;
+  padding: 0 var(--space-20);
   background: var(--color-white);
   font-family: var(--font-family-sans);
-  filter: drop-shadow(0 0 8px rgba(200, 200, 200, 0.45));
 }
 
-/* ---- Top Menu Mobile (usuario) ---- */
-.and-menu-mobile__user {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-10);
-  width: 100%;
-  padding: var(--space-10) var(--space-20);
-  background: var(--color-white);
-  border-bottom: 1px solid var(--color-gray-100);
+.and-menu-mobile--cerrado {
+  width: 84px;
+  padding: 0 var(--space-10);
 }
 
-.and-menu-mobile__user-info {
-  display: flex;
-  align-items: center;
-  gap: var(--space-10);
-  min-width: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  font-family: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.and-menu-mobile__initials {
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  background: var(--color-white);
-  border: 1px solid var(--color-primary);
-  border-radius: var(--radius-pill);
-  font-size: var(--font-size-parrafo-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-primary);
-}
-
-.and-menu-mobile__user-texts {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  color: var(--color-body);
-}
-
-.and-menu-mobile__user-name {
-  font-size: var(--font-size-parrafo-sm);
-  font-weight: var(--font-weight-semibold);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.and-menu-mobile__user-access {
-  font-size: var(--font-size-parrafo-xs);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.and-menu-mobile__user-chevron {
-  display: inline-flex;
-  flex-shrink: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: var(--color-body);
-  cursor: pointer;
-}
-
-/* ---- Botón Mis productos (componente del DS) ---- */
-.and-menu-mobile__products {
-  box-sizing: border-box;
-  width: 100%;
-  padding: var(--space-20);
-  background: var(--color-white);
-}
-
-.and-menu-mobile__products .and-btn-productos {
-  width: 100%;
-}
-
-/* ---- Lista de items (60px, radio 10) ---- */
-.and-menu-mobile__list {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-10);
-  width: 100%;
-  padding: 0 var(--space-20) var(--space-20);
-  background: var(--color-white);
-}
-
+.and-menu-mobile__toggle,
 .and-menu-mobile__item {
   box-sizing: border-box;
   display: flex;
@@ -194,20 +111,46 @@
   padding: 0 var(--space-20);
   background: var(--color-white);
   border: none;
-  border-radius: var(--radius-md);
   font-family: inherit;
+  cursor: pointer;
+}
+
+.and-menu-mobile__toggle svg,
+.and-menu-mobile__item svg {
+  flex-shrink: 0;
+}
+
+.and-menu-mobile__toggle {
+  color: var(--color-body);
+}
+
+.and-menu-mobile__item {
+  border-radius: var(--radius-md);
   font-size: var(--font-size-parrafo-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-secondary);
   text-align: left;
-  cursor: pointer;
 }
 
+.and-menu-mobile__item-label {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+/* Estado Hover del Item menu mobile */
+.and-menu-mobile__item:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Estado Active */
 .and-menu-mobile__item--active {
   background: var(--color-background);
-  color: var(--color-primary);
+  color: var(--color-body);
 }
 
+.and-menu-mobile__toggle:focus-visible,
 .and-menu-mobile__item:focus-visible {
   outline: 2px solid var(--color-action-primary-default);
   outline-offset: -2px;

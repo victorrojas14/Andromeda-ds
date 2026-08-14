@@ -7,12 +7,10 @@ const meta: Meta<typeof Menu> = {
   component: Menu,
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    items: { control: 'object', description: 'Items (strings o { label, showIcon })' },
-    userName: { control: 'text', description: 'Mobile (Figma: "Nombre Usuario")' },
-    userInitials: { control: 'text', description: 'Mobile (Figma: "Iniciales")' },
-    lastAccess: { control: 'text', description: 'Mobile: texto de último acceso' },
-    showUser: { control: 'boolean', description: 'Barra de usuario en mobile' },
-    showProductsButton: { control: 'boolean', description: 'Botón Mis productos en mobile' },
+    items: {
+      control: 'object',
+      description: 'Items (strings o { label, icon, showLeftIcon, showIcon })',
+    },
     open: { control: 'boolean', description: 'v-model:open — menú mobile Abierto/Cerrado' },
   },
 }
@@ -32,21 +30,39 @@ export const Playground: Story = {
       'Servicios',
       'Ayuda',
     ],
-    userName: 'Nombre Usuario',
-    userInitials: 'NU',
-    lastAccess: 'Último acceso: 08/05/2023 10:25 a.m.',
   },
 }
 
 export const ConIconos: Story = {
   name: 'Con iconos (Mostrar Icono)',
   args: {
-    ...Playground.args,
     items: [
       { label: 'Menú', showIcon: true },
       { label: 'Menú', showIcon: true },
       { label: 'Menú' },
       { label: 'Menú' },
+    ],
+  },
+}
+
+export const MenuLateral: Story = {
+  name: 'Menú lateral (ejemplo mobile)',
+  render: (args) => ({
+    components: { Menu },
+    setup() {
+      const activo = ref(3)
+      return { args, activo }
+    },
+    template: `<Menu v-bind="args" v-model="activo" />`,
+  }),
+  args: {
+    items: [
+      { label: 'Inicio', icon: 'home-outline' },
+      { label: 'Monitor de flujos', icon: 'monitoring' },
+      { label: 'Emisiones de ventanilla', icon: 'file-document-outline' },
+      { label: 'Emisiones bursátiles', icon: 'chart' },
+      { label: 'Reportes', icon: 'file-document-multiple-outline', showIcon: true },
+      { label: 'Utilerías', icon: 'tools' },
     ],
   },
 }

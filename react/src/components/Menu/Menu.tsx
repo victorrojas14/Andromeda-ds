@@ -1,39 +1,34 @@
 import { useState, type HTMLAttributes } from 'react'
-import { ButtonMisProductos } from '../Button'
-import { Icon } from '../Icon'
+import { Icon, type AndIconName } from '../Icon'
 import './Menu.css'
 
 export interface MenuItem {
   /** Texto del item (Figma: "Texto") */
   label: string
-  /** Muestra el chevron down/up (Figma: "Mostrar Icono") */
+  /** Icono izquierdo en mobile (Figma: "Cambiar Icono"; default account-outline) */
+  icon?: AndIconName
+  /** Muestra el icono izquierdo en mobile (Figma: "Mostrar Icono Izq") */
+  showLeftIcon?: boolean
+  /**
+   * Muestra el chevron: down/up en la barra desktop (Figma: "Mostrar
+   * Icono") y chevron-down a la derecha en mobile ("Mostrar Icono Der",
+   * indica submenú)
+   */
   showIcon?: boolean
 }
 
 export interface MenuProps
   extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
-  /** Items del menú (strings u objetos con showIcon) */
+  /** Items del menú (strings u objetos con icono/chevron) */
   items: Array<string | MenuItem>
   /** Índice activo (controlado) */
   active?: number
   defaultActive?: number
   onChange?: (index: number, item: MenuItem) => void
-  /** Nombre del usuario (mobile, Figma: "Nombre Usuario") */
-  userName?: string
-  /** Iniciales del avatar (mobile, Figma: "Iniciales") */
-  userInitials?: string
-  /** Texto de último acceso (mobile) */
-  lastAccess?: string
-  /** Muestra la barra de usuario en mobile (Top Menu Mobile) */
-  showUser?: boolean
-  /** Muestra el botón Mis productos del DS en mobile */
-  showProductsButton?: boolean
   /** Menú mobile expandido (controlado; Figma: Estado Abierto/Cerrado) */
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
-  onProductsClick?: () => void
-  onUserClick?: () => void
 }
 
 const toItems = (items: Array<string | MenuItem>): MenuItem[] =>
@@ -44,16 +39,9 @@ export function Menu({
   active,
   defaultActive = 0,
   onChange,
-  userName = 'Nombre Usuario',
-  userInitials = 'NU',
-  lastAccess = '',
-  showUser = true,
-  showProductsButton = true,
   open,
   defaultOpen = true,
   onOpenChange,
-  onProductsClick,
-  onUserClick,
   className = '',
   ...rest
 }: MenuProps) {
@@ -105,74 +93,48 @@ export function Menu({
         </div>
       </div>
 
-      {/* Menú mobile (Top Menu Mobile + Mis productos + Menu Mobile) */}
-      <div className="and-menu-mobile">
-        {showUser && (
-          <div className="and-menu-mobile__user">
-            <button
-              type="button"
-              className="and-menu-mobile__user-info"
-              onClick={() => {
-                setOpen(!isOpen)
-                onUserClick?.()
-              }}
-            >
-              <span className="and-menu-mobile__initials" aria-hidden="true">
-                {userInitials}
-              </span>
-              <div className="and-menu-mobile__user-texts">
-                <span className="and-menu-mobile__user-name">{userName}</span>
-                {lastAccess && (
-                  <span className="and-menu-mobile__user-access">{lastAccess}</span>
-                )}
-              </div>
-            </button>
-            <button
-              type="button"
-              className="and-menu-mobile__user-chevron"
-              aria-label={isOpen ? 'Colapsar menú' : 'Expandir menú'}
-              aria-expanded={isOpen}
-              onClick={() => {
-                setOpen(!isOpen)
-                onUserClick?.()
-              }}
-            >
-              <Icon name={isOpen ? 'chevron-up' : 'chevron-down'} size={24} />
-            </button>
-          </div>
-        )}
-        {isOpen && (
-          <>
-            {showProductsButton && (
-              <div className="and-menu-mobile__products">
-                <ButtonMisProductos
-                  onClick={() => {
-                    setOpen(false)
-                    onProductsClick?.()
-                  }}
-                />
-              </div>
+      {/* Menú mobile / lateral (Menu Movil y Lateral) */}
+      <div
+        className={[
+          'and-menu-mobile',
+          !isOpen && 'and-menu-mobile--cerrado',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      >
+        <button
+          type="button"
+          className="and-menu-mobile__toggle"
+          aria-label={isOpen ? 'Colapsar menú' : 'Expandir menú'}
+          aria-expanded={isOpen}
+          onClick={() => setOpen(!isOpen)}
+        >
+          <Icon name={isOpen ? 'chevron-left' : 'chevron-right'} size={24} />
+        </button>
+        {menuItems.map((item, i) => (
+          <button
+            key={i}
+            type="button"
+            className={[
+              'and-menu-mobile__item',
+              i === current && 'and-menu-mobile__item--active',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            aria-current={i === current ? 'page' : undefined}
+            aria-label={!isOpen ? item.label : undefined}
+            title={!isOpen ? item.label : undefined}
+            onClick={() => select(i)}
+          >
+            {(item.showLeftIcon ?? true) && (
+              <Icon name={item.icon ?? 'account-outline'} size={24} />
             )}
-            <div className="and-menu-mobile__list">
-              {menuItems.map((item, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className={[
-                    'and-menu-mobile__item',
-                    i === current && 'and-menu-mobile__item--active',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                  aria-current={i === current ? 'page' : undefined}
-                  onClick={() => select(i)}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
+            {isOpen && (
+              <span className="and-menu-mobile__item-label">{item.label}</span>
+            )}
+            {isOpen && item.showIcon && <Icon name="chevron-down" size={24} />}
+          </button>
+        ))}
       </div>
     </nav>
   )
