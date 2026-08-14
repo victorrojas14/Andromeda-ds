@@ -11,6 +11,11 @@ const meta: Meta<typeof Menu> = {
       control: 'object',
       description: 'Items (strings o { label, icon, showLeftIcon, showIcon })',
     },
+    variant: {
+      control: 'inline-radio',
+      options: ['lateral', 'usuario'],
+      description: 'Variante del menú mobile',
+    },
     open: { control: 'boolean', description: 'v-model:open — menú mobile Abierto/Cerrado' },
   },
 }
@@ -63,6 +68,26 @@ export const MenuLateral: Story = {
       { label: 'Emisiones bursátiles', icon: 'chart' },
       { label: 'Reportes', icon: 'file-document-multiple-outline', showIcon: true },
       { label: 'Utilerías', icon: 'tools' },
+    ],
+  },
+}
+
+export const VarianteUsuario: Story = {
+  name: 'Variante usuario (Menu Mobile)',
+  args: {
+    variant: 'usuario',
+    items: ['Item menu 1', 'Item menu 2', 'Item menu 3', 'Item menu 4', 'Item menu 5'],
+    userName: 'Nombre Usuario',
+    userInitials: 'NU',
+    lastAccess: 'Último acceso: 08/05/2023 10:25 a.m.',
+    productsItems: [
+      'Mis productos 1',
+      'Mis productos 2',
+      'Mis productos 3',
+      'Mis productos 4',
+      'Mis productos 5',
+      'Mis productos 6',
+      'Mis productos 7',
     ],
   },
 }

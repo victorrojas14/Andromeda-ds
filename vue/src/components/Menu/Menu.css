@@ -156,13 +156,155 @@
   outline-offset: -2px;
 }
 
+/* ============ Variante usuario (Menu Mobile, 2944:2982) ============
+ * Composición del set "Menu Mobile" Estado=Abierto: "Perfil Movil"
+ * (2943:476 — Top Menu Mobile 751:579 con iniciales de 32px + "Menu
+ * usuario" con padding-izq 30 y borde inferior gray-300), botón Mis
+ * productos del DS en un wrapper de padding 20 (con lista propia al
+ * abrirse) y lista de items de 60px. Cerrado = solo la barra de
+ * usuario. Los items reutilizan .and-menu-mobile__item. */
+.and-menu-user {
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+  background: var(--color-white);
+  font-family: var(--font-family-sans);
+  box-shadow: var(--shadow-autolayout-sm);
+}
+
+/* ---- Top Menu Mobile (barra de usuario) ---- */
+.and-menu-user__bar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  padding: var(--space-10) var(--space-20);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.and-menu-user__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.and-menu-user__initials {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: var(--color-white);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+.and-menu-user__texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--color-body);
+}
+
+.and-menu-user__name {
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.and-menu-user__access {
+  font-size: var(--font-size-parrafo-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.and-menu-user__chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+/* ---- Menu usuario (Perfil Movil Estado=Abierto) ---- */
+.and-menu-user__usermenu {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: var(--space-30);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-300);
+}
+
+/* ---- Botón Mis productos (componente del DS) ---- */
+.and-menu-user__products {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-20);
+  background: var(--color-white);
+}
+
+.and-menu-user__products .and-btn-productos {
+  width: 100%;
+}
+
+.and-menu-user__products--open .and-btn-productos__icon:last-child svg {
+  transform: rotate(180deg);
+}
+
+/* ---- Listas (Mis productos abiertos e items) ---- */
+.and-menu-user__products-list,
+.and-menu-user__list {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 100%;
+  padding: 0 var(--space-20) var(--space-20);
+  background: var(--color-white);
+}
+
+.and-menu-user__products-list {
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.and-menu-user__info:focus-visible,
+.and-menu-user__chevron:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: -2px;
+}
+
 /* ============ Responsivo: <768px muestra el diseño mobile ============ */
 @media (max-width: 767px) {
   .and-menu {
     display: none;
   }
 
-  .and-menu-mobile {
+  .and-menu-mobile,
+  .and-menu-user {
     display: flex;
   }
 }
