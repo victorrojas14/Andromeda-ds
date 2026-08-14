@@ -105,6 +105,12 @@
   align-items: center;
   gap: var(--space-10);
   min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
 .and-menu-mobile__initials {

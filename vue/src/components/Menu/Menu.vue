@@ -11,7 +11,9 @@ import './Menu.css'
  * 751:579 + botón Mis productos del DS + "Menu Mobile" 2944:2982 con
  * items de 60px). Un solo componente responsivo: en <768px la barra
  * desktop se oculta y se muestra el diseño mobile (9435:21661).
- * v-model con el índice activo.
+ * v-model con el índice activo; v-model:open con el estado
+ * Abierto/Cerrado del menú mobile (colapsa al hacer clic en el
+ * chevron, el nombre de usuario o el botón Mis productos).
  */
 
 export interface MenuItem {
@@ -46,6 +48,9 @@ const props = withDefaults(defineProps<MenuProps>(), {
 
 const model = defineModel<number>({ default: 0 })
 
+/** Menú mobile expandido (Figma: Estado Abierto/Cerrado). */
+const open = defineModel<boolean>('open', { default: true })
+
 const emit = defineEmits<{
   change: [index: number, item: MenuItem]
   productsClick: []
@@ -59,6 +64,16 @@ const menuItems = computed<MenuItem[]>(() =>
 const select = (index: number) => {
   model.value = index
   emit('change', index, menuItems.value[index])
+}
+
+const toggleOpen = () => {
+  open.value = !open.value
+  emit('userClick')
+}
+
+const onProducts = () => {
+  open.value = false
+  emit('productsClick')
 }
 </script>
 
@@ -90,37 +105,40 @@ const select = (index: number) => {
     <!-- Menú mobile (Top Menu Mobile + Mis productos + Menu Mobile) -->
     <div class="and-menu-mobile">
       <div v-if="showUser" class="and-menu-mobile__user">
-        <div class="and-menu-mobile__user-info">
+        <button type="button" class="and-menu-mobile__user-info" @click="toggleOpen">
           <span class="and-menu-mobile__initials" aria-hidden="true">{{ userInitials }}</span>
           <div class="and-menu-mobile__user-texts">
             <span class="and-menu-mobile__user-name">{{ userName }}</span>
             <span v-if="lastAccess" class="and-menu-mobile__user-access">{{ lastAccess }}</span>
           </div>
-        </div>
+        </button>
         <button
           type="button"
           class="and-menu-mobile__user-chevron"
-          aria-label="Perfil"
-          @click="emit('userClick')"
+          :aria-label="open ? 'Colapsar menú' : 'Expandir menú'"
+          :aria-expanded="open"
+          @click="toggleOpen"
         >
-          <Icon name="chevron-down" :size="24" />
+          <Icon :name="open ? 'chevron-up' : 'chevron-down'" :size="24" />
         </button>
       </div>
-      <div v-if="showProductsButton" class="and-menu-mobile__products">
-        <ButtonMisProductos @click="emit('productsClick')" />
-      </div>
-      <div class="and-menu-mobile__list">
-        <button
-          v-for="(item, i) in menuItems"
-          :key="i"
-          type="button"
-          :class="['and-menu-mobile__item', i === model && 'and-menu-mobile__item--active']"
-          :aria-current="i === model ? 'page' : undefined"
-          @click="select(i)"
-        >
-          {{ item.label }}
-        </button>
-      </div>
+      <template v-if="open">
+        <div v-if="showProductsButton" class="and-menu-mobile__products">
+          <ButtonMisProductos @click="onProducts" />
+        </div>
+        <div class="and-menu-mobile__list">
+          <button
+            v-for="(item, i) in menuItems"
+            :key="i"
+            type="button"
+            :class="['and-menu-mobile__item', i === model && 'and-menu-mobile__item--active']"
+            :aria-current="i === model ? 'page' : undefined"
+            @click="select(i)"
+          >
+            {{ item.label }}
+          </button>
+        </div>
+      </template>
     </div>
   </nav>
 </template>

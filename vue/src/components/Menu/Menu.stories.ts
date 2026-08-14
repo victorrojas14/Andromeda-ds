@@ -13,6 +13,7 @@ const meta: Meta<typeof Menu> = {
     lastAccess: { control: 'text', description: 'Mobile: texto de último acceso' },
     showUser: { control: 'boolean', description: 'Barra de usuario en mobile' },
     showProductsButton: { control: 'boolean', description: 'Botón Mis productos en mobile' },
+    open: { control: 'boolean', description: 'v-model:open — menú mobile Abierto/Cerrado' },
   },
 }
 

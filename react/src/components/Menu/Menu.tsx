@@ -28,6 +28,10 @@ export interface MenuProps
   showUser?: boolean
   /** Muestra el botón Mis productos del DS en mobile */
   showProductsButton?: boolean
+  /** Menú mobile expandido (controlado; Figma: Estado Abierto/Cerrado) */
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
   onProductsClick?: () => void
   onUserClick?: () => void
 }
@@ -45,18 +49,28 @@ export function Menu({
   lastAccess = '',
   showUser = true,
   showProductsButton = true,
+  open,
+  defaultOpen = true,
+  onOpenChange,
   onProductsClick,
   onUserClick,
   className = '',
   ...rest
 }: MenuProps) {
   const [inner, setInner] = useState(defaultActive)
+  const [innerOpen, setInnerOpen] = useState(defaultOpen)
   const current = active !== undefined ? active : inner
+  const isOpen = open !== undefined ? open : innerOpen
   const menuItems = toItems(items)
 
   const select = (index: number) => {
     if (active === undefined) setInner(index)
     onChange?.(index, menuItems[index])
+  }
+
+  const setOpen = (next: boolean) => {
+    if (open === undefined) setInnerOpen(next)
+    onOpenChange?.(next)
   }
 
   return (
@@ -95,7 +109,14 @@ export function Menu({
       <div className="and-menu-mobile">
         {showUser && (
           <div className="and-menu-mobile__user">
-            <div className="and-menu-mobile__user-info">
+            <button
+              type="button"
+              className="and-menu-mobile__user-info"
+              onClick={() => {
+                setOpen(!isOpen)
+                onUserClick?.()
+              }}
+            >
               <span className="and-menu-mobile__initials" aria-hidden="true">
                 {userInitials}
               </span>
@@ -105,40 +126,53 @@ export function Menu({
                   <span className="and-menu-mobile__user-access">{lastAccess}</span>
                 )}
               </div>
-            </div>
+            </button>
             <button
               type="button"
               className="and-menu-mobile__user-chevron"
-              aria-label="Perfil"
-              onClick={onUserClick}
+              aria-label={isOpen ? 'Colapsar menú' : 'Expandir menú'}
+              aria-expanded={isOpen}
+              onClick={() => {
+                setOpen(!isOpen)
+                onUserClick?.()
+              }}
             >
-              <Icon name="chevron-down" size={24} />
+              <Icon name={isOpen ? 'chevron-up' : 'chevron-down'} size={24} />
             </button>
           </div>
         )}
-        {showProductsButton && (
-          <div className="and-menu-mobile__products">
-            <ButtonMisProductos onClick={onProductsClick} />
-          </div>
+        {isOpen && (
+          <>
+            {showProductsButton && (
+              <div className="and-menu-mobile__products">
+                <ButtonMisProductos
+                  onClick={() => {
+                    setOpen(false)
+                    onProductsClick?.()
+                  }}
+                />
+              </div>
+            )}
+            <div className="and-menu-mobile__list">
+              {menuItems.map((item, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  className={[
+                    'and-menu-mobile__item',
+                    i === current && 'and-menu-mobile__item--active',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  aria-current={i === current ? 'page' : undefined}
+                  onClick={() => select(i)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </>
         )}
-        <div className="and-menu-mobile__list">
-          {menuItems.map((item, i) => (
-            <button
-              key={i}
-              type="button"
-              className={[
-                'and-menu-mobile__item',
-                i === current && 'and-menu-mobile__item--active',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              aria-current={i === current ? 'page' : undefined}
-              onClick={() => select(i)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
       </div>
     </nav>
   )
