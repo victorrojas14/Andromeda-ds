@@ -1,0 +1,155 @@
+/*
+ * ProgressTracker — Andromeda DS
+ * Figma: página "Progress Tracker" — átomo "Puntero" (1383:838, círculo
+ * de 20px blanco con anillo de 2px tertiary; Estado Active agrega un
+ * halo de 30px tertiary al 30%), molécula "BasicProgress" (1114:5032,
+ * pista de 4px radio 4 en gray-300 con relleno tertiary dentro de un
+ * wrapper de 18px) y organismo "Límite de crédito" (1135:5344: tooltip
+ * superior info-dark con texto H5 20 y flecha de 20×12, texto Límite
+ * de crédito 14 Medium centrado, y saldos inferiores 12 Regular /
+ * 12 SemiBold a ambos extremos). Full width: se ajusta al contenedor
+ * en cualquier resolución. Todas las partes son ocultables por props.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-progress {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  align-items: center;
+  width: 100%;
+  font-family: var(--font-family-sans);
+}
+
+.and-progress__top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  align-items: center;
+  width: 100%;
+}
+
+/* ---- Tooltip superior (info-dark, texto H5, flecha 20×12) ---- */
+.and-progress__tooltip-wrap {
+  position: relative;
+  width: 100%;
+  /* burbuja de 38px + parte de la flecha; la punta queda a 6px del
+   * siguiente bloque (Figma: tooltip en top -53 del organismo) */
+  height: 43px;
+}
+
+.and-progress__tooltip {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-50%);
+  padding: 4px 14px;
+  background: var(--color-info-dark);
+  border-radius: var(--radius-sm);
+  filter: drop-shadow(var(--shadow-autolayout-sm));
+  font-size: var(--font-size-h5);
+  color: var(--color-white);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.and-progress__tooltip::after {
+  content: '';
+  position: absolute;
+  top: calc(100% - 3px);
+  left: 50%;
+  width: 20px;
+  height: 12px;
+  transform: translateX(-50%);
+  background: var(--color-info-dark);
+  clip-path: polygon(6.7% 0, 93.3% 0, 50% 75%);
+}
+
+/* ---- Texto superior (Limite credito) ---- */
+.and-progress__limit {
+  width: 100%;
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+  text-align: center;
+}
+
+/* ---- BasicProgress (pista + relleno + Puntero) ---- */
+.and-progress__track-wrap {
+  position: relative;
+  width: 100%;
+  height: 18px;
+}
+
+.and-progress__track,
+.and-progress__fill {
+  position: absolute;
+  top: 9px;
+  left: 0;
+  height: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-300);
+}
+
+.and-progress__track {
+  right: 0;
+}
+
+.and-progress__fill {
+  background: var(--color-tertiary);
+}
+
+.and-progress__pointer {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  background: var(--color-white);
+  border: 2px solid var(--color-tertiary);
+  border-radius: var(--radius-pill);
+}
+
+/* Estado Active del Puntero: halo de 30px tertiary al 30% */
+.and-progress__pointer--active::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: var(--radius-pill);
+  background: var(--color-tertiary);
+  opacity: 0.3;
+}
+
+/* ---- Saldos (texto Izq / Der) ---- */
+.and-progress__saldos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+  font-size: var(--font-size-parrafo-xs);
+}
+
+.and-progress__saldo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  color: var(--color-secondary);
+}
+
+.and-progress__saldo--der {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.and-progress__saldo-valor {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-body);
+}
