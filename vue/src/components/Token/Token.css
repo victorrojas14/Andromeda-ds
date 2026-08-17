@@ -1,0 +1,184 @@
+/*
+ * Token — Andromeda DS
+ * Figma: página "Token" — set "Token" (8490:6138, Tipo Desktop 576 /
+ * Mobile 350 con "Añadir texto" y "Contenido"), inputs "Inputs-Token"
+ * (8490:6181) e "Input" (8490:6455) con estados Default / Normal /
+ * Active / Error. Modal (montado sobre el Blanket del DS) con X de
+ * cierre, título H5 20 Medium secondary-dark centrado, inputs de
+ * 40×40 radio 8 borde gray-200 (Active = borde tertiary, Error =
+ * borde danger + mensaje 12), links 14 tertiary, contenido 14 body y
+ * botones del DS (Cancelar ghost + Continuar solid primary MD,
+ * deshabilitado en primary-light hasta completar el código).
+ * Responsivo: en <768px toma el layout Mobile de Figma (350px,
+ * footer en columna con Continuar al 100% arriba).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ */
+
+.and-token {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  width: 576px;
+  max-width: calc(100vw - 40px);
+  padding: var(--space-20);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-autolayout-md);
+  font-family: var(--font-family-sans);
+}
+
+.and-token__header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.and-token__close {
+  display: inline-flex;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-secondary-dark);
+  cursor: pointer;
+}
+
+.and-token__title {
+  width: 100%;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-secondary-dark);
+  text-align: center;
+}
+
+/* ---- Inputs-Token ---- */
+.and-token__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  align-items: center;
+  width: 100%;
+  padding: var(--space-10) 0;
+}
+
+.and-token__inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+.and-token__input {
+  box-sizing: border-box;
+  flex: 0 1 40px;
+  width: 40px;
+  height: 40px;
+  min-width: 28px;
+  padding: 0;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: var(--font-size-h5);
+  color: var(--color-body);
+  text-align: center;
+  outline: none;
+}
+
+.and-token__input::placeholder {
+  color: var(--color-gray-400);
+}
+
+/* Estado Active */
+.and-token__input:focus {
+  border-color: var(--color-tertiary);
+}
+
+/* Estado Error */
+.and-token--error .and-token__input {
+  border-color: var(--color-danger);
+}
+
+.and-token__error {
+  width: 100%;
+  margin-top: calc(-1 * var(--space-16));
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--color-danger);
+  text-align: center;
+}
+
+/* ---- Links de ayuda (14 tertiary) ---- */
+.and-token__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+  align-items: center;
+  width: 100%;
+}
+
+.and-token__link {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-tertiary);
+  text-align: center;
+  cursor: pointer;
+}
+
+.and-token__link:hover {
+  text-decoration: underline;
+}
+
+/* ---- Contenido (Añadir texto) ---- */
+.and-token__text {
+  width: 100%;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+}
+
+/* ---- Footer con botones del DS ---- */
+.and-token__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-30);
+  width: 100%;
+}
+
+/* Continuar deshabilitado: primary-light sólido como en Figma */
+.and-token__footer .and-btn--solid-primary:disabled {
+  background: var(--color-action-primary-disabled);
+  border-color: var(--color-action-primary-disabled);
+  opacity: 1;
+}
+
+/* ============ Responsivo: <768px toma el layout Mobile ============ */
+@media (max-width: 767px) {
+  /* Figma: card de 350 en viewport de 375 (el padding del Blanket no
+   * lo comprime: flex-shrink 0 y máximo el viewport menos 24) */
+  .and-token {
+    flex-shrink: 0;
+    width: 350px;
+    max-width: calc(100vw - 24px);
+  }
+
+  .and-token__body {
+    padding: 0;
+  }
+
+  .and-token__text {
+    text-align: center;
+  }
+
+  .and-token__footer {
+    flex-direction: column-reverse;
+    gap: var(--space-16);
+  }
+
+  .and-token__footer .and-btn {
+    width: 100%;
+  }
+}
