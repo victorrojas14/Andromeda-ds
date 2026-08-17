@@ -86,6 +86,28 @@
   height: 18px;
 }
 
+/* Arrastrable: el Puntero se mueve con el mouse sobre la pista */
+.and-progress__track-wrap--drag {
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+.and-progress__track-wrap--drag .and-progress__pointer {
+  cursor: grab;
+}
+
+.and-progress__track-wrap--dragging,
+.and-progress__track-wrap--dragging .and-progress__pointer {
+  cursor: grabbing;
+}
+
+.and-progress__track-wrap--drag:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 .and-progress__track,
 .and-progress__fill {
   position: absolute;

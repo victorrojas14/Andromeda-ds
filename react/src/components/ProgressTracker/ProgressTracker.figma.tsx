@@ -25,7 +25,7 @@ figma.connect(
     },
     example: (props) => (
       <ProgressTracker
-        value={25}
+        defaultValue={25}
         tooltip={props.tooltip}
         showTooltip={props.showTooltip}
         limitText={props.limitText}
@@ -47,7 +47,7 @@ figma.connect(
     props: {},
     example: () => (
       <ProgressTracker
-        value={25}
+        defaultValue={25}
         showTooltip={false}
         showLimitText={false}
         showLeft={false}
@@ -67,7 +67,7 @@ figma.connect(
     },
     example: (props) => (
       <ProgressTracker
-        value={25}
+        defaultValue={25}
         active={props.active}
         showTooltip={false}
         showLimitText={false}

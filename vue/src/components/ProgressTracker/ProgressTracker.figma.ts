@@ -22,7 +22,7 @@ figma.connect('https://www.figma.com/design/oTZzdsgGkCjbL2f3oybxD0/Ui-Kit-Web?no
   },
   example: (props) => html`
 <ProgressTracker
-  :value="25"
+  :model-value="25"
   tooltip="${props.tooltip}"
   :show-tooltip="${props.showTooltip}"
   limit-text="${props.limitText}"
@@ -40,7 +40,7 @@ figma.connect('https://www.figma.com/design/oTZzdsgGkCjbL2f3oybxD0/Ui-Kit-Web?no
   props: {},
   example: () => html`
 <ProgressTracker
-  :value="25"
+  :model-value="25"
   :show-tooltip="false"
   :show-limit-text="false"
   :show-left="false"
@@ -56,7 +56,7 @@ figma.connect('https://www.figma.com/design/oTZzdsgGkCjbL2f3oybxD0/Ui-Kit-Web?no
   },
   example: (props) => html`
 <ProgressTracker
-  :value="25"
+  :model-value="25"
   :active="${props.active}"
   :show-tooltip="false"
   :show-limit-text="false"
