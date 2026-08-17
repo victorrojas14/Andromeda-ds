@@ -1,0 +1,101 @@
+/*
+ * InfoBox — Andromeda DS
+ * Figma: página "Infobox" — set publicado "Info Box" (14524:69295)
+ * con Título, Descripción y Type (6 variantes). Card blanca de radio
+ * 8 con barra izquierda de 10px del color de la variante, padding 16
+ * (24 a la izquierda), título H5 20 SemiBold con el icono de 24 de la
+ * variante a la derecha (pintado del mismo color), descripción 14
+ * secondary y CTA/Link reutilizando el Button ghost-secondary SM del
+ * DS. Colores por Type: Legal o de riesgo = estatus-morado, Regla de
+ * negocio = primary-light, Interacción & funcionalidad = info, Nota
+ * general = gray-400, Acuerdo de diseño = warning y Definición de
+ * desarrollo = estatus-naranja. Responsivo: ocupa el 100% del
+ * contenedor.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-infobox {
+  --and-infobox-color: var(--color-estatus-morado);
+
+  box-sizing: border-box;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: var(--space-16);
+  padding-left: var(--space-24);
+  background: var(--color-white);
+  border-left: 10px solid var(--and-infobox-color);
+  border-radius: 8px;
+  font-family: var(--font-family-sans);
+}
+
+/* Colores por variante (Type) */
+.and-infobox--negocio {
+  --and-infobox-color: var(--color-primary-light);
+}
+
+.and-infobox--interaccion {
+  --and-infobox-color: var(--color-info);
+}
+
+.and-infobox--nota {
+  --and-infobox-color: var(--color-gray-400);
+}
+
+.and-infobox--diseno {
+  --and-infobox-color: var(--color-warning);
+}
+
+.and-infobox--desarrollo {
+  --and-infobox-color: var(--color-estatus-naranja);
+}
+
+.and-infobox__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+}
+
+.and-infobox__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.and-infobox__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+.and-infobox__title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-body);
+}
+
+/* Icono de la variante (24, del color de la barra) */
+.and-infobox__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--and-infobox-color);
+}
+
+/* El icono de Definición de desarrollo (unfold) va rotado 90° */
+.and-infobox--desarrollo .and-infobox__icon svg {
+  transform: rotate(90deg);
+}
+
+.and-infobox__description {
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary);
+}
