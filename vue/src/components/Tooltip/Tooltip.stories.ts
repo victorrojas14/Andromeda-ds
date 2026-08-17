@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import Button from '../Button/Button.vue'
 import Icon from '../Icon/Icon.vue'
-import RichTooltip from './RichTooltip.vue'
 import Tooltip from './Tooltip.vue'
 
 const meta: Meta<typeof Tooltip> = {
@@ -76,37 +75,5 @@ export const SobreIcono: Story = {
   }),
 }
 
-export const Rich: Story = {
-  name: 'Rich tooltip',
-  render: () => ({
-    components: { RichTooltip, Button },
-    template: `
-      <RichTooltip
-        title="Rich tooltip"
-        content="La referencia númerica ayuda a identificar tu pago, automáticamente se llena con la fecha actual, pero puedes cambiarlo por otro número de hasta 7 dígitos."
-        position="top"
-        theme="light"
-      >
-        <Button variant="primary" appearance="solid" size="md">Objetivo</Button>
-      </RichTooltip>
-    `,
-  }),
-}
-
-export const RichDark: Story = {
-  name: 'Rich tooltip dark (sin botón derecho)',
-  render: () => ({
-    components: { RichTooltip, Button },
-    template: `
-      <RichTooltip
-        title="Rich tooltip"
-        content="La referencia númerica ayuda a identificar tu pago."
-        position="bottom"
-        theme="dark"
-        :show-button-right="false"
-      >
-        <Button variant="primary" appearance="solid" size="md">Objetivo</Button>
-      </RichTooltip>
-    `,
-  }),
-}
+/* Las stories del RichTooltip viven en RichTooltip.stories.ts con sus
+ * propios controles (position/theme/botones conectados a los args). */
