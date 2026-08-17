@@ -43,7 +43,7 @@ export const Playground: Story = {
   render: (args) => ({
     ...wrap(`
       <RichTooltip v-bind="args">
-        <Button variant="primary" appearance="solid" size="md">Objetivo</Button>
+        <Button variant="primary" appearance="solid" size="md">Pasa el mouse</Button>
       </RichTooltip>
     `),
     setup() {
@@ -55,27 +55,6 @@ export const Playground: Story = {
     content:
       'La referencia númerica ayuda a identificar tu pago, automáticamente se llena con la fecha actual, pero puedes cambiarlo por otro número de hasta 7 dígitos.',
     position: 'top',
-    theme: 'light',
-    open: true,
-  },
-}
-
-export const Hover: Story = {
-  name: 'Con hover (oculto por defecto)',
-  render: (args) => ({
-    ...wrap(`
-      <RichTooltip v-bind="args">
-        <Button variant="primary" appearance="solid" size="md">Pasa el mouse</Button>
-      </RichTooltip>
-    `),
-    setup() {
-      return { args }
-    },
-  }),
-  args: {
-    title: 'Rich tooltip',
-    content: 'La referencia númerica ayuda a identificar tu pago.',
-    position: 'right',
     theme: 'light',
   },
 }
@@ -125,6 +104,5 @@ export const Dark: Story = {
     position: 'bottom',
     theme: 'dark',
     showButtonRight: false,
-    open: true,
   },
 }
