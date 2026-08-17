@@ -1,0 +1,53 @@
+/*
+ * Skeleton — Andromeda DS
+ * Figma: página "Skeleton" — set "Skeleton" (12739:2231) de 360×40 con
+ * radio 4 y degradado lineal entre blanco y gray-300 (#ccc); sus dos
+ * variantes (Property 1 = Group 1 blanco→gris / Group 2 gris→blanco)
+ * son las dos fases del shimmer, por lo que la animación desliza el
+ * degradado entre ambas. Estático (animated=false o
+ * prefers-reduced-motion) muestra exactamente el Group 1.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-skeleton {
+  display: block;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(
+    90deg,
+    var(--color-white) 0%,
+    var(--color-gray-300) 50%,
+    var(--color-white) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  border-radius: var(--radius-sm);
+  animation: and-skeleton-shimmer 1.2s linear infinite alternate;
+}
+
+/* 0% = Group 1 (blanco→gris) · 100% = Group 2 (gris→blanco) */
+@keyframes and-skeleton-shimmer {
+  from {
+    background-position: 0% 0;
+  }
+
+  to {
+    background-position: 100% 0;
+  }
+}
+
+.and-skeleton--static {
+  animation: none;
+}
+
+/* Círculo (placeholder de avatares) */
+.and-skeleton--circle {
+  border-radius: var(--radius-pill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .and-skeleton {
+    animation: none;
+  }
+}
