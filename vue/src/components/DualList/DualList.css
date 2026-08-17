@@ -1,0 +1,198 @@
+/*
+ * DualList — Andromeda DS
+ * Figma: página "Duallist" — organismo "Duallist" (14258:76392, 834px
+ * con min 690, padding 16 y gap 19), paneles "Dual-list-atom"
+ * (14254:67419: 518px de alto, radio 10, borde gray-100, header con
+ * título H6 16 Medium + "N elementos" 14, buscador con borde gray-300
+ * radio 5, item "Seleccionar todo" de 44px con borde inferior y lista
+ * de items de 44px con checkbox de 20 — el seleccionado con fondo
+ * background — y scroll de 8px con track background y thumb gray-300)
+ * y "Botones" (14255:73941: btn/primary-SM al 100% con chevron,
+ * deshabilitado en primary-light). Reutiliza el Checkbox y el Button
+ * del DS. Full width: ocupa el 100% del contenedor (mín. natural del
+ * diseño 690) y en <768px las columnas se apilan.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-duallist {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 19px;
+  width: 100%;
+  padding: var(--space-16);
+  background: var(--color-white);
+  font-family: var(--font-family-sans);
+}
+
+.and-duallist__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Panel (Dual-list-atom) ---- */
+.and-duallist__panel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 518px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-100);
+  border-radius: var(--radius-md);
+}
+
+.and-duallist__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-20) var(--space-10) var(--space-10);
+}
+
+.and-duallist__title {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-body);
+}
+
+.and-duallist__count {
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary);
+}
+
+.and-duallist__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  flex: 1;
+  min-height: 0;
+  padding: 0 var(--space-20) var(--space-10);
+}
+
+/* ---- Buscador (Input busqueda) ---- */
+.and-duallist__search {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  width: 100%;
+  padding: 9px var(--space-10);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: 5px;
+  color: var(--color-secondary-light);
+}
+
+.and-duallist__search input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+}
+
+.and-duallist__search input::placeholder {
+  color: var(--color-secondary-light);
+}
+
+/* ---- Seleccionar todo ---- */
+.and-duallist__select-all {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: 44px;
+  padding: 0 var(--space-10);
+  border-bottom: 1px solid var(--color-gray-300);
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+/* ---- Lista con scroll (Scroll de 8px) ---- */
+.and-duallist__list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.and-duallist__list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.and-duallist__list::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+.and-duallist__list::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-md);
+}
+
+/* Firefox no soporta ::-webkit-scrollbar */
+@supports (-moz-appearance: none) {
+  .and-duallist__list {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-300) var(--color-background);
+  }
+}
+
+.and-duallist__item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: 44px;
+  padding: 6px var(--space-10);
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+/* Item seleccionado (Selection State Some/All) */
+.and-duallist__item--checked {
+  background: var(--color-background);
+}
+
+/* ---- Estado Empty ---- */
+.and-duallist__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0 var(--space-20) var(--space-10);
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary);
+  text-align: center;
+}
+
+/* ---- Botones (btn/primary-SM al 100%) ---- */
+.and-duallist__col .and-btn {
+  width: 100%;
+  min-height: 32px;
+}
+
+.and-duallist__col .and-btn--solid-primary:disabled {
+  background: var(--color-action-primary-disabled);
+  border-color: var(--color-action-primary-disabled);
+  opacity: 1;
+}
+
+/* ============ Responsivo: <768px apila las columnas ============ */
+@media (max-width: 767px) {
+  .and-duallist {
+    flex-direction: column;
+  }
+
+  .and-duallist__col {
+    width: 100%;
+  }
+}
