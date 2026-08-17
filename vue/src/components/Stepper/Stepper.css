@@ -1,0 +1,354 @@
+/*
+ * Stepper — Andromeda DS
+ * Figma: página "Steppers" — items web "Items Progress Tracker 1"
+ * (546:7071, vertical: círculo 44px + texto a la derecha) y "Items
+ * Progress Tracker 2" (546:7178, horizontal: círculo 44px + texto
+ * abajo), con Number 20 SemiBold y Check blanco sobre círculo lleno;
+ * conector "Line stepper icon web H" de 1px. Con más de 5 pasos se usa
+ * "Stepper Web + 5" (7849:1987: dots de 12px — el activo con halo de
+ * 20px al 30% — líneas de 72×1 y textos "Paso # de #" 14 + título H5
+ * 20 Medium). En <768px: con ≤5 pasos "Stepper Mobile" (1114:4660,
+ * círculos de 30px con número 16 SemiBold, conectores flex de 1px con
+ * padding 4 y título 12 abajo) y con >5 "Stepper Mobile 2.0"
+ * (7849:1988: aro de 90px con grosor 6.3, texto "# de #" 20 Medium al
+ * centro y título 20 Medium a la derecha, gap 16).
+ * El color se elige con la prop color: azul (tertiary) o vino
+ * (primary) vía la variable --and-stepper-color.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ */
+
+.and-stepper {
+  --and-stepper-color: var(--color-tertiary);
+
+  box-sizing: border-box;
+  width: 100%;
+  font-family: var(--font-family-sans);
+}
+
+.and-stepper--vino {
+  --and-stepper-color: var(--color-primary);
+}
+
+/* ============ Web ≤5 pasos (Items Progress Tracker 1 y 2) ============ */
+.and-stepper__web {
+  display: flex;
+}
+
+/* ---- Horizontal (Tracker 2: círculo arriba, texto abajo) ---- */
+.and-stepper__web--horizontal {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.and-stepper__web--horizontal .and-stepper__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-10);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Conector: 1px a la altura del centro del círculo (22px), a 10px de
+ * cada círculo (22 + 10 = 32); antes del paso activo va coloreado */
+.and-stepper__web--horizontal .and-stepper__item + .and-stepper__item::before {
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: calc(-50% + 32px);
+  right: calc(50% + 32px);
+  height: 1px;
+  background: var(--color-gray-400);
+}
+
+.and-stepper__web--horizontal
+  .and-stepper__item + .and-stepper__item--active::before,
+.and-stepper__web--horizontal
+  .and-stepper__item + .and-stepper__item--completed::before {
+  background: var(--and-stepper-color);
+}
+
+/* ---- Vertical (Tracker 1: círculo + texto a la derecha) ---- */
+.and-stepper__web--vertical {
+  flex-direction: column;
+  gap: 5px;
+}
+
+.and-stepper__web--vertical .and-stepper__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.and-stepper__vconn {
+  width: 1px;
+  height: 20px;
+  margin-left: 22px;
+  background: var(--color-gray-400);
+}
+
+.and-stepper__vconn--done {
+  background: var(--and-stepper-color);
+}
+
+/* ---- Círculo (Number / Check, 44px) ---- */
+.and-stepper__circle {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-400);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-400);
+}
+
+.and-stepper__item--active .and-stepper__circle {
+  border-color: var(--and-stepper-color);
+  color: var(--and-stepper-color);
+}
+
+.and-stepper__item--completed .and-stepper__circle {
+  background: var(--and-stepper-color);
+  border-color: var(--and-stepper-color);
+  color: var(--color-white);
+}
+
+/* ---- Texto del paso (14px) ---- */
+.and-stepper__label {
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary-light);
+}
+
+.and-stepper__web--horizontal .and-stepper__label {
+  text-align: center;
+}
+
+.and-stepper__item--active .and-stepper__label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--and-stepper-color);
+}
+
+.and-stepper__item--completed .and-stepper__label {
+  color: var(--and-stepper-color);
+}
+
+/* ============ Web >5 pasos (Stepper Web + 5) ============ */
+.and-stepper__v2 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.and-stepper__v2-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  width: 100%;
+}
+
+.and-stepper__v2-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  height: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.and-stepper__v2-item:last-child {
+  flex: 0 0 auto;
+}
+
+/* Dot de 12px; el activo agrega el halo de 20px al 30% */
+.and-stepper__dot {
+  position: relative;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-gray-300);
+}
+
+.and-stepper__dot--complete,
+.and-stepper__dot--active {
+  background: var(--and-stepper-color);
+}
+
+.and-stepper__dot--active::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-pill);
+  background: var(--and-stepper-color);
+  opacity: 0.3;
+}
+
+.and-stepper__v2-line {
+  flex: 1;
+  min-width: 0;
+  height: 1px;
+  background: var(--color-gray-300);
+}
+
+.and-stepper__v2-line--done {
+  background: var(--and-stepper-color);
+}
+
+.and-stepper__v2-textos {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.and-stepper__v2-paso {
+  font-size: var(--font-size-parrafo-sm);
+  color: var(--color-secondary-light);
+}
+
+.and-stepper__v2-titulo {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-medium);
+  color: var(--and-stepper-color);
+}
+
+/* ============ Mobile ≤5 pasos (Stepper Mobile) ============ */
+.and-stepper__mobile {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-10);
+  align-items: center;
+  width: 100%;
+}
+
+.and-stepper__mobile-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.and-stepper__mobile-num {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-400);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-parrafo);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-400);
+}
+
+.and-stepper__mobile-num--active {
+  border-color: var(--and-stepper-color);
+  color: var(--and-stepper-color);
+}
+
+.and-stepper__mobile-num--completed {
+  background: var(--and-stepper-color);
+  border-color: var(--and-stepper-color);
+  color: var(--color-white);
+}
+
+/* Conector mobile: línea de 1px con padding lateral de 4px */
+.and-stepper__mobile-conn {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0 4px;
+}
+
+.and-stepper__mobile-conn::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--color-gray-400);
+}
+
+.and-stepper__mobile-conn--done::before {
+  background: var(--and-stepper-color);
+}
+
+.and-stepper__mobile-label {
+  width: 100%;
+  font-size: var(--font-size-parrafo-xs);
+  color: var(--and-stepper-color);
+}
+
+/* ============ Mobile >5 pasos (Stepper Mobile 2.0) ============ */
+.and-stepper__ring-wrap {
+  display: none;
+  align-items: center;
+  gap: var(--space-16);
+  width: 100%;
+}
+
+.and-stepper__ring {
+  position: relative;
+  flex-shrink: 0;
+  width: 90px;
+  height: 90px;
+}
+
+.and-stepper__ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.and-stepper__ring-track {
+  stroke: var(--color-gray-300);
+}
+
+.and-stepper__ring-progress {
+  stroke: var(--and-stepper-color);
+}
+
+.and-stepper__ring-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-medium);
+  color: var(--and-stepper-color);
+  text-align: center;
+}
+
+.and-stepper__ring-title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-medium);
+  color: var(--and-stepper-color);
+}
+
+/* ============ Responsivo: <768px muestra el diseño mobile ============ */
+@media (max-width: 767px) {
+  .and-stepper__web,
+  .and-stepper__v2 {
+    display: none;
+  }
+
+  .and-stepper__mobile {
+    display: flex;
+  }
+
+  .and-stepper__ring-wrap {
+    display: flex;
+  }
+}
