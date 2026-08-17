@@ -1,0 +1,139 @@
+/*
+ * PermisoNativo — Andromeda DS
+ * Figma: página "Permisos nativos web" — set publicado "Component 1"
+ * (13580:38176) con Type=Notificaciones|Ubicación|Microfono. Réplica
+ * del prompt nativo del navegador (Chrome): card de 318px con radio
+ * 15, padding y gap 20, sombra Sombra-Per y tipografía Roboto (la del
+ * navegador, no la del DS); header "www.invex.com quiere" (Bold 14 +
+ * Medium 14) con X de 20; fila del permiso con icono de 16 y texto 12;
+ * chips de 36px radio 55 en los colores nativos de Chrome (#d3e3fd /
+ * #041e49) — Notificaciones: fila con padding-izq 100 y chips
+ * Permitir/Bloquear; Ubicación y Micrófono: columna con 3 chips al
+ * 100%. Con `fixed` se ancla arriba a la izquierda como el navegador.
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ */
+
+.and-permiso {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 318px;
+  min-width: 318px;
+  max-width: 318px;
+  padding: 20px;
+  background: var(--color-white);
+  border-radius: 15px;
+  box-shadow: var(--shadow-per);
+  /* Tipografía nativa del navegador (Chrome usa Roboto) */
+  font-family: Roboto, 'Segoe UI', Helvetica, Arial, sans-serif;
+  color: var(--color-body);
+}
+
+/* Anclado arriba a la izquierda, como el prompt real del navegador */
+.and-permiso--fixed {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 120;
+}
+
+.and-permiso__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+.and-permiso__site {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.and-permiso__site-nombre {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.and-permiso__site-quiere {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.and-permiso__close {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-body);
+  cursor: pointer;
+}
+
+.and-permiso__request {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.and-permiso__request svg {
+  flex-shrink: 0;
+}
+
+/* ---- Chips nativos (colores de Chrome, no del DS) ---- */
+.and-permiso__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Notificaciones: fila de 2 chips con padding izquierdo de 100 */
+.and-permiso__actions--inline {
+  flex-direction: row;
+  gap: 5px;
+  padding-left: 100px;
+}
+
+.and-permiso__chip {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 36px;
+  padding: 4px 10px;
+  background: #d3e3fd;
+  border: none;
+  border-radius: 55px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: #041e49;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.and-permiso__actions--inline .and-permiso__chip {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+}
+
+.and-permiso__chip:hover {
+  background: #c2d7fb;
+}
+
+.and-permiso__close:focus-visible,
+.and-permiso__chip:focus-visible {
+  outline: 2px solid var(--color-action-primary-default);
+  outline-offset: 2px;
+}
