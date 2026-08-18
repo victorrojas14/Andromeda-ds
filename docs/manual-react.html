@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Andromeda DS — Manual de integración React</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  /* ===== Tokens del DS usados en este manual ===== */
+  :root {
+    --color-primary: #a41d36;
+    --color-primary-dark: #7c1629;
+    --color-primary-light: #c68091;
+    --color-secondary-dark: #232930;
+    --color-body: #222222;
+    --color-secondary: #565a5c;
+    --color-secondary-light: #73797e;
+    --color-white: #ffffff;
+    --color-background: #f6f6f6;
+    --color-gray-100: #ededed;
+    --color-gray-200: #e9e9e9;
+    --color-gray-300: #cccccc;
+    --color-gray-400: #a7a7a7;
+    --color-tertiary: #0f89d3;
+    --color-success-light: #d4edda;  --color-success-dark: #176529;
+    --color-warning-light: #fff3cd;  --color-warning-dark: #a17901;
+    --color-danger-light: #fcd9e0;   --color-danger-dark: #bd0026;
+    --color-info-light: #d7e6ff;     --color-info-dark: #0044b4;
+    --space-8: 8px; --space-10: 10px; --space-16: 16px; --space-20: 20px;
+    --radius-sm: 4px; --radius-md: 10px; --radius-pill: 999px;
+    --font-family-sans: 'Poppins', system-ui, sans-serif;
+    --font-family-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --font-size-parrafo-sm: 14px; --font-size-h5: 20px;
+    --font-weight-semibold: 600; --font-weight-medium: 500;
+    --line-height-normal: 1.5;
+    --shadow-md-2: 8px 8px 18px 8px rgba(200, 200, 200, 0.25);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: var(--font-family-sans);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-body);
+    background: var(--color-white);
+  }
+  .page { max-width: 900px; margin: 0 auto; padding: 0 40px 60px; }
+
+  /* ===== Portada ===== */
+  .cover {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    padding: 56px 40px 48px;
+    margin-bottom: 40px;
+  }
+  .cover__inner { max-width: 900px; margin: 0 auto; }
+  .cover__brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    opacity: .9; margin-bottom: 22px;
+  }
+  .cover__brand span {
+    display: inline-block; padding: 3px 9px; border: 1.5px solid rgba(255,255,255,.65);
+    border-radius: var(--radius-sm); letter-spacing: .1em;
+  }
+  .cover h1 { margin: 0 0 8px; font-size: 40px; line-height: 1.15; font-weight: 700; }
+  .cover .sub { margin: 0 0 26px; font-size: 19px; font-weight: 300; opacity: .95; }
+  .cover__meta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28);
+    border-radius: var(--radius-pill); padding: 6px 14px; font-size: 12.5px; font-weight: 500;
+  }
+
+  /* ===== Tipografía ===== */
+  h2 {
+    font-size: 24px; margin: 44px 0 6px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-primary); color: var(--color-secondary-dark);
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  h2 .num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: var(--radius-pill);
+    background: var(--color-primary); color: #fff; font-size: 14px; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  h3 { font-size: 17px; margin: 26px 0 8px; color: var(--color-secondary-dark); }
+  h4 { font-size: 14.5px; margin: 20px 0 6px; color: var(--color-secondary); }
+  p { margin: 10px 0; }
+  a { color: var(--color-tertiary); }
+  code:not(pre code) {
+    font-family: var(--font-family-mono); font-size: .88em;
+    background: var(--color-background); border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-sm); padding: 1px 5px; color: var(--color-primary);
+  }
+  ul, ol { margin: 10px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+
+  /* ===== Índice ===== */
+  .toc {
+    background: var(--color-background); border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md); padding: 20px 26px; margin-bottom: 8px;
+  }
+  .toc h2 { margin: 0 0 10px; font-size: 15px; border: 0; padding: 0; letter-spacing: .06em;
+            text-transform: uppercase; color: var(--color-secondary-light); }
+  .toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 34px; }
+  .toc li { margin: 4px 0; break-inside: avoid; }
+  .toc a { text-decoration: none; color: var(--color-body); }
+
+  /* ===== Código ===== */
+  pre {
+    background: var(--color-secondary-dark); color: #e8eaed;
+    border-radius: var(--radius-md); padding: 16px 18px; overflow-x: auto;
+    font-family: var(--font-family-mono); font-size: 12.5px; line-height: 1.65;
+    margin: 12px 0; border-left: 4px solid var(--color-primary);
+  }
+  pre .c { color: #8b98a5; font-style: italic; }   /* comentario */
+  pre .k { color: #ff9fb2; }                        /* keyword */
+  pre .s { color: #a5e3a0; }                        /* string */
+  pre .t { color: #8ed2f7; }                        /* tag / tipo */
+  pre .a { color: #f7d38e; }                        /* atributo */
+  .filename {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--color-gray-100); border: 1px solid var(--color-gray-200);
+    border-bottom: 0; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    padding: 5px 12px; font-family: var(--font-family-mono); font-size: 11.5px;
+    color: var(--color-secondary); margin-bottom: -4px; font-weight: 600;
+  }
+
+  /* ===== Callouts ===== */
+  .callout {
+    display: flex; gap: 12px; border-radius: var(--radius-md);
+    padding: 13px 16px; margin: 16px 0; font-size: 13.5px;
+    border-left: 5px solid; break-inside: avoid;
+  }
+  .callout .ico { flex-shrink: 0; font-size: 16px; line-height: 1.4; }
+  .callout--tip  { background: var(--color-info-light);    border-color: var(--color-info-dark);    color: #0b2f6b; }
+  .callout--warn { background: var(--color-warning-light); border-color: var(--color-warning-dark); color: #6b5000; }
+  .callout--ok   { background: var(--color-success-light); border-color: var(--color-success-dark); color: #10471d; }
+
+  /* ===== Pasos ===== */
+  .step {
+    display: flex; gap: 16px; margin: 22px 0; break-inside: avoid;
+  }
+  .step__num {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: var(--radius-pill);
+    background: var(--color-secondary-dark); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 14px;
+  }
+  .step__body { flex: 1; min-width: 0; }
+  .step__body > :first-child { margin-top: 3px; }
+
+  /* ===== Tablas ===== */
+  table {
+    width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px;
+    break-inside: avoid;
+  }
+  th {
+    background: var(--color-secondary-dark); color: #fff; text-align: left;
+    padding: 9px 12px; font-weight: 600; font-size: 12.5px;
+  }
+  th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+  th:last-child  { border-radius: 0 var(--radius-sm) 0 0; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--color-gray-200); vertical-align: top; }
+  tr:nth-child(even) td { background: #fbfbfb; }
+  td code { white-space: nowrap; }
+  .req { color: var(--color-primary); font-weight: 600; }
+
+  /* ===== Previews ===== */
+  .preview {
+    border: 1px solid var(--color-gray-200); border-radius: var(--radius-md);
+    overflow: hidden; margin: 14px 0; break-inside: avoid;
+  }
+  .preview__bar {
+    background: var(--color-background); border-bottom: 1px solid var(--color-gray-200);
+    padding: 6px 14px; font-size: 11.5px; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--color-secondary-light);
+  }
+  .preview__body { padding: 20px; background: #fff; }
+  .preview__body + .preview__bar { border-top: 1px solid var(--color-gray-200); }
+
+  /* ===== Alert real del DS ===== */
+  .and-alert {
+    display: flex; align-items: center; justify-content: space-between; width: 100%;
+    padding: var(--space-10) var(--space-20); border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md-2); font-family: var(--font-family-sans);
+    font-size: var(--font-size-parrafo-sm); line-height: var(--line-height-normal);
+  }
+  .and-alert + .and-alert { margin-top: 18px; }
+  .and-alert--success { background: var(--color-success-light); color: var(--color-success-dark); }
+  .and-alert--warning { background: var(--color-warning-light); color: var(--color-warning-dark); }
+  .and-alert--danger  { background: var(--color-danger-light);  color: var(--color-danger-dark); }
+  .and-alert--info    { background: var(--color-info-light);    color: var(--color-info-dark); }
+  .and-alert__lead { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; padding-right: var(--space-20); }
+  .and-alert__icon { flex-shrink: 0; display: inline-flex; }
+  .and-alert--info .and-alert__icon svg { transform: rotate(180deg); }
+  .and-alert__message {
+    display: flex; align-items: center; gap: var(--space-10); flex-shrink: 0;
+    font-weight: var(--font-weight-semibold); white-space: nowrap;
+  }
+  .and-alert__message-divider { width: 1px; height: 30px; background: currentColor; }
+  .and-alert__content { flex: 1; min-width: 0; }
+  .and-alert__trail { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  .and-alert__close { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+
+  .and-alert-block {
+    display: flex; flex-direction: column; gap: var(--space-8); width: 100%;
+    padding: var(--space-10) var(--space-20) var(--space-16);
+    border-radius: var(--radius-md); box-shadow: var(--shadow-md-2);
+    font-family: var(--font-family-sans); font-size: var(--font-size-parrafo-sm);
+    line-height: var(--line-height-normal);
+  }
+  .and-alert-block--success { background: var(--color-success-light); color: var(--color-success-dark); }
+  .and-alert-block--warning { background: var(--color-warning-light); color: var(--color-warning-dark); }
+  .and-alert-block--info    { background: var(--color-info-light);    color: var(--color-info-dark); }
+  .and-alert-block__title { margin: 0; font-size: var(--font-size-h5); font-weight: var(--font-weight-semibold); }
+  .and-alert-block__body { display: flex; flex-direction: column; gap: var(--space-10); width: 100%; }
+  .and-alert-block__body p { margin: 0; }
+  .and-alert-block__divider { width: 100%; height: 1px; background: currentColor; opacity: .6; }
+
+  /* Botón outline del DS (para la receta con acción) */
+  .and-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--font-family-sans); font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-sm); cursor: pointer; white-space: nowrap;
+    min-height: 36px; padding: 6px 18px; font-size: 14px;
+    background: transparent; border: 1px solid var(--color-primary); color: var(--color-primary);
+  }
+
+  /* Anatomía */
+  .anatomy { position: relative; }
+  .pin {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 19px; height: 19px; border-radius: var(--radius-pill);
+    background: var(--color-secondary-dark); color: #fff; font-size: 11px;
+    font-weight: 700; font-family: var(--font-family-sans); margin-right: 6px;
+    flex-shrink: 0;
+  }
+  .legend { list-style: none; padding: 0; margin: 14px 0 0; }
+  .legend li { display: flex; align-items: flex-start; gap: 4px; margin: 7px 0; font-size: 13px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card {
+    border: 1px solid var(--color-gray-200); border-radius: var(--radius-md);
+    padding: 16px 18px; break-inside: avoid;
+  }
+  .card h4 { margin: 0 0 6px; font-size: 14px; color: var(--color-secondary-dark); }
+  .card p { margin: 4px 0 0; font-size: 13px; color: var(--color-secondary); }
+
+  .kpi { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0; }
+  .kpi__item {
+    flex: 1; min-width: 150px; border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md); padding: 14px 16px; text-align: center;
+  }
+  .kpi__val { font-size: 26px; font-weight: 700; color: var(--color-primary); line-height: 1.1; }
+  .kpi__lbl { font-size: 12px; color: var(--color-secondary-light); margin-top: 4px; }
+
+  footer.doc {
+    margin-top: 50px; padding-top: 18px; border-top: 1px solid var(--color-gray-200);
+    font-size: 12px; color: var(--color-secondary-light); display: flex;
+    justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+
+  @media print {
+    .cover { padding: 40px; }
+    h2 { break-after: avoid; page-break-after: avoid; }
+    pre, .preview, .callout, table, .step { page-break-inside: avoid; }
+    .page { padding: 0 24px 24px; }
+    a { text-decoration: none; }
+  }
+  @media (max-width: 720px) {
+    .grid2 { grid-template-columns: 1fr; }
+    .toc ol { columns: 1; }
+    .page { padding: 0 20px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="cover__inner">
+    <div class="cover__brand"><span>INVEX</span> Design System</div>
+    <h1>Andromeda&nbsp;DS · React</h1>
+    <p class="sub">Manual de integración para desarrolladores</p>
+    <div class="cover__meta">
+      <span class="chip">📦 @andromeda/react v0.1.0</span>
+      <span class="chip">⚛️ React 18+</span>
+      <span class="chip">🧩 42 componentes</span>
+      <span class="chip">🎨 Sincronizado con Figma</span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+<nav class="toc">
+  <h2>Contenido</h2>
+  <ol>
+    <li><a href="#s1">Qué es Andromeda</a></li>
+    <li><a href="#s2">Requisitos previos</a></li>
+    <li><a href="#s3">Instalación en 3 pasos</a></li>
+    <li><a href="#s4">Verificar que funciona</a></li>
+    <li><a href="#s5">Anatomía del Alert</a></li>
+    <li><a href="#s6">Las 4 variantes</a></li>
+    <li><a href="#s7">Props del Alert</a></li>
+    <li><a href="#s8">Recetas comunes</a></li>
+    <li><a href="#s9">Buenas prácticas</a></li>
+    <li><a href="#s10">Explorar los 42 componentes</a></li>
+    <li><a href="#s11">Solución de problemas</a></li>
+  </ol>
+</nav>
+
+<h2 id="s1"><span class="num">1</span> Qué es Andromeda</h2>
+<p>
+  Andromeda es la librería de componentes de INVEX. Un mismo diseño, dos implementaciones
+  nativas —<strong>React</strong> y <strong>Vue 3</strong>— construidas <em>pixel perfect</em> desde el archivo
+  de Figma <em>“Ui Kit Web”</em> y conectadas a él con Code Connect: cuando un diseñador
+  selecciona un componente en Figma, ve el código real que debes usar.
+</p>
+
+<div class="kpi">
+  <div class="kpi__item"><div class="kpi__val">42</div><div class="kpi__lbl">componentes</div></div>
+  <div class="kpi__item"><div class="kpi__val">1</div><div class="kpi__lbl">archivo de tokens</div></div>
+  <div class="kpi__item"><div class="kpi__val">0</div><div class="kpi__lbl">colores hardcodeados</div></div>
+  <div class="kpi__item"><div class="kpi__val">100%</div><div class="kpi__lbl">responsivo</div></div>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <h4>Qué te da la librería</h4>
+    <p>Componentes accesibles y responsivos, listos para producción, con las variantes y props
+       exactas que definió diseño en Figma.</p>
+  </div>
+  <div class="card">
+    <h4>Cómo se distribuye</h4>
+    <p>Como <strong>código fuente</strong> dentro del repositorio (no hay paquete en npm todavía),
+       así que se consume apuntando a la carpeta del repo.</p>
+  </div>
+</div>
+
+<p><strong>Estructura del repositorio:</strong></p>
+<pre><span class="c">Andromeda-ds/</span>
+├── react/          <span class="c">← @andromeda/react (este manual)</span>
+│   └── src/
+│       ├── components/   <span class="c">42 componentes</span>
+│       └── index.ts      <span class="c">punto de entrada</span>
+├── vue/            <span class="c">← @andromeda/vue</span>
+├── tokens/
+│   └── tokens.css  <span class="c">colores, espacios, tipografías (obligatorio)</span>
+└── README.md       <span class="c">documentación de cada componente</span></pre>
+
+<h2 id="s2"><span class="num">2</span> Requisitos previos</h2>
+<table>
+  <thead><tr><th>Requisito</th><th>Versión</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Node.js</td><td>18 o superior</td><td>Para instalar dependencias</td></tr>
+    <tr><td>React</td><td>18.0+</td><td><code>react</code> y <code>react-dom</code></td></tr>
+    <tr><td>Bundler</td><td>Vite, Next.js o webpack 5</td><td>Debe permitir importar CSS desde JS/TS</td></tr>
+    <tr><td>TypeScript</td><td>5.x <em>(opcional)</em></td><td>Recomendado: la librería trae sus tipos</td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout--tip">
+  <span class="ico">💡</span>
+  <div>Los ejemplos usan <strong>Vite</strong>, que es el setup más común. Al final de la sección 3
+  están las notas para Next.js y webpack.</div>
+</div>
+
+<h2 id="s3"><span class="num">3</span> Instalación en 3 pasos</h2>
+
+<div class="step">
+  <div class="step__num">1</div>
+  <div class="step__body">
+    <h3 style="margin-top:0">Trae el repositorio a tu máquina</h3>
+    <p>Clónalo <strong>al lado</strong> de tu proyecto (no dentro):</p>
+    <pre><span class="c"># quedando: /trabajo/mi-app  y  /trabajo/Andromeda-ds</span>
+git clone https://github.com/victorrojas14/Andromeda-ds.git</pre>
+    <p>Si tu equipo prefiere fijar la versión dentro del proyecto, usa un submódulo:</p>
+    <pre>git submodule add https://github.com/victorrojas14/Andromeda-ds.git vendor/andromeda
+git submodule update --init --recursive</pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step__num">2</div>
+  <div class="step__body">
+    <h3 style="margin-top:0">Apunta los alias a la librería</h3>
+    <p>Así puedes importar con el nombre del paquete en lugar de rutas relativas largas.</p>
+    <div class="filename">📄 vite.config.ts</div>
+    <pre><span class="k">import</span> { defineConfig } <span class="k">from</span> <span class="s">'vite'</span>
+<span class="k">import</span> react <span class="k">from</span> <span class="s">'@vitejs/plugin-react'</span>
+<span class="k">import</span> { fileURLToPath } <span class="k">from</span> <span class="s">'node:url'</span>
+
+<span class="c">// ajusta la ruta a donde clonaste el repo</span>
+<span class="k">const</span> DS = fileURLToPath(<span class="k">new</span> URL(<span class="s">'../Andromeda-ds'</span>, <span class="k">import</span>.meta.url))
+
+<span class="k">export default</span> defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      <span class="s">'@andromeda/react'</span>: DS + <span class="s">'/react/src'</span>,
+      <span class="s">'@andromeda/tokens'</span>: DS + <span class="s">'/tokens'</span>,
+    },
+  },
+})</pre>
+    <p>Y para que TypeScript resuelva los tipos:</p>
+    <div class="filename">📄 tsconfig.json</div>
+    <pre>{
+  <span class="a">"compilerOptions"</span>: {
+    <span class="a">"baseUrl"</span>: <span class="s">"."</span>,
+    <span class="a">"paths"</span>: {
+      <span class="a">"@andromeda/react"</span>: [<span class="s">"../Andromeda-ds/react/src"</span>],
+      <span class="a">"@andromeda/react/*"</span>: [<span class="s">"../Andromeda-ds/react/src/*"</span>]
+    }
+  }
+}</pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step__num">3</div>
+  <div class="step__body">
+    <h3 style="margin-top:0">Carga los tokens y la tipografía</h3>
+    <p><strong>Una sola vez</strong> en el punto de entrada de tu app. Sin esto los componentes
+       se ven sin color ni espaciado, porque todo el DS lee variables CSS.</p>
+    <div class="filename">📄 src/main.tsx</div>
+    <pre><span class="k">import</span> { createRoot } <span class="k">from</span> <span class="s">'react-dom/client'</span>
+<span class="k">import</span> <span class="s">'@andromeda/tokens/tokens.css'</span>   <span class="c">← obligatorio, antes de tus estilos</span>
+<span class="k">import</span> App <span class="k">from</span> <span class="s">'./App'</span>
+
+createRoot(document.getElementById(<span class="s">'root'</span>)!).render(&lt;App /&gt;)</pre>
+    <p>La tipografía del DS es <strong>Poppins</strong>; agrégala en tu HTML:</p>
+    <div class="filename">📄 index.html</div>
+    <pre>&lt;<span class="t">link</span> <span class="a">rel</span>=<span class="s">"preconnect"</span> <span class="a">href</span>=<span class="s">"https://fonts.gstatic.com"</span> crossorigin&gt;
+&lt;<span class="t">link</span> <span class="a">rel</span>=<span class="s">"stylesheet"</span> <span class="a">href</span>=<span class="s">"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"</span>&gt;</pre>
+  </div>
+</div>
+
+<div class="callout callout--warn">
+  <span class="ico">⚠️</span>
+  <div>
+    <strong>Next.js / webpack:</strong> la librería se distribuye como TypeScript sin compilar.
+    En Next.js agrega <code>transpilePackages: ['@andromeda/react']</code> en
+    <code>next.config.js</code> y define el alias en <code>webpack.resolve.alias</code>.
+    En webpack puro, incluye la carpeta del DS en la regla de <code>babel-loader</code>/<code>ts-loader</code>.
+  </div>
+</div>
+
+<h2 id="s4"><span class="num">4</span> Verificar que funciona</h2>
+<p>Pega esto en cualquier pantalla. Si ves la alerta verde con su icono, la instalación está lista:</p>
+<div class="filename">📄 src/App.tsx</div>
+<pre><span class="k">import</span> { Alert } <span class="k">from</span> <span class="s">'@andromeda/react/components/Alert'</span>
+
+<span class="k">export default function</span> <span class="t">App</span>() {
+  <span class="k">return</span> (
+    &lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"success"</span> <span class="a">message</span>=<span class="s">"¡Listo!"</span>&gt;
+      Tu operación se registró correctamente.
+    &lt;/<span class="t">Alert</span>&gt;
+  )
+}</pre>
+
+<div class="preview">
+  <div class="preview__bar">Resultado esperado</div>
+  <div class="preview__body">
+    <div class="and-alert and-alert--success">
+      <div class="and-alert__lead">
+        <span class="and-alert__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(2 2)"><path d="M14.59 5.58L8 12.17L4.41 8.59L3 10L8 15L16 7L14.59 5.58ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.58 18 2 14.42 2 10C2 5.58 5.58 2 10 2C14.42 2 18 5.58 18 10C18 14.42 14.42 18 10 18Z" fill="currentColor"/></g></svg></span>
+        <span class="and-alert__message">¡Listo!<span class="and-alert__message-divider"></span></span>
+        <span class="and-alert__content">Tu operación se registró correctamente.</span>
+      </div>
+      <div class="and-alert__trail">
+        <button class="and-alert__close" aria-label="Cerrar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(5 5)"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="currentColor"/></g></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="callout callout--ok">
+  <span class="ico">✅</span>
+  <div>Fíjate en el import: <code>@andromeda/react/components/Alert</code> en lugar de
+  <code>@andromeda/react</code>. Es lo recomendado y en la sección 9 explicamos por qué.</div>
+</div>
+
+<h2 id="s5"><span class="num">5</span> Anatomía del Alert</h2>
+<p>El Alert se arma con cinco piezas; todas son opcionales salvo el contenido:</p>
+
+<div class="preview anatomy">
+  <div class="preview__bar">Partes del componente</div>
+  <div class="preview__body">
+    <div class="and-alert and-alert--info">
+      <div class="and-alert__lead">
+        <span class="and-alert__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(2 2)"><path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM10 5C10.2652 5 10.5196 5.10536 10.7071 5.29289C10.8946 5.48043 11 5.73478 11 6V11C11 11.2652 10.8946 11.5196 10.7071 11.7071C10.5196 11.8946 10.2652 12 10 12C9.73478 12 9.48043 11.8946 9.29289 11.7071C9.10536 11.5196 9 11.2652 9 11V6C9 5.73478 9.10536 5.48043 9.29289 5.29289C9.48043 5.10536 9.73478 5 10 5ZM10 15C9.73478 15 9.48043 14.8946 9.29289 14.7071C9.10536 14.5196 9 14.2652 9 14C9 13.7348 9.10536 13.4804 9.29289 13.2929C9.48043 13.1054 9.73478 13 10 13C10.2652 13 10.5196 13.1054 10.7071 13.2929C10.8946 13.4804 11 13.7348 11 14C11 14.2652 10.8946 14.5196 10.7071 14.7071C10.5196 14.8946 10.2652 15 10 15Z" fill="currentColor"/></g></svg></span>
+        <span class="and-alert__message"><span class="pin">2</span>Aviso<span class="and-alert__message-divider"></span></span>
+        <span class="and-alert__content"><span class="pin">3</span>Texto de la alerta que explica la situación.</span>
+      </div>
+      <div class="and-alert__trail">
+        <button class="and-btn"><span class="pin" style="margin:0">4</span>Acción</button>
+        <button class="and-alert__close" aria-label="Cerrar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(5 5)"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="currentColor"/></g></svg></button>
+      </div>
+    </div>
+    <ul class="legend">
+      <li><span class="pin">1</span><div><strong>Icono</strong> — se elige solo según el <code>variant</code>. Prop <code>icon</code> para cambiarlo, <code>icon={null}</code> para quitarlo. <em>(es el círculo a la izquierda)</em></div></li>
+      <li><span class="pin">2</span><div><strong>Mensaje</strong> — texto corto en negrita con divisor. Prop <code>message</code>.</div></li>
+      <li><span class="pin">3</span><div><strong>Contenido</strong> — el cuerpo. Va como <code>children</code>.</div></li>
+      <li><span class="pin">4</span><div><strong>Acción</strong> — cualquier elemento a la derecha, normalmente un <code>Button</code>. Prop <code>action</code>.</div></li>
+      <li><span class="pin">5</span><div><strong>Cerrar</strong> — visible por defecto. Se apaga con <code>closable={false}</code>. <em>(la ✕ al extremo derecho)</em></div></li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="s6"><span class="num">6</span> Las 4 variantes</h2>
+<p>
+  La prop <code>variant</code> cambia color de fondo, color de texto e icono, todo al mismo tiempo.
+  Son los cuatro estados semánticos definidos en Figma:
+</p>
+
+<div class="preview">
+  <div class="preview__bar">variant="success" · variant="warning" · variant="danger" · variant="info"</div>
+  <div class="preview__body">
+
+    <div class="and-alert and-alert--success">
+      <div class="and-alert__lead">
+        <span class="and-alert__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(2 2)"><path d="M14.59 5.58L8 12.17L4.41 8.59L3 10L8 15L16 7L14.59 5.58ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.58 18 2 14.42 2 10C2 5.58 5.58 2 10 2C14.42 2 18 5.58 18 10C18 14.42 14.42 18 10 18Z" fill="currentColor"/></g></svg></span>
+        <span class="and-alert__message">¡Bien hecho!<span class="and-alert__message-divider"></span></span>
+        <span class="and-alert__content">La transferencia se aplicó con éxito.</span>
+      </div>
+      <div class="and-alert__trail"><button class="and-alert__close" aria-label="Cerrar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(5 5)"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="currentColor"/></g></svg></button></div>
+    </div>
+
+    <div class="and-alert and-alert--warning">
+      <div class="and-alert__lead">
+        <span class="and-alert__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(1 2)"><path d="M11 3.99L18.53 17H3.47L11 3.99ZM11 0L0 19H22L11 0ZM12 14H10V16H12V14ZM12 8H10V12H12V8Z" fill="currentColor"/></g></svg></span>
+        <span class="and-alert__message">¡Alerta!<span class="and-alert__message-divider"></span></span>
+        <span class="and-alert__content">Tu sesión expira en 2 minutos.</span>
+      </div>
+      <div class="and-alert__trail"><button class="and-alert__close" aria-label="Cerrar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(5 5)"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="currentColor"/></g></svg></button></div>
+    </div>
+
+    <div class="and-alert and-alert--danger">
+      <div class="and-alert__lead">
+        <span class="and-alert__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(1.5 1.5)"><path d="M10.5 0C4.65 0 0 4.65 0 10.5C0 16.35 4.65 21 10.5 21C16.35 21 21 16.35 21 10.5C21 4.65 16.35 0 10.5 0ZM10.5 19.5C5.55 19.5 1.5 15.45 1.5 10.5C1.5 5.55 5.55 1.5 10.5 1.5C15.45 1.5 19.5 5.55 19.5 10.5C19.5 15.45 15.45 19.5 10.5 19.5Z" fill="currentColor"/></g><g transform="translate(6.75 6.75)"><path d="M9.3 10.5L5.25 6.45L1.2 10.5L0 9.3L4.05 5.25L0 1.2L1.2 0L5.25 4.05L9.3 0L10.5 1.2L6.45 5.25L10.5 9.3L9.3 10.5Z" fill="currentColor"/></g></svg></span>
+        <span class="and-alert__message">Error<span class="and-alert__message-divider"></span></span>
+        <span class="and-alert__content">No pudimos procesar el movimiento.</span>
+      </div>
+      <div class="and-alert__trail"><button class="and-alert__close" aria-label="Cerrar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(5 5)"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="currentColor"/></g></svg></button></div>
+    </div>
+
+    <div class="and-alert and-alert--info">
+      <div class="and-alert__lead">
+        <span class="and-alert__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(2 2)"><path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM10 5C10.2652 5 10.5196 5.10536 10.7071 5.29289C10.8946 5.48043 11 5.73478 11 6V11C11 11.2652 10.8946 11.5196 10.7071 11.7071C10.5196 11.8946 10.2652 12 10 12C9.73478 12 9.48043 11.8946 9.29289 11.7071C9.10536 11.5196 9 11.2652 9 11V6C9 5.73478 9.10536 5.48043 9.29289 5.29289C9.48043 5.10536 9.73478 5 10 5ZM10 15C9.73478 15 9.48043 14.8946 9.29289 14.7071C9.10536 14.5196 9 14.2652 9 14C9 13.7348 9.10536 13.4804 9.29289 13.2929C9.48043 13.1054 9.73478 13 10 13C10.2652 13 10.5196 13.1054 10.7071 13.2929C10.8946 13.4804 11 13.7348 11 14C11 14.2652 10.8946 14.5196 10.7071 14.7071C10.5196 14.8946 10.2652 15 10 15Z" fill="currentColor"/></g></svg></span>
+        <span class="and-alert__message">Aviso<span class="and-alert__message-divider"></span></span>
+        <span class="and-alert__content">Actualizamos nuestros términos y condiciones.</span>
+      </div>
+      <div class="and-alert__trail"><button class="and-alert__close" aria-label="Cerrar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(5 5)"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="currentColor"/></g></svg></button></div>
+    </div>
+
+  </div>
+  <div class="preview__bar">Código</div>
+  <div class="preview__body" style="padding:0">
+<pre style="margin:0;border-radius:0;border-left:0">&lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"success"</span> <span class="a">message</span>=<span class="s">"¡Bien hecho!"</span>&gt;La transferencia se aplicó con éxito.&lt;/<span class="t">Alert</span>&gt;
+&lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"warning"</span> <span class="a">message</span>=<span class="s">"¡Alerta!"</span>&gt;Tu sesión expira en 2 minutos.&lt;/<span class="t">Alert</span>&gt;
+&lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"danger"</span>  <span class="a">message</span>=<span class="s">"Error"</span>&gt;No pudimos procesar el movimiento.&lt;/<span class="t">Alert</span>&gt;
+&lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"info"</span>    <span class="a">message</span>=<span class="s">"Aviso"</span>&gt;Actualizamos nuestros términos y condiciones.&lt;/<span class="t">Alert</span>&gt;</pre>
+  </div>
+</div>
+
+<div class="callout callout--tip">
+  <span class="ico">💡</span>
+  <div>Si omites <code>variant</code>, el componente usa <code>"success"</code>. Cambiar de variante
+  es <strong>una sola palabra</strong>: nunca toques colores a mano.</div>
+</div>
+
+<h2 id="s7"><span class="num">7</span> Props del Alert</h2>
+<table>
+  <thead><tr><th>Prop</th><th>Tipo</th><th>Default</th><th>Para qué sirve</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>variant</code></td>
+      <td><code>'success' | 'warning' | 'danger' | 'info'</code></td>
+      <td><code>'success'</code></td>
+      <td>Estado semántico: define fondo, color de texto e icono.</td>
+    </tr>
+    <tr>
+      <td><code>message</code></td>
+      <td><code>ReactNode</code></td>
+      <td>—</td>
+      <td>Texto corto en negrita, separado del cuerpo por un divisor.</td>
+    </tr>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>ReactNode</code></td>
+      <td>—</td>
+      <td>Cuerpo de la alerta.</td>
+    </tr>
+    <tr>
+      <td><code>icon</code></td>
+      <td><code>ReactNode</code></td>
+      <td>icono del variant</td>
+      <td>Reemplaza el icono. Usa <code>null</code> para ocultarlo.</td>
+    </tr>
+    <tr>
+      <td><code>action</code></td>
+      <td><code>ReactNode</code></td>
+      <td>—</td>
+      <td>Elemento a la derecha, normalmente un <code>Button</code>.</td>
+    </tr>
+    <tr>
+      <td><code>closable</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Muestra u oculta el botón de cerrar.</td>
+    </tr>
+    <tr>
+      <td><code>onClose</code></td>
+      <td><code>() =&gt; void</code></td>
+      <td>—</td>
+      <td>Se ejecuta al cerrar (el componente ya se oculta solo).</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:12.5px;color:var(--color-secondary-light)">
+  Además acepta cualquier atributo de un <code>&lt;div&gt;</code> (<code>className</code>, <code>id</code>,
+  <code>style</code>, <code>data-*</code>…), que se aplica al contenedor.
+</p>
+
+<h3>AlertBlock — la versión en bloque</h3>
+<p>Para mensajes más largos, con título propio y un texto final separado por un divisor:</p>
+<div class="preview">
+  <div class="preview__bar">AlertBlock</div>
+  <div class="preview__body">
+    <div class="and-alert-block and-alert-block--info">
+      <p class="and-alert-block__title">¡Info!</p>
+      <div class="and-alert-block__body">
+        <p>Tu contrato se renovará automáticamente el 1 de marzo con las mismas condiciones vigentes.</p>
+        <span class="and-alert-block__divider"></span>
+        <p>Puedes cancelarlo en cualquier momento desde Configuración.</p>
+      </div>
+    </div>
+  </div>
+  <div class="preview__bar">Código</div>
+  <div class="preview__body" style="padding:0">
+<pre style="margin:0;border-radius:0;border-left:0">&lt;<span class="t">AlertBlock</span> <span class="a">variant</span>=<span class="s">"info"</span> <span class="a">footer</span>=<span class="s">"Puedes cancelarlo en cualquier momento desde Configuración."</span>&gt;
+  Tu contrato se renovará automáticamente el 1 de marzo con las mismas condiciones vigentes.
+&lt;/<span class="t">AlertBlock</span>&gt;</pre>
+  </div>
+</div>
+<table>
+  <thead><tr><th>Prop</th><th>Tipo</th><th>Default</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td><code>variant</code></td><td><code>'success' | 'warning' | 'info'</code></td><td><code>'success'</code></td><td>No tiene <code>danger</code> (así está en Figma).</td></tr>
+    <tr><td><code>title</code></td><td><code>ReactNode</code></td><td>según variant</td><td>“¡Bien hecho!”, “¡Alerta!” o “¡Info!”.</td></tr>
+    <tr><td><code>children</code></td><td><code>ReactNode</code></td><td>—</td><td>Cuerpo del mensaje.</td></tr>
+    <tr><td><code>footer</code></td><td><code>ReactNode</code></td><td>—</td><td>Texto final tras el divisor.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s8"><span class="num">8</span> Recetas comunes</h2>
+
+<h3>Con un botón de acción</h3>
+<div class="preview">
+  <div class="preview__bar">Vista</div>
+  <div class="preview__body">
+    <div class="and-alert and-alert--info">
+      <div class="and-alert__lead">
+        <span class="and-alert__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(2 2)"><path d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM10 5C10.2652 5 10.5196 5.10536 10.7071 5.29289C10.8946 5.48043 11 5.73478 11 6V11C11 11.2652 10.8946 11.5196 10.7071 11.7071C10.5196 11.8946 10.2652 12 10 12C9.73478 12 9.48043 11.8946 9.29289 11.7071C9.10536 11.5196 9 11.2652 9 11V6C9 5.73478 9.10536 5.48043 9.29289 5.29289C9.48043 5.10536 9.73478 5 10 5ZM10 15C9.73478 15 9.48043 14.8946 9.29289 14.7071C9.10536 14.5196 9 14.2652 9 14C9 13.7348 9.10536 13.4804 9.29289 13.2929C9.48043 13.1054 9.73478 13 10 13C10.2652 13 10.5196 13.1054 10.7071 13.2929C10.8946 13.4804 11 13.7348 11 14C11 14.2652 10.8946 14.5196 10.7071 14.7071C10.5196 14.8946 10.2652 15 10 15Z" fill="currentColor"/></g></svg></span>
+        <span class="and-alert__message">Aviso<span class="and-alert__message-divider"></span></span>
+        <span class="and-alert__content">Tienes un documento pendiente de firma.</span>
+      </div>
+      <div class="and-alert__trail">
+        <button class="and-btn">Ver documento</button>
+        <button class="and-alert__close" aria-label="Cerrar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><g transform="translate(5 5)"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="currentColor"/></g></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+<pre><span class="k">import</span> { Alert } <span class="k">from</span> <span class="s">'@andromeda/react/components/Alert'</span>
+<span class="k">import</span> { Button } <span class="k">from</span> <span class="s">'@andromeda/react/components/Button'</span>
+
+&lt;<span class="t">Alert</span>
+  <span class="a">variant</span>=<span class="s">"info"</span>
+  <span class="a">message</span>=<span class="s">"Aviso"</span>
+  <span class="a">action</span>={&lt;<span class="t">Button</span> <span class="a">variant</span>=<span class="s">"primary"</span> <span class="a">appearance</span>=<span class="s">"outline"</span> <span class="a">size</span>=<span class="s">"sm"</span>&gt;Ver documento&lt;/<span class="t">Button</span>&gt;}
+&gt;
+  Tienes un documento pendiente de firma.
+&lt;/<span class="t">Alert</span>&gt;</pre>
+
+<h3>Sin icono y sin botón de cerrar</h3>
+<pre><span class="c">// icon={null} quita el icono; closable={false} quita la ✕</span>
+&lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"warning"</span> <span class="a">icon</span>={<span class="k">null</span>} <span class="a">closable</span>={<span class="k">false</span>}&gt;
+  Revisa los datos antes de continuar.
+&lt;/<span class="t">Alert</span>&gt;</pre>
+
+<h3>Reaccionar al cierre</h3>
+<pre><span class="c">// El Alert se oculta solo; onClose sirve para tu lógica</span>
+&lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"success"</span> <span class="a">onClose</span>={() =&gt; registrarEvento(<span class="s">'alerta_cerrada'</span>)}&gt;
+  Guardamos tus cambios.
+&lt;/<span class="t">Alert</span>&gt;</pre>
+
+<h3>Mostrar una alerta según el resultado de una operación</h3>
+<pre><span class="k">const</span> [estado, setEstado] = useState&lt;<span class="s">'ok'</span> | <span class="s">'error'</span> | <span class="k">null</span>&gt;(<span class="k">null</span>)
+
+<span class="k">return</span> (
+  &lt;&gt;
+    {estado === <span class="s">'ok'</span> &amp;&amp; (
+      &lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"success"</span> <span class="a">message</span>=<span class="s">"¡Listo!"</span>&gt;Operación completada.&lt;/<span class="t">Alert</span>&gt;
+    )}
+    {estado === <span class="s">'error'</span> &amp;&amp; (
+      &lt;<span class="t">Alert</span> <span class="a">variant</span>=<span class="s">"danger"</span> <span class="a">message</span>=<span class="s">"Error"</span>&gt;Intenta de nuevo.&lt;/<span class="t">Alert</span>&gt;
+    )}
+  &lt;/&gt;
+)</pre>
+
+<h2 id="s9"><span class="num">9</span> Buenas prácticas</h2>
+
+<h3>Importa por componente, no del paquete completo</h3>
+<p>Medido en un proyecto Vite real con este mismo Alert:</p>
+<table>
+  <thead><tr><th>Forma de importar</th><th>CSS final</th><th>Assets extra</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>from '@andromeda/react'</code></td>
+      <td>111.8 KB</td>
+      <td>+263 KB de logos</td>
+    </tr>
+    <tr>
+      <td><code>from '@andromeda/react/components/Alert'</code> <span class="req">← recomendado</span></td>
+      <td><strong>15.9 KB</strong></td>
+      <td>ninguno</td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  El CSS de cada componente se importa junto con su código, y las hojas de estilo
+  <em>no</em> se pueden depurar automáticamente. Importando por subpath te llevas
+  <strong>solo lo que usas</strong>: 7 veces menos CSS.
+</p>
+
+<h3>Nunca escribas colores ni medidas a mano</h3>
+<pre><span class="c">/* ❌ mal: se desincroniza cuando diseño cambia la paleta */</span>
+.mi-caja { background: #a41d36; padding: 20px; }
+
+<span class="c">/* ✅ bien: usa los tokens del DS */</span>
+.mi-caja { background: <span class="t">var</span>(--color-primary); padding: <span class="t">var</span>(--space-20); }</pre>
+<p>Si diseño cambia el rojo INVEX en Figma, se actualiza <code>tokens.css</code> y tu pantalla
+   se actualiza sola. Con un hex escrito a mano, no.</p>
+
+<h3>No edites la librería desde tu proyecto</h3>
+<p>
+  Si un componente no cubre tu caso, envuélvelo o pide el cambio en el DS. Editar
+  <code>Andromeda-ds/</code> desde una app rompe a los demás equipos y se pierde en el próximo
+  <code>git pull</code>.
+</p>
+
+<div class="callout callout--tip">
+  <span class="ico">💡</span>
+  <div>Para personalizar detalles puntuales pasa tu propia clase:
+  <code>&lt;Alert className="mi-espaciado" /&gt;</code> — la clase se suma a las del DS.</div>
+</div>
+
+<h2 id="s10"><span class="num">10</span> Explorar los 42 componentes</h2>
+<p>
+  La referencia viva es <strong>Storybook</strong>: cada componente con todas sus variantes y un panel
+  para cambiar props en caliente. Desde el repositorio del DS:
+</p>
+<pre>cd Andromeda-ds/react
+npm install
+npm run storybook     <span class="c">→ http://localhost:6006</span></pre>
+<p>
+  Además, el <code>README.md</code> del repositorio documenta cada componente con su origen en Figma,
+  y en <strong>Figma → Dev Mode</strong> cualquier componente muestra el snippet de código listo
+  para copiar (Code Connect), con pestañas para React y Vue.
+</p>
+
+<h2 id="s11"><span class="num">11</span> Solución de problemas</h2>
+<table>
+  <thead><tr><th>Síntoma</th><th>Causa</th><th>Solución</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Los componentes salen sin colores ni espacios</td>
+      <td>No se cargó <code>tokens.css</code></td>
+      <td>Importa <code>'@andromeda/tokens/tokens.css'</code> en tu entry (paso 3)</td>
+    </tr>
+    <tr>
+      <td>Se ve con otra tipografía</td>
+      <td>Falta Poppins</td>
+      <td>Agrega el <code>&lt;link&gt;</code> de Google Fonts en tu <code>index.html</code></td>
+    </tr>
+    <tr>
+      <td><code>Failed to resolve import "@andromeda/react"</code></td>
+      <td>Alias mal configurado o ruta equivocada</td>
+      <td>Revisa la ruta del alias en <code>vite.config.ts</code>; debe apuntar a <code>&lt;repo&gt;/react/src</code></td>
+    </tr>
+    <tr>
+      <td><code>Could not load .../tokens.css</code></td>
+      <td>La ruta relativa del alias no resuelve</td>
+      <td>Verifica cuántos niveles sube tu <code>'../Andromeda-ds'</code> o usa ruta absoluta para probar</td>
+    </tr>
+    <tr>
+      <td>Errores de sintaxis en <code>.tsx</code> del DS</td>
+      <td>Tu bundler no transpila la librería</td>
+      <td>Next.js: <code>transpilePackages</code>. webpack: incluye la carpeta del DS en el loader</td>
+    </tr>
+    <tr>
+      <td>TypeScript no encuentra los tipos</td>
+      <td>Faltan los <code>paths</code></td>
+      <td>Agrega <code>paths</code> en <code>tsconfig.json</code> (paso 2)</td>
+    </tr>
+  </tbody>
+</table>
+
+<footer class="doc">
+  <div><strong>Andromeda Design System</strong> · INVEX · Manual React v0.1.0</div>
+  <div>github.com/victorrojas14/Andromeda-ds</div>
+</footer>
+
+</div>
+</body>
+</html>

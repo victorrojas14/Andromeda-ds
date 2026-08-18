@@ -2,7 +2,16 @@
 
 Sistema de diseño de INVEX. Este repositorio contiene los componentes del DS en **React** y **Vue 3**, con **Storybook** para documentación interactiva y **Figma Code Connect** para mantener sincronizado el código con la librería de Figma.
 
-Primer componente disponible: **Button**.
+## 📘 Manuales de integración
+
+Si vas a **consumir la librería en un proyecto**, empieza aquí (guía paso a paso con ejemplo del componente Alert, sus variantes y props):
+
+| Framework | HTML | PDF |
+|---|---|---|
+| React | [docs/manual-react.html](docs/manual-react.html) | [docs/manual-react.pdf](docs/manual-react.pdf) |
+| Vue 3 | [docs/manual-vue.html](docs/manual-vue.html) | [docs/manual-vue.pdf](docs/manual-vue.pdf) |
+
+El resto de este README es la referencia técnica de cada componente y su origen en Figma.
 
 ## Estructura del repositorio
 
