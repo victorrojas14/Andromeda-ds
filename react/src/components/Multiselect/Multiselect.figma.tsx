@@ -33,7 +33,7 @@ figma.connect(
   'https://www.figma.com/design/oTZzdsgGkCjbL2f3oybxD0/Ui-Kit-Web?node-id=13357-3885',
   {
     props: {
-      texto: figma.string('Text content'),
+      texto: figma.string('Text content '),
     },
     example: (props) => (
       <Multiselect

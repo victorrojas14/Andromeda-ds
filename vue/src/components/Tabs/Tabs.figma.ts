@@ -48,7 +48,7 @@ figma.connect('https://www.figma.com/design/oTZzdsgGkCjbL2f3oybxD0/Ui-Kit-Web?no
 // Tab-atom (segmento individual)
 figma.connect('https://www.figma.com/design/oTZzdsgGkCjbL2f3oybxD0/Ui-Kit-Web?node-id=14031-9608', {
   props: {
-    label: figma.string('Text content'),
+    label: figma.string('TextContent'),
   },
   example: (props) => html`
 <Tabs variant="secondary" :items="['${props.label}', 'Text']" />`,
