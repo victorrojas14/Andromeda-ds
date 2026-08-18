@@ -1,0 +1,260 @@
+/*
+ * Header — Andromeda DS
+ * Figma: página "Header" — set "Header Desktop-Tablet" (7392:4079) con
+ * Header=Invex|Header-Renacer|Header-Fiduciario y sus props booleanas,
+ * set "Header Mobile" (751:2118, Estado Abierto/Cerrado por marca) y
+ * componente "Menu usuario" (806:171890).
+ * Un solo componente responsivo: barra primary de 80px (padding 30)
+ * con logo, iconos de 48px (pill radius 50), usuario + iniciales de
+ * 44px, ButtonMisProductos e icono de menú; en <768px toma el diseño
+ * mobile (60px, padding 20, logo de ~23px y solo campana con badge +
+ * hamburguesa, gap 20). El menú de usuario reutiliza los items del
+ * componente Menu (mismo átomo "Item menu mobile" de Figma).
+ * Este mismo archivo se usa desde los componentes de React y Vue.
+ * Consume únicamente tokens de tokens/tokens.css.
+ */
+
+.and-header {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 80px;
+  padding: 0 var(--space-30);
+  background: var(--color-primary);
+  font-family: var(--font-family-sans);
+  color: var(--color-white);
+}
+
+/* ---- Logotipo (el Logo del DS hereda currentColor) ---- */
+.and-header__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  color: var(--color-white);
+}
+
+/* El Logo del DS trae su propio color primary: en el header va blanco */
+.and-header__logo .and-logo {
+  color: var(--color-white);
+}
+
+/* Alto completo del header (sin efecto visual: los hijos van
+ * centrados) para que el Menu usuario se ancle a su borde inferior */
+.and-header__right {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  gap: var(--space-20);
+}
+
+/* ---- Iconos (btn/primary-MD de 48px, solo icono) ---- */
+.and-header__icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.and-header__icon-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: 48px;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-xl);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.and-header__icon-btn:hover {
+  background: var(--color-action-primary-hover);
+}
+
+/* Campana: bell-outline en desktop, bell-badge-outline en mobile */
+.and-header__only-mobile {
+  display: none;
+}
+
+.and-header__only-desktop {
+  display: inline-flex;
+}
+
+/* ---- Usuario - Iniciales ---- */
+/* Figma: "Usuario - Iniciales" es self-stretch (alto del header), lo
+ * que ancla el Menu usuario a su borde inferior */
+.and-header__user {
+  position: relative;
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  gap: var(--space-10);
+  padding-left: var(--space-30);
+}
+
+.and-header__user-date {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+  justify-content: center;
+  padding-right: var(--space-10);
+}
+
+.and-header__user-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-10);
+}
+
+.and-header__user-name {
+  font-size: var(--font-size-parrafo-sm);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+/* Etiqueta ADMIN */
+.and-header__admin {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  background: transparent;
+  border: 1px solid var(--color-white);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-small-1);
+  white-space: nowrap;
+}
+
+.and-header__last-access {
+  font-size: var(--font-size-small-1);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.and-header__initials-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.and-header__initials {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: var(--color-white);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+/* ---- Icono de menú (hamburguesa / cerrar) ---- */
+.and-header__menu {
+  display: inline-flex;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+/* ---- Menu usuario (dropdown de 300px) ---- */
+.and-header__usermenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background: var(--color-white);
+  filter: drop-shadow(0 0 8px rgba(200, 200, 200, 0.45));
+}
+
+.and-header__icon-btn:focus-visible,
+.and-header__initials-btn:focus-visible,
+.and-header__menu:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/* ============ Responsivo: <768px toma el diseño mobile ============ */
+@media (max-width: 767px) {
+  .and-header {
+    min-height: 60px;
+    padding: 0 var(--space-20);
+  }
+
+  /* Logo de 23px (Invex) / 24px (Renacer y Fiduciario) */
+  .and-header__logo svg {
+    width: auto;
+    height: 23px;
+  }
+
+  .and-header--renacer .and-header__logo svg,
+  .and-header--fiduciario .and-header__logo svg {
+    height: 24px;
+  }
+
+  /* En mobile solo quedan la campana con badge y la hamburguesa */
+  .and-header__icon-btn--help,
+  .and-header__icon-btn--clock,
+  .and-header__icon-btn--settings,
+  .and-header__user-date,
+  .and-header__initials-btn,
+  .and-header__products {
+    display: none;
+  }
+
+  .and-header__icon-btn {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .and-header__icon-btn:hover {
+    background: transparent;
+  }
+
+  .and-header__only-desktop {
+    display: none;
+  }
+
+  .and-header__only-mobile {
+    display: inline-flex;
+  }
+
+  /* Sin caja propia: no aporta gap (sus hijos van ocultos) y el Menu
+   * usuario se ancla al header */
+  .and-header__user {
+    display: contents;
+  }
+
+  /* El menú de usuario se ancla al header y ocupa el ancho disponible */
+  .and-header__usermenu {
+    top: 100%;
+    right: 0;
+    left: 0;
+    width: auto;
+  }
+}
