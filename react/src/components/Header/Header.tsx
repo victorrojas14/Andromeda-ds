@@ -58,6 +58,16 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   defaultUserMenuOpen?: boolean
   onUserMenuOpenChange?: (open: boolean) => void
   onUserMenuSelect?: (index: number, item: HeaderUserMenuItem) => void
+  /**
+   * Items del dropdown de Mis productos (Figma: Boton-MisProductos
+   * Estado=Abierto; default los 7 del set). Vacío = sin dropdown.
+   */
+  productsItems?: Array<string | HeaderUserMenuItem>
+  /** Dropdown de Mis productos desplegado (controlado) */
+  productsOpen?: boolean
+  defaultProductsOpen?: boolean
+  onProductsOpenChange?: (open: boolean) => void
+  onProductsSelect?: (index: number, item: HeaderUserMenuItem) => void
   onHelpClick?: () => void
   onClockClick?: () => void
   onNotificationsClick?: () => void
@@ -74,6 +84,17 @@ const DEFAULT_USER_MENU: HeaderUserMenuItem[] = [
   { label: 'Configuración', icon: 'settings-outline' },
   { label: 'Notificaciones', icon: 'bell-outline' },
   { label: 'Cerrar sesión', icon: 'Salir' },
+]
+
+/** Items del "Boton-MisProductos" Estado=Abierto de Figma (5637:7861) */
+const DEFAULT_PRODUCTS: HeaderUserMenuItem[] = [
+  { label: 'Mis productos 1' },
+  { label: 'Mis productos 2' },
+  { label: 'Mis productos 3' },
+  { label: 'Mis productos 4' },
+  { label: 'Mis productos 5' },
+  { label: 'Mis productos 6' },
+  { label: 'Mis productos 7' },
 ]
 
 /** Logo del DS y su alto (desktop) por marca */
@@ -116,6 +137,11 @@ export function Header({
   defaultUserMenuOpen = false,
   onUserMenuOpenChange,
   onUserMenuSelect,
+  productsItems,
+  productsOpen,
+  defaultProductsOpen = false,
+  onProductsOpenChange,
+  onProductsSelect,
   onHelpClick,
   onClockClick,
   onNotificationsClick,
@@ -127,13 +153,25 @@ export function Header({
   ...rest
 }: HeaderProps) {
   const [innerOpen, setInnerOpen] = useState(defaultUserMenuOpen)
+  const [innerProductsOpen, setInnerProductsOpen] = useState(defaultProductsOpen)
   const isUserMenuOpen = userMenuOpen !== undefined ? userMenuOpen : innerOpen
+  const isProductsOpen =
+    productsOpen !== undefined ? productsOpen : innerProductsOpen
   const items = toItems(userMenuItems ?? DEFAULT_USER_MENU)
+  const products = toItems(productsItems ?? DEFAULT_PRODUCTS)
   const logo = LOGO[variant]
 
   const setUserMenuOpen = (next: boolean) => {
     if (userMenuOpen === undefined) setInnerOpen(next)
     onUserMenuOpenChange?.(next)
+    // Solo un dropdown abierto a la vez
+    if (next && isProductsOpen) setProductsOpen(false)
+  }
+
+  const setProductsOpen = (next: boolean) => {
+    if (productsOpen === undefined) setInnerProductsOpen(next)
+    onProductsOpenChange?.(next)
+    if (next && isUserMenuOpen) setUserMenuOpen(false)
   }
 
   const iconButton = (
@@ -245,8 +283,42 @@ export function Header({
         )}
 
         {showProductsButton && (
-          <div className="and-header__products">
-            <ButtonMisProductos onClick={onProductsClick} />
+          <div
+            className={[
+              'and-header__products',
+              isProductsOpen && 'and-header__products--open',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
+            <ButtonMisProductos
+              aria-expanded={isProductsOpen}
+              onClick={() => {
+                setProductsOpen(!isProductsOpen)
+                onProductsClick?.()
+              }}
+            />
+            {isProductsOpen && products.length > 0 && (
+              <div className="and-header__productsmenu" role="menu">
+                {products.map((item, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className="and-menu-mobile__item"
+                    role="menuitem"
+                    onClick={() => {
+                      onProductsSelect?.(i, item)
+                      setProductsOpen(false)
+                    }}
+                  >
+                    {item.icon && <Icon name={item.icon} size={24} />}
+                    <span className="and-menu-mobile__item-label">
+                      {item.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

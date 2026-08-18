@@ -44,6 +44,13 @@ const meta: Meta<typeof Header> = {
     },
     userMenuOpen: { control: 'boolean', description: 'Menu usuario desplegado' },
     defaultUserMenuOpen: { control: 'boolean' },
+    productsItems: {
+      control: 'object',
+      description: 'Items del dropdown de Mis productos (Boton-MisProductos Abierto)',
+    },
+    productsOpen: { control: 'boolean', description: 'Mis productos desplegado' },
+    defaultProductsOpen: { control: 'boolean' },
+    onProductsSelect: { action: 'productsSelect' },
     onMenuClick: { action: 'menuClick' },
     onProductsClick: { action: 'productsClick' },
     onNotificationsClick: { action: 'notificationsClick' },
@@ -118,6 +125,11 @@ export const SoloMenu: Story = {
 export const MenuUsuarioAbierto: Story = {
   name: 'Menu usuario desplegado',
   args: { defaultUserMenuOpen: true },
+}
+
+export const MisProductosAbierto: Story = {
+  name: 'Mis productos desplegado',
+  args: { defaultProductsOpen: true },
 }
 
 /** El icono de menú abre el Menu lateral del DS (mobile) */

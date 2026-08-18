@@ -43,6 +43,11 @@ const meta: Meta<typeof Header> = {
       description: 'Header Mobile: Estado Abierto/Cerrado (hamburguesa ↔ X)',
     },
     userMenuOpen: { control: 'boolean', description: 'Menu usuario desplegado' },
+    productsItems: {
+      control: 'object',
+      description: 'Items del dropdown de Mis productos (Boton-MisProductos Abierto)',
+    },
+    productsOpen: { control: 'boolean', description: 'Mis productos desplegado' },
   },
 }
 
@@ -116,6 +121,11 @@ export const SoloMenu: Story = {
 export const MenuUsuarioAbierto: Story = {
   name: 'Menu usuario desplegado',
   args: { userMenuOpen: true },
+}
+
+export const MisProductosAbierto: Story = {
+  name: 'Mis productos desplegado',
+  args: { productsOpen: true },
 }
 
 export const ConMenuDelDS: Story = {

@@ -169,6 +169,37 @@
   color: var(--color-primary);
 }
 
+/* ---- Mis productos + su dropdown (Boton-MisProductos Abierto) ----
+ * Figma 5637:7861: lista con padding lateral 20 y gap 10 de items de
+ * 60px (radio 10, px 20, texto 14 Medium secondary) bajo el botón, con
+ * borde inferior gray-300; el chevron del botón pasa a chevron-up. */
+.and-header__products {
+  position: relative;
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+}
+
+.and-header__products--open .and-btn-productos__icon:last-child svg {
+  transform: rotate(180deg);
+}
+
+.and-header__productsmenu {
+  box-sizing: border-box;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  width: 300px;
+  padding: 0 var(--space-20);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-gray-300);
+  filter: drop-shadow(0 0 8px rgba(200, 200, 200, 0.45));
+}
+
 /* ---- Icono de menú (hamburguesa / cerrar) ---- */
 .and-header__menu {
   display: inline-flex;

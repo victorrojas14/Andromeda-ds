@@ -66,6 +66,11 @@ interface HeaderProps {
   menuOpen?: boolean
   /** Items del Menu usuario (default los 5 del componente de Figma). */
   userMenuItems?: Array<string | HeaderUserMenuItem>
+  /**
+   * Items del dropdown de Mis productos (Figma: Boton-MisProductos
+   * Estado=Abierto; default los 7 del set). Vacío = sin dropdown.
+   */
+  productsItems?: Array<string | HeaderUserMenuItem>
 }
 
 const props = withDefaults(defineProps<HeaderProps>(), {
@@ -85,13 +90,18 @@ const props = withDefaults(defineProps<HeaderProps>(), {
   showMenuIcon: true,
   menuOpen: false,
   userMenuItems: undefined,
+  productsItems: undefined,
 })
 
 /** Menú de usuario desplegado (Menu usuario). */
 const userMenuOpen = defineModel<boolean>('userMenuOpen', { default: false })
 
+/** Dropdown de Mis productos desplegado (Boton-MisProductos Abierto). */
+const productsOpen = defineModel<boolean>('productsOpen', { default: false })
+
 const emit = defineEmits<{
   userMenuSelect: [index: number, item: HeaderUserMenuItem]
+  productsSelect: [index: number, item: HeaderUserMenuItem]
   helpClick: []
   clockClick: []
   notificationsClick: []
@@ -108,6 +118,17 @@ const DEFAULT_USER_MENU: HeaderUserMenuItem[] = [
   { label: 'Configuración', icon: 'settings-outline' },
   { label: 'Notificaciones', icon: 'bell-outline' },
   { label: 'Cerrar sesión', icon: 'Salir' },
+]
+
+/** Items del "Boton-MisProductos" Estado=Abierto de Figma (5637:7861). */
+const DEFAULT_PRODUCTS: HeaderUserMenuItem[] = [
+  { label: 'Mis productos 1' },
+  { label: 'Mis productos 2' },
+  { label: 'Mis productos 3' },
+  { label: 'Mis productos 4' },
+  { label: 'Mis productos 5' },
+  { label: 'Mis productos 6' },
+  { label: 'Mis productos 7' },
 ]
 
 /** Logo del DS y su alto (desktop) por marca. */
@@ -128,9 +149,32 @@ const items = computed<HeaderUserMenuItem[]>(() =>
   ),
 )
 
+const products = computed<HeaderUserMenuItem[]>(() =>
+  (props.productsItems ?? DEFAULT_PRODUCTS).map((i) =>
+    typeof i === 'string' ? { label: i } : i,
+  ),
+)
+
 const selectUserMenu = (index: number) => {
   emit('userMenuSelect', index, items.value[index])
   userMenuOpen.value = false
+}
+
+const selectProduct = (index: number) => {
+  emit('productsSelect', index, products.value[index])
+  productsOpen.value = false
+}
+
+/** Solo un dropdown abierto a la vez. */
+const toggleUserMenu = () => {
+  userMenuOpen.value = !userMenuOpen.value
+  if (userMenuOpen.value) productsOpen.value = false
+}
+
+const toggleProducts = () => {
+  productsOpen.value = !productsOpen.value
+  if (productsOpen.value) userMenuOpen.value = false
+  emit('productsClick')
 }
 </script>
 
@@ -199,7 +243,7 @@ const selectUserMenu = (index: number) => {
           class="and-header__initials-btn"
           :aria-expanded="userMenuOpen"
           aria-label="Menú de usuario"
-          @click="userMenuOpen = !userMenuOpen"
+          @click="toggleUserMenu"
         >
           <span class="and-header__initials">{{ initials }}</span>
           <Icon :name="userMenuOpen ? 'chevron-up' : 'chevron-down'" :size="24" />
@@ -219,8 +263,28 @@ const selectUserMenu = (index: number) => {
         </div>
       </div>
 
-      <div v-if="showProductsButton" class="and-header__products">
-        <ButtonMisProductos @click="emit('productsClick')" />
+      <div
+        v-if="showProductsButton"
+        :class="['and-header__products', productsOpen && 'and-header__products--open']"
+      >
+        <ButtonMisProductos :aria-expanded="productsOpen" @click="toggleProducts" />
+        <div
+          v-if="productsOpen && products.length > 0"
+          class="and-header__productsmenu"
+          role="menu"
+        >
+          <button
+            v-for="(item, i) in products"
+            :key="i"
+            type="button"
+            class="and-menu-mobile__item"
+            role="menuitem"
+            @click="selectProduct(i)"
+          >
+            <Icon v-if="item.icon" :name="item.icon" :size="24" />
+            <span class="and-menu-mobile__item-label">{{ item.label }}</span>
+          </button>
+        </div>
       </div>
 
       <button
