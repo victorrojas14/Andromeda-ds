@@ -137,8 +137,16 @@ export const MenuHamburguesaAbierto: Story = {
   args: { menuOpen: true },
 }
 
+export const ConItemsDeMenu: Story = {
+  name: 'Hamburguesa con items de menú',
+  args: {
+    menuOpen: true,
+    menuItems: ['Inicio', 'Cuentas', 'Transferencias', 'Inversiones'],
+  },
+}
+
 export const ConMenuPropio: Story = {
-  name: 'Con un Menu propio (menuItems=[])',
+  name: 'Con un Menu propio (showDrawer=false)',
   render: () => ({
     components: { Header, Menu },
     setup() {
@@ -147,7 +155,7 @@ export const ConMenuPropio: Story = {
     },
     template: `
       <div>
-        <Header :menu-items="[]" v-model:menu-open="abierto" />
+        <Header :show-drawer="false" v-model:menu-open="abierto" />
         <Menu
           v-if="abierto"
           :items="['Inicio', 'Cuentas', 'Transferencias', 'Inversiones', 'Tarjetas']"

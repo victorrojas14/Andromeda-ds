@@ -151,14 +151,22 @@ export const MenuHamburguesaAbierto: Story = {
   args: { defaultMenuOpen: true },
 }
 
-/** El drawer se puede reemplazar por un Menu propio con menuItems=[] */
+export const ConItemsDeMenu: Story = {
+  name: 'Hamburguesa con items de menú',
+  args: {
+    defaultMenuOpen: true,
+    menuItems: ['Inicio', 'Cuentas', 'Transferencias', 'Inversiones'],
+  },
+}
+
+/** El drawer se puede reemplazar por un Menu propio con showDrawer=false */
 const DemoMenuPropio = () => {
   const [abierto, setAbierto] = useState(false)
 
   return (
     <div>
       <Header
-        menuItems={[]}
+        showDrawer={false}
         menuOpen={abierto}
         onMenuClick={() => setAbierto((v) => !v)}
       />
@@ -173,6 +181,6 @@ const DemoMenuPropio = () => {
 }
 
 export const ConMenuPropio: Story = {
-  name: 'Con un Menu propio (menuItems=[])',
+  name: 'Con un Menu propio (showDrawer=false)',
   render: () => <DemoMenuPropio />,
 }

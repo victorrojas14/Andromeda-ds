@@ -247,7 +247,7 @@ const selectProduct = (index: number) => {
             <Icon v-if="item.showIcon" name="chevron-down" :size="24" />
           </button>
         </div>
-        <div class="and-menu-user__list">
+        <div v-if="menuItems.length > 0" class="and-menu-user__list">
           <button
             v-for="(item, i) in menuItems"
             :key="i"

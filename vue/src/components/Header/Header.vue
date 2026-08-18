@@ -62,13 +62,17 @@ interface HeaderProps {
   /** Muestra el icono de menú (Figma: "Mostrar Ic Menu"). */
   showMenuIcon?: boolean
   /**
-   * Items del menú lateral que despliega la hamburguesa en mobile
-   * (Figma 9368:21635). Vacío = sin drawer (lo maneja el consumidor
-   * con @menu-click).
+   * Items extra del menú lateral en el drawer mobile (vacío por
+   * default: el drawer muestra la barra de usuario y Mis productos).
    */
   menuItems?: Array<string | MenuItem>
   /** Índice activo del menú lateral. */
   defaultActiveMenuItem?: number
+  /**
+   * Despliega el Menu del DS al abrir la hamburguesa en mobile
+   * (false = lo maneja el consumidor con @menu-click).
+   */
+  showDrawer?: boolean
   /** Items del Menu usuario (default los 5 del componente de Figma). */
   userMenuItems?: Array<string | HeaderUserMenuItem>
   /**
@@ -93,8 +97,9 @@ const props = withDefaults(defineProps<HeaderProps>(), {
   showInitials: true,
   showProductsButton: true,
   showMenuIcon: true,
-  menuItems: undefined,
+  menuItems: () => [],
   defaultActiveMenuItem: 0,
+  showDrawer: true,
   userMenuItems: undefined,
   productsItems: undefined,
 })
@@ -132,14 +137,6 @@ const DEFAULT_USER_MENU: HeaderUserMenuItem[] = [
   { label: 'Configuración', icon: 'settings-outline' },
   { label: 'Notificaciones', icon: 'bell-outline' },
   { label: 'Cerrar sesión', icon: 'Salir' },
-]
-
-/** Items del menú lateral del ejemplo mobile de Figma (9368:21635). */
-const DEFAULT_MENU_ITEMS: MenuItem[] = [
-  { label: 'Item menu 1' },
-  { label: 'Item menu 2' },
-  { label: 'Item menu 3' },
-  { label: 'Item menu 4' },
 ]
 
 /** Items del "Boton-MisProductos" Estado=Abierto de Figma (5637:7861). */
@@ -198,10 +195,6 @@ const toggleProducts = () => {
   if (productsOpen.value) userMenuOpen.value = false
   emit('productsClick')
 }
-
-const drawerItems = computed<Array<string | MenuItem>>(
-  () => props.menuItems ?? DEFAULT_MENU_ITEMS,
-)
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
@@ -336,10 +329,10 @@ const onDrawerOpenChange = (next: boolean) => {
     </div>
 
     <!-- Drawer mobile: el Menu del DS (variante usuario) bajo el header -->
-    <div v-if="menuOpen && drawerItems.length > 0" class="and-header__drawer">
+    <div v-if="menuOpen && showDrawer" class="and-header__drawer">
       <Menu
         variant="usuario"
-        :items="drawerItems"
+        :items="menuItems"
         :model-value="defaultActiveMenuItem"
         :open="true"
         :user-name="userName"

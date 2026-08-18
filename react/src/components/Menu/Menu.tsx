@@ -295,14 +295,16 @@ export function Menu({
                   )}
                 </div>
               )}
-              <div className="and-menu-user__list">
-                {menuItems.map((item, i) =>
-                  mobileItem(item, i, {
-                    active: i === current,
-                    onClick: () => select(i),
-                  }),
-                )}
-              </div>
+              {menuItems.length > 0 && (
+                <div className="and-menu-user__list">
+                  {menuItems.map((item, i) =>
+                    mobileItem(item, i, {
+                      active: i === current,
+                      onClick: () => select(i),
+                    }),
+                  )}
+                </div>
+              )}
             </>
           )}
         </div>
