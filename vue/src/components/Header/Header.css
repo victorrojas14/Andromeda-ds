@@ -200,6 +200,20 @@
   filter: drop-shadow(0 0 8px rgba(200, 200, 200, 0.45));
 }
 
+/* ---- Drawer del menú hamburguesa (mobile) ----
+ * Figma 9368:21635: al abrir la hamburguesa se despliega bajo el
+ * header el Menu variante usuario del DS (barra de usuario con su
+ * menú, botón Mis productos con su lista e items del menú lateral).
+ * Solo existe en mobile: en desktop se oculta el wrapper completo. */
+.and-header__drawer {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 90;
+  display: none;
+}
+
 /* ---- Icono de menú (hamburguesa / cerrar) ---- */
 .and-header__menu {
   display: inline-flex;
@@ -287,5 +301,9 @@
     right: 0;
     left: 0;
     width: auto;
+  }
+
+  .and-header__drawer {
+    display: block;
   }
 }

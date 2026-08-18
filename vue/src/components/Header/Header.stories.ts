@@ -40,7 +40,11 @@ const meta: Meta<typeof Header> = {
     showMenuIcon: { control: 'boolean', description: 'Figma: "Mostrar Ic Menu"' },
     menuOpen: {
       control: 'boolean',
-      description: 'Header Mobile: Estado Abierto/Cerrado (hamburguesa ↔ X)',
+      description: 'Header Mobile: Estado Abierto/Cerrado (hamburguesa ↔ X + drawer)',
+    },
+    menuItems: {
+      control: 'object',
+      description: 'Items del drawer mobile (vacío = lo maneja el consumidor)',
     },
     userMenuOpen: { control: 'boolean', description: 'Menu usuario desplegado' },
     productsItems: {
@@ -128,8 +132,13 @@ export const MisProductosAbierto: Story = {
   args: { productsOpen: true },
 }
 
-export const ConMenuDelDS: Story = {
-  name: 'Integrado con el Menu del DS',
+export const MenuHamburguesaAbierto: Story = {
+  name: 'Hamburguesa desplegada (mobile)',
+  args: { menuOpen: true },
+}
+
+export const ConMenuPropio: Story = {
+  name: 'Con un Menu propio (menuItems=[])',
   render: () => ({
     components: { Header, Menu },
     setup() {
@@ -138,7 +147,7 @@ export const ConMenuDelDS: Story = {
     },
     template: `
       <div>
-        <Header :menu-open="abierto" @menu-click="abierto = !abierto" />
+        <Header :menu-items="[]" v-model:menu-open="abierto" />
         <Menu
           v-if="abierto"
           :items="['Inicio', 'Cuentas', 'Transferencias', 'Inversiones', 'Tarjetas']"

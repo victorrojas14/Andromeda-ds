@@ -40,8 +40,14 @@ const meta: Meta<typeof Header> = {
     showMenuIcon: { control: 'boolean', description: 'Figma: "Mostrar Ic Menu"' },
     menuOpen: {
       control: 'boolean',
-      description: 'Header Mobile: Estado Abierto/Cerrado (hamburguesa ↔ X)',
+      description: 'Header Mobile: Estado Abierto/Cerrado (hamburguesa ↔ X + drawer)',
     },
+    defaultMenuOpen: { control: 'boolean' },
+    menuItems: {
+      control: 'object',
+      description: 'Items del drawer mobile (vacío = lo maneja el consumidor)',
+    },
+    onMenuItemSelect: { action: 'menuItemSelect' },
     userMenuOpen: { control: 'boolean', description: 'Menu usuario desplegado' },
     defaultUserMenuOpen: { control: 'boolean' },
     productsItems: {
@@ -132,22 +138,33 @@ export const MisProductosAbierto: Story = {
   args: { defaultProductsOpen: true },
 }
 
-/** El icono de menú abre el Menu lateral del DS (mobile) */
-const DemoConMenu = () => {
+export const MenuHamburguesaAbierto: Story = {
+  name: 'Hamburguesa desplegada (mobile)',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Ver en un viewport <768px: la hamburguesa despliega el Menu del DS (variante usuario) bajo el header.',
+      },
+    },
+  },
+  args: { defaultMenuOpen: true },
+}
+
+/** El drawer se puede reemplazar por un Menu propio con menuItems=[] */
+const DemoMenuPropio = () => {
   const [abierto, setAbierto] = useState(false)
 
   return (
     <div>
-      <Header menuOpen={abierto} onMenuClick={() => setAbierto((v) => !v)} />
+      <Header
+        menuItems={[]}
+        menuOpen={abierto}
+        onMenuClick={() => setAbierto((v) => !v)}
+      />
       {abierto && (
         <Menu
-          items={[
-            'Inicio',
-            'Cuentas',
-            'Transferencias',
-            'Inversiones',
-            'Tarjetas',
-          ]}
+          items={['Inicio', 'Cuentas', 'Transferencias', 'Inversiones', 'Tarjetas']}
           defaultActive={0}
         />
       )}
@@ -155,7 +172,7 @@ const DemoConMenu = () => {
   )
 }
 
-export const ConMenuDelDS: Story = {
-  name: 'Integrado con el Menu del DS',
-  render: () => <DemoConMenu />,
+export const ConMenuPropio: Story = {
+  name: 'Con un Menu propio (menuItems=[])',
+  render: () => <DemoMenuPropio />,
 }

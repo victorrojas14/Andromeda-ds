@@ -2,8 +2,9 @@ import { useState, type HTMLAttributes } from 'react'
 import { ButtonMisProductos } from '../Button'
 import { Icon, type AndIconName } from '../Icon'
 import { Logo } from '../Logo'
-// El menú de usuario reutiliza los items del componente Menu
-// (mismo átomo "Item menu mobile" de Figma).
+// La hamburguesa despliega el Menu del DS (variante usuario) y el menú
+// de usuario reutiliza sus items (mismo átomo "Item menu mobile").
+import { Menu, type MenuItem } from '../Menu'
 import '../Menu/Menu.css'
 import './Header.css'
 
@@ -47,10 +48,22 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   /** Muestra el icono de menú (Figma: "Mostrar Ic Menu") */
   showMenuIcon?: boolean
   /**
-   * Estado del menú lateral (Figma Header Mobile: Estado
-   * Abierto/Cerrado). Abierto cambia la hamburguesa por la X.
+   * Drawer del menú desplegado (Figma Header Mobile: Estado
+   * Abierto/Cerrado). Abierto cambia la hamburguesa por la X y, en
+   * mobile, despliega el Menu del DS bajo el header (controlado).
    */
   menuOpen?: boolean
+  defaultMenuOpen?: boolean
+  onMenuOpenChange?: (open: boolean) => void
+  /**
+   * Items del menú lateral que despliega la hamburguesa en mobile
+   * (Figma 9368:21635). Vacío = sin drawer (lo maneja el consumidor
+   * con `onMenuClick`).
+   */
+  menuItems?: Array<string | MenuItem>
+  /** Índice activo del menú lateral */
+  defaultActiveMenuItem?: number
+  onMenuItemSelect?: (index: number, item: MenuItem) => void
   /** Items del Menu usuario (default los 5 del componente de Figma) */
   userMenuItems?: Array<string | HeaderUserMenuItem>
   /** Menú de usuario desplegado (controlado) */
@@ -84,6 +97,14 @@ const DEFAULT_USER_MENU: HeaderUserMenuItem[] = [
   { label: 'Configuración', icon: 'settings-outline' },
   { label: 'Notificaciones', icon: 'bell-outline' },
   { label: 'Cerrar sesión', icon: 'Salir' },
+]
+
+/** Items del menú lateral del ejemplo mobile de Figma (9368:21635) */
+const DEFAULT_MENU_ITEMS: MenuItem[] = [
+  { label: 'Item menu 1' },
+  { label: 'Item menu 2' },
+  { label: 'Item menu 3' },
+  { label: 'Item menu 4' },
 ]
 
 /** Items del "Boton-MisProductos" Estado=Abierto de Figma (5637:7861) */
@@ -131,7 +152,12 @@ export function Header({
   showInitials = true,
   showProductsButton = true,
   showMenuIcon = true,
-  menuOpen = false,
+  menuOpen,
+  defaultMenuOpen = false,
+  onMenuOpenChange,
+  menuItems,
+  defaultActiveMenuItem = 0,
+  onMenuItemSelect,
   userMenuItems,
   userMenuOpen,
   defaultUserMenuOpen = false,
@@ -154,12 +180,20 @@ export function Header({
 }: HeaderProps) {
   const [innerOpen, setInnerOpen] = useState(defaultUserMenuOpen)
   const [innerProductsOpen, setInnerProductsOpen] = useState(defaultProductsOpen)
+  const [innerMenuOpen, setInnerMenuOpen] = useState(defaultMenuOpen)
   const isUserMenuOpen = userMenuOpen !== undefined ? userMenuOpen : innerOpen
   const isProductsOpen =
     productsOpen !== undefined ? productsOpen : innerProductsOpen
+  const isMenuOpen = menuOpen !== undefined ? menuOpen : innerMenuOpen
   const items = toItems(userMenuItems ?? DEFAULT_USER_MENU)
   const products = toItems(productsItems ?? DEFAULT_PRODUCTS)
+  const drawerItems = menuItems ?? DEFAULT_MENU_ITEMS
   const logo = LOGO[variant]
+
+  const setMenuOpen = (next: boolean) => {
+    if (menuOpen === undefined) setInnerMenuOpen(next)
+    onMenuOpenChange?.(next)
+  }
 
   const setUserMenuOpen = (next: boolean) => {
     if (userMenuOpen === undefined) setInnerOpen(next)
@@ -326,14 +360,42 @@ export function Header({
           <button
             type="button"
             className="and-header__menu"
-            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            aria-expanded={menuOpen}
-            onClick={onMenuClick}
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isMenuOpen}
+            onClick={() => {
+              setMenuOpen(!isMenuOpen)
+              onMenuClick?.()
+            }}
           >
-            <Icon name={menuOpen ? 'close' : 'menu'} size={24} />
+            <Icon name={isMenuOpen ? 'close' : 'menu'} size={24} />
           </button>
         )}
       </div>
+
+      {/* Drawer mobile: el Menu del DS (variante usuario) bajo el header */}
+      {isMenuOpen && drawerItems.length > 0 && (
+        <div className="and-header__drawer">
+          <Menu
+            variant="usuario"
+            items={drawerItems}
+            defaultActive={defaultActiveMenuItem}
+            onChange={onMenuItemSelect}
+            open
+            onOpenChange={(next) => {
+              // El Menu se colapsa al elegir una opción: cierra el drawer
+              if (!next) setMenuOpen(false)
+            }}
+            userName={userName}
+            userInitials={initials}
+            lastAccess={lastAccess}
+            userMenuItems={items}
+            productsItems={products}
+            showProductsButton={showProductsButton}
+            onUserMenuSelect={onUserMenuSelect}
+            onProductsSelect={onProductsSelect}
+          />
+        </div>
+      )}
     </header>
   )
 }

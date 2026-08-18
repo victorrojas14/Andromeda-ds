@@ -4,8 +4,10 @@ import ButtonMisProductos from '../Button/ButtonMisProductos.vue'
 import Icon from '../Icon/Icon.vue'
 import type { AndIconName } from '../Icon/icons'
 import Logo from '../Logo/Logo.vue'
-// El menú de usuario reutiliza los items del componente Menu
-// (mismo átomo "Item menu mobile" de Figma).
+// La hamburguesa despliega el Menu del DS (variante usuario) y el menú
+// de usuario reutiliza sus items (mismo átomo "Item menu mobile").
+import Menu from '../Menu/Menu.vue'
+import type { MenuItem } from '../Menu/Menu.vue'
 import '../Menu/Menu.css'
 import './Header.css'
 
@@ -60,10 +62,13 @@ interface HeaderProps {
   /** Muestra el icono de menú (Figma: "Mostrar Ic Menu"). */
   showMenuIcon?: boolean
   /**
-   * Estado del menú lateral (Figma Header Mobile: Estado
-   * Abierto/Cerrado). Abierto cambia la hamburguesa por la X.
+   * Items del menú lateral que despliega la hamburguesa en mobile
+   * (Figma 9368:21635). Vacío = sin drawer (lo maneja el consumidor
+   * con @menu-click).
    */
-  menuOpen?: boolean
+  menuItems?: Array<string | MenuItem>
+  /** Índice activo del menú lateral. */
+  defaultActiveMenuItem?: number
   /** Items del Menu usuario (default los 5 del componente de Figma). */
   userMenuItems?: Array<string | HeaderUserMenuItem>
   /**
@@ -88,10 +93,18 @@ const props = withDefaults(defineProps<HeaderProps>(), {
   showInitials: true,
   showProductsButton: true,
   showMenuIcon: true,
-  menuOpen: false,
+  menuItems: undefined,
+  defaultActiveMenuItem: 0,
   userMenuItems: undefined,
   productsItems: undefined,
 })
+
+/**
+ * Drawer del menú desplegado (Figma Header Mobile: Estado
+ * Abierto/Cerrado). Abierto cambia la hamburguesa por la X y, en
+ * mobile, despliega el Menu del DS bajo el header.
+ */
+const menuOpen = defineModel<boolean>('menuOpen', { default: false })
 
 /** Menú de usuario desplegado (Menu usuario). */
 const userMenuOpen = defineModel<boolean>('userMenuOpen', { default: false })
@@ -102,6 +115,7 @@ const productsOpen = defineModel<boolean>('productsOpen', { default: false })
 const emit = defineEmits<{
   userMenuSelect: [index: number, item: HeaderUserMenuItem]
   productsSelect: [index: number, item: HeaderUserMenuItem]
+  menuItemSelect: [index: number, item: MenuItem]
   helpClick: []
   clockClick: []
   notificationsClick: []
@@ -118,6 +132,14 @@ const DEFAULT_USER_MENU: HeaderUserMenuItem[] = [
   { label: 'Configuración', icon: 'settings-outline' },
   { label: 'Notificaciones', icon: 'bell-outline' },
   { label: 'Cerrar sesión', icon: 'Salir' },
+]
+
+/** Items del menú lateral del ejemplo mobile de Figma (9368:21635). */
+const DEFAULT_MENU_ITEMS: MenuItem[] = [
+  { label: 'Item menu 1' },
+  { label: 'Item menu 2' },
+  { label: 'Item menu 3' },
+  { label: 'Item menu 4' },
 ]
 
 /** Items del "Boton-MisProductos" Estado=Abierto de Figma (5637:7861). */
@@ -175,6 +197,20 @@ const toggleProducts = () => {
   productsOpen.value = !productsOpen.value
   if (productsOpen.value) userMenuOpen.value = false
   emit('productsClick')
+}
+
+const drawerItems = computed<Array<string | MenuItem>>(
+  () => props.menuItems ?? DEFAULT_MENU_ITEMS,
+)
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value
+  emit('menuClick')
+}
+
+/** El Menu se colapsa al elegir una opción: cierra el drawer. */
+const onDrawerOpenChange = (next: boolean) => {
+  if (!next) menuOpen.value = false
 }
 </script>
 
@@ -293,10 +329,30 @@ const toggleProducts = () => {
         class="and-header__menu"
         :aria-label="menuOpen ? 'Cerrar menú' : 'Abrir menú'"
         :aria-expanded="menuOpen"
-        @click="emit('menuClick')"
+        @click="toggleMenu"
       >
         <Icon :name="menuOpen ? 'close' : 'menu'" :size="24" />
       </button>
+    </div>
+
+    <!-- Drawer mobile: el Menu del DS (variante usuario) bajo el header -->
+    <div v-if="menuOpen && drawerItems.length > 0" class="and-header__drawer">
+      <Menu
+        variant="usuario"
+        :items="drawerItems"
+        :model-value="defaultActiveMenuItem"
+        :open="true"
+        :user-name="userName"
+        :user-initials="initials"
+        :last-access="lastAccess"
+        :user-menu-items="items"
+        :products-items="products"
+        :show-products-button="showProductsButton"
+        @change="(i: number, item: MenuItem) => emit('menuItemSelect', i, item)"
+        @update:open="onDrawerOpenChange"
+        @user-menu-select="(i: number, item: MenuItem) => emit('userMenuSelect', i, item)"
+        @products-select="(i: number, item: MenuItem) => emit('productsSelect', i, item)"
+      />
     </div>
   </header>
 </template>
