@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Circuito Andromeda</title>
+<style>
+  /* ============ Tokens: light por defecto ============ */
+  :root {
+    --bg: #fbf8f9;
+    --surface: #ffffff;
+    --surface-2: #f4eef0;
+    --ink: #241c20;
+    --ink-soft: #574a4f;
+    --muted: #7c7278;
+    --border: #e8dfe2;
+    --border-strong: #d4c6cb;
+
+    --wine: #a41d36;
+    --wine-soft: #f7e6ea;
+    --blue: #0f6fb0;
+    --blue-soft: #e2eefa;
+    --green: #176529;
+    --green-soft: #e0f0e4;
+
+    --code-bg: #241c20;
+    --code-ink: #f0e9eb;
+
+    --font-ui: system-ui, -apple-system, 'Segoe UI Variable Display', 'Segoe UI', Roboto, sans-serif;
+    --font-mono: ui-monospace, 'Cascadia Mono', 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --bg: #171316;
+      --surface: #201a1d;
+      --surface-2: #2a2226;
+      --ink: #f4eff1;
+      --ink-soft: #cbbfc4;
+      --muted: #9d9196;
+      --border: #33292d;
+      --border-strong: #453840;
+
+      --wine: #e8768c;
+      --wine-soft: #38222a;
+      --blue: #5cb4ea;
+      --blue-soft: #17293a;
+      --green: #62c47e;
+      --green-soft: #17301f;
+
+      --code-bg: #120e10;
+      --code-ink: #ece4e7;
+    }
+  }
+  :root[data-theme='dark'] {
+    --bg: #171316;
+    --surface: #201a1d;
+    --surface-2: #2a2226;
+    --ink: #f4eff1;
+    --ink-soft: #cbbfc4;
+    --muted: #9d9196;
+    --border: #33292d;
+    --border-strong: #453840;
+
+    --wine: #e8768c;
+    --wine-soft: #38222a;
+    --blue: #5cb4ea;
+    --blue-soft: #17293a;
+    --green: #62c47e;
+    --green-soft: #17301f;
+
+    --code-bg: #120e10;
+    --code-ink: #ece4e7;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px 96px; }
+
+  /* ============ Hero ============ */
+  .hero { padding: 72px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 44px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--wine); margin: 0 0 18px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--border-strong); }
+  h1 {
+    margin: 0 0 16px; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.04;
+    font-weight: 700; letter-spacing: -.03em; text-wrap: balance;
+  }
+  .lede {
+    margin: 0; max-width: 60ch; font-size: clamp(16px, 1.9vw, 19px);
+    color: var(--ink-soft); font-weight: 350;
+  }
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+    margin-top: 40px; border-radius: 3px; overflow: hidden;
+  }
+  .stat { background: var(--surface); padding: 18px 20px; }
+  .stat b {
+    display: block; font-size: 30px; line-height: 1; letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums; margin-bottom: 6px;
+  }
+  .stat span {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ============ Secciones ============ */
+  section { margin-top: 72px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .sec-num {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    color: var(--surface); background: var(--ink); border-radius: 2px;
+    padding: 3px 7px; flex-shrink: 0; letter-spacing: .04em;
+  }
+  h2 { margin: 0; font-size: clamp(22px, 3vw, 30px); letter-spacing: -.022em; font-weight: 650; }
+  h3 { font-size: 17px; margin: 32px 0 10px; letter-spacing: -.01em; }
+  .sec-sub { color: var(--ink-soft); max-width: 66ch; margin: 8px 0 26px; }
+  p { margin: 12px 0; }
+  strong { font-weight: 620; }
+
+  /* ============ Figura / diagrama ============ */
+  figure { margin: 32px 0 0; }
+  .canvas {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; padding: 26px 22px; overflow-x: auto;
+  }
+  .canvas svg { display: block; max-width: 100%; height: auto; min-width: 720px; margin: 0 auto; }
+  figcaption {
+    margin-top: 14px; font-size: 13.5px; color: var(--muted); max-width: 78ch;
+  }
+
+  /* clases del SVG (theme-aware) */
+  .d-box { fill: var(--surface-2); stroke: var(--border-strong); stroke-width: 1.5; }
+  .d-box-accent { fill: var(--wine-soft); stroke: var(--wine); stroke-width: 1.5; }
+  .d-box-repo { fill: var(--surface-2); stroke: var(--ink); stroke-width: 2; }
+  .d-title { fill: var(--ink); font-family: var(--font-ui); font-size: 15px; font-weight: 650; }
+  .d-sub { fill: var(--muted); font-family: var(--font-mono); font-size: 10.5px; }
+  .d-item { fill: var(--ink-soft); font-family: var(--font-mono); font-size: 11px; }
+  .d-flow-read { stroke: var(--wine); stroke-width: 2.5; fill: none; }
+  .d-flow-pub  { stroke: var(--blue); stroke-width: 2.5; fill: none; stroke-dasharray: 7 4; }
+  .d-flow-use  { stroke: var(--green); stroke-width: 2.5; fill: none; }
+  .d-lbl-read { fill: var(--wine); font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; }
+  .d-lbl-pub  { fill: var(--blue); font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; }
+  .d-lbl-use  { fill: var(--green); font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; }
+  .d-note { fill: var(--muted); font-family: var(--font-ui); font-size: 11px; }
+  .d-divider { stroke: var(--border); stroke-width: 1; }
+
+  /* ============ Cards / listas ============ */
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 4px; padding: 20px 22px;
+  }
+  .card--read { border-top: 3px solid var(--wine); }
+  .card--pub  { border-top: 3px solid var(--blue); }
+  .card--use  { border-top: 3px solid var(--green); }
+  .card h4 { margin: 0 0 4px; font-size: 15px; letter-spacing: -.01em; }
+  .card p { margin: 6px 0 0; font-size: 14px; color: var(--ink-soft); }
+
+  .tools { display: flex; flex-direction: column; gap: 1px; background: var(--border);
+           border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-top: 26px; }
+  .tool { display: grid; grid-template-columns: minmax(0, 304px) 1fr; gap: 20px;
+          background: var(--surface); padding: 13px 20px; align-items: baseline; }
+  .tool code {
+    font-family: var(--font-mono); font-size: 12px; color: var(--wine);
+    font-weight: 600; white-space: nowrap;
+  }
+  .tool span { font-size: 14px; color: var(--ink-soft); }
+
+  code:not(pre code):not(.tool code) {
+    font-family: var(--font-mono); font-size: .875em; background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 2px; padding: 1px 5px;
+  }
+  pre {
+    background: var(--code-bg); color: var(--code-ink); border-radius: 4px;
+    padding: 16px 18px; overflow-x: auto; font-family: var(--font-mono);
+    font-size: 12.5px; line-height: 1.7; margin: 18px 0;
+  }
+  pre .cm { color: #9b8f94; }
+  pre .hl { color: #f2a3b4; }
+
+  /* ============ Mockup Dev Mode ============ */
+  .devmode {
+    border: 1px solid var(--border-strong); border-radius: 5px; overflow: hidden;
+    background: var(--surface); margin-top: 26px; max-width: 560px;
+  }
+  .devmode__top {
+    display: flex; align-items: center; gap: 8px; padding: 9px 14px;
+    background: var(--surface-2); border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+    letter-spacing: .05em; text-transform: uppercase;
+  }
+  .devmode__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--wine); }
+  .devmode__tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+  .devmode__tab {
+    padding: 9px 18px; font-family: var(--font-mono); font-size: 12px;
+    color: var(--muted); border-bottom: 2px solid transparent;
+  }
+  .devmode__tab--on { color: var(--ink); border-bottom-color: var(--wine); font-weight: 600; }
+  .devmode pre { margin: 0; border-radius: 0; font-size: 12px; }
+  .devmode__foot {
+    padding: 10px 14px; border-top: 1px solid var(--border);
+    font-size: 12.5px; color: var(--muted);
+  }
+
+  /* ============ Ventajas ============ */
+  .adv { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px;
+         background: var(--border); border: 1px solid var(--border); border-radius: 4px;
+         overflow: hidden; margin-top: 30px; }
+  .adv__item { background: var(--surface); padding: 22px 24px; }
+  .adv__k {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--wine); display: block; margin-bottom: 8px;
+  }
+  .adv__item h4 { margin: 0 0 6px; font-size: 15.5px; letter-spacing: -.012em; }
+  .adv__item p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+  .adv__item p em { color: var(--ink); font-style: normal; font-weight: 600; }
+
+  .closing {
+    margin-top: 72px; padding: 28px 30px; background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 4px;
+  }
+  .closing h3 { margin-top: 0; }
+  footer {
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--muted);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    letter-spacing: .04em;
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 18px 64px; }
+    .hero { padding: 48px 0 32px; }
+    .tool { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Andromeda Design System · INVEX</p>
+    <h1>Un lazo cerrado entre Figma y el código</h1>
+    <p class="lede">
+      El diseño no se “pasa” a desarrollo y ahí termina. Andromeda funciona como un circuito:
+      el MCP de Figma alimenta la construcción de los componentes, y Code Connect devuelve
+      a Figma el código real que quedó publicado. Así se ve ese circuito y qué gana el banco
+      por tenerlo cerrado.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>42</b><span>componentes</span></div>
+      <div class="stat"><b>2</b><span>frameworks</span></div>
+      <div class="stat"><b>113</b><span>mappings publicados</span></div>
+      <div class="stat"><b>1</b><span>archivo de tokens</span></div>
+    </div>
+  </header>
+
+  <figure>
+    <div class="canvas">
+      <svg viewBox="0 0 1000 470" role="img"
+           aria-label="Diagrama del circuito: Figma alimenta al agente vía MCP, el agente genera el repositorio de React y Vue, el repositorio publica los mappings de Code Connect de regreso a Figma, y las aplicaciones consumen el repositorio.">
+        <defs>
+          <marker id="ar-read" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--wine)" />
+          </marker>
+          <marker id="ar-pub" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--blue)" />
+          </marker>
+          <marker id="ar-use" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--green)" />
+          </marker>
+        </defs>
+
+        <!-- ===== FIGMA ===== -->
+        <rect class="d-box-accent" x="16" y="96" width="176" height="152" rx="4" />
+        <text class="d-title" x="34" y="124">Figma</text>
+        <text class="d-sub"   x="34" y="141">Ui Kit Web</text>
+        <line class="d-divider" x1="34" y1="152" x2="174" y2="152" />
+        <text class="d-item" x="34" y="172">componentes</text>
+        <text class="d-item" x="34" y="190">variantes y props</text>
+        <text class="d-item" x="34" y="208">variables (tokens)</text>
+        <text class="d-item" x="34" y="226">Dev Mode</text>
+
+        <!-- ===== MCP + AGENTE ===== -->
+        <rect class="d-box" x="290" y="96" width="196" height="152" rx="4" />
+        <text class="d-title" x="308" y="124">MCP + agente</text>
+        <text class="d-sub"   x="308" y="141">Claude Code</text>
+        <line class="d-divider" x1="308" y1="152" x2="468" y2="152" />
+        <text class="d-item" x="308" y="172">lee medidas exactas</text>
+        <text class="d-item" x="308" y="190">lee tokens y variantes</text>
+        <text class="d-item" x="308" y="208">traduce a componentes</text>
+        <text class="d-item" x="308" y="226">verifica en navegador</text>
+
+        <!-- ===== REPOSITORIO ===== -->
+        <rect class="d-box-repo" x="584" y="76" width="196" height="192" rx="4" />
+        <text class="d-title" x="602" y="104">Repositorio</text>
+        <text class="d-sub"   x="602" y="121">Andromeda-ds</text>
+        <line class="d-divider" x1="602" y1="132" x2="762" y2="132" />
+        <text class="d-item" x="602" y="152">react/ · 42 comp.</text>
+        <text class="d-item" x="602" y="170">vue/ · 42 comp.</text>
+        <text class="d-item" x="602" y="188">tokens/tokens.css</text>
+        <text class="d-item" x="602" y="206">*.figma.tsx / .ts</text>
+        <text class="d-item" x="602" y="224">Storybook · docs/</text>
+        <text class="d-note" x="602" y="248">CSS compartido entre ambos</text>
+
+        <!-- ===== APPS ===== -->
+        <rect class="d-box" x="878" y="96" width="106" height="152" rx="4" />
+        <text class="d-title" x="896" y="124">Apps</text>
+        <text class="d-sub"   x="896" y="141">INVEX</text>
+        <line class="d-divider" x1="896" y1="152" x2="966" y2="152" />
+        <text class="d-item" x="896" y="172">React</text>
+        <text class="d-item" x="896" y="190">Vue 3</text>
+        <text class="d-item" x="896" y="208">Nuxt</text>
+        <text class="d-item" x="896" y="226">Next</text>
+
+        <!-- ===== 1. Figma -> MCP (leer) ===== -->
+        <line class="d-flow-read" x1="192" y1="172" x2="284" y2="172" marker-end="url(#ar-read)" />
+        <text class="d-lbl-read" x="238" y="160" text-anchor="middle">1 · lee</text>
+        <text class="d-note"     x="238" y="192" text-anchor="middle">MCP</text>
+
+        <!-- ===== 2. MCP -> Repo (generar) ===== -->
+        <line class="d-flow-read" x1="486" y1="172" x2="578" y2="172" marker-end="url(#ar-read)" />
+        <text class="d-lbl-read" x="532" y="160" text-anchor="middle">2 · genera</text>
+        <text class="d-note"     x="532" y="192" text-anchor="middle">.tsx / .vue</text>
+
+        <!-- ===== 4. Repo -> Apps (consumir) ===== -->
+        <line class="d-flow-use" x1="780" y1="172" x2="872" y2="172" marker-end="url(#ar-use)" />
+        <text class="d-lbl-use" x="826" y="160" text-anchor="middle">4 · consume</text>
+        <text class="d-note"    x="826" y="192" text-anchor="middle">alias</text>
+
+        <!-- ===== 3. Repo -> Figma (publicar Code Connect) ===== -->
+        <path class="d-flow-pub" d="M 682 268 L 682 352 L 104 352 L 104 248" marker-end="url(#ar-pub)" />
+        <text class="d-lbl-pub" x="393" y="342" text-anchor="middle">3 · publica los snippets  ·  figma connect publish</text>
+        <text class="d-note"    x="393" y="374" text-anchor="middle">el diseñador ve en Dev Mode el código real, con pestañas React y Vue</text>
+
+        <!-- ===== Carriles: etiquetas de dirección ===== -->
+        <text class="d-lbl-read" x="16" y="60">→ diseño hacia código</text>
+        <text class="d-lbl-pub"  x="16" y="432">← código hacia diseño</text>
+        <line class="d-flow-read" x1="196" y1="55" x2="238" y2="55" marker-end="url(#ar-read)" />
+        <line class="d-flow-pub"  x1="196" y1="427" x2="238" y2="427" marker-end="url(#ar-pub)" />
+      </svg>
+    </div>
+    <figcaption>
+      El circuito completo. Los tramos <strong>1</strong> y <strong>2</strong> son de lectura: el MCP
+      entrega al agente el diseño con sus medidas y tokens, y de ahí salen los componentes.
+      El tramo <strong>3</strong> va en sentido contrario: el repositorio publica en Figma el código
+      que quedó, de modo que el diseño y el código apuntan uno al otro. El tramo <strong>4</strong>
+      es el consumo en las aplicaciones del banco.
+    </figcaption>
+  </figure>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">1</span><h2>El MCP lee el diseño</h2></div>
+    <p class="sec-sub">
+      MCP (Model Context Protocol) es el puente que le da al agente acceso directo al archivo de Figma.
+      No trabaja con una captura de pantalla: consulta el documento y obtiene números.
+      Estas son las consultas que se usaron para construir Andromeda:
+    </p>
+
+    <div class="tools">
+      <div class="tool"><code>get_design_context</code><span>Medidas exactas, colores, tipografías y estructura del nodo. Es la consulta principal: de aquí salen los 44&nbsp;px de un círculo o el radio de 10 de una card.</span></div>
+      <div class="tool"><code>get_variable_defs</code><span>Las variables de Figma —la paleta, espaciados, tipografías— que se convierten en <code>tokens.css</code>.</span></div>
+      <div class="tool"><code>get_metadata</code><span>La jerarquía del diseño: qué contiene cada frame, con posiciones y tamaños.</span></div>
+      <div class="tool"><code>get_screenshot</code><span>La imagen del nodo, para confirmar que lo construido se ve como el diseño.</span></div>
+      <div class="tool"><code>list_file_components_for_code_connect</code><span>El inventario de componentes publicados con su <code>nodeId</code> y sus properties: la lista de lo que existe y cómo se llama cada variante.</span></div>
+      <div class="tool"><code>get_code_connect_map</code><span>Qué componentes ya tienen código asociado y cuál es.</span></div>
+    </div>
+
+    <p>
+      La diferencia práctica: sin MCP un desarrollador interpreta el diseño “a ojo” y aparecen
+      los 47&nbsp;px donde debían ser 44. Con MCP el número viene del archivo.
+    </p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">2</span><h2>El agente genera los componentes</h2></div>
+    <p class="sec-sub">
+      Cada componente del diseño produce un conjunto fijo de archivos, iguales en los dos frameworks.
+      El CSS es <strong>el mismo archivo</strong> en React y en Vue: por eso los dos se ven idénticos
+      y no pueden separarse con el tiempo.
+    </p>
+
+    <div class="cols">
+      <div class="card card--read">
+        <h4>Componente</h4>
+        <p><code>Alert.tsx</code> en React y <code>Alert.vue</code> en Vue, con las mismas variantes y props que definió Figma.</p>
+      </div>
+      <div class="card card--read">
+        <h4>Estilos</h4>
+        <p><code>Alert.css</code> idéntico en ambos paquetes, escrito solo con tokens: cero colores a mano.</p>
+      </div>
+      <div class="card card--read">
+        <h4>Documentación viva</h4>
+        <p><code>Alert.stories</code> para Storybook: cada variante navegable y con controles.</p>
+      </div>
+      <div class="card card--pub">
+        <h4>Mapa a Figma</h4>
+        <p><code>Alert.figma.tsx</code> / <code>.ts</code>: la pieza que conecta el código de vuelta al nodo de Figma.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">3</span><h2>Code Connect devuelve el código a Figma</h2></div>
+    <p class="sec-sub">
+      Este es el tramo que casi nadie implementa y el que cambia el trabajo diario. Los archivos
+      <code>*.figma.*</code> declaran qué componente de código corresponde a cada nodo de Figma y cómo
+      se traduce cada property. Al publicarlos, Figma deja de ser solo un plano.
+    </p>
+
+    <pre><span class="cm"># desde el repositorio, en cada paquete</span>
+npm run figma:connect <span class="hl">-- --batch-size 10</span>
+<span class="cm">→ Successfully uploaded to Figma, for React   (113 mappings)</span>
+<span class="cm">→ Successfully uploaded to Figma, for Vue</span></pre>
+
+    <h3>Qué ve el diseñador después de publicar</h3>
+    <p>
+      Selecciona un componente en Figma, abre Dev Mode y en el panel de código aparece el
+      componente real del DS con sus props ya traducidas —no un CSS aproximado— y un selector
+      para ver la versión de React o de Vue:
+    </p>
+
+    <div class="devmode">
+      <div class="devmode__top"><span class="devmode__dot"></span> Figma · Dev Mode · Alerta</div>
+      <div class="devmode__tabs">
+        <div class="devmode__tab devmode__tab--on">React</div>
+        <div class="devmode__tab">Vue</div>
+      </div>
+<pre>&lt;Alert
+  variant=<span class="hl">"danger"</span>
+  message=<span class="hl">"Error"</span>
+  closable={<span class="hl">true</span>}
+&gt;
+  No pudimos procesar el movimiento.
+&lt;/Alert&gt;</pre>
+      <div class="devmode__foot">Al cambiar la variante en Figma, el snippet cambia con ella.</div>
+    </div>
+
+    <p>
+      Y funciona en los dos sentidos de la conversación: el diseñador sabe qué componente pedir
+      por su nombre real, y el desarrollador no tiene que adivinar cuál de los cuarenta y dos usar.
+    </p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">4</span><h2>Las aplicaciones consumen el repositorio</h2></div>
+    <p class="sec-sub">
+      Las apps apuntan al repositorio con un alias (o un submódulo si quieren fijar versión) y cargan
+      los tokens una sola vez. A partir de ahí, importan componentes.
+    </p>
+    <pre><span class="cm">// vite.config.ts</span>
+resolve: { alias: {
+  <span class="hl">'@andromeda/react'</span>: DS + '/react/src',
+  <span class="hl">'@andromeda/tokens'</span>: DS + '/tokens',
+}}
+
+<span class="cm">// main.tsx — una sola vez en toda la app</span>
+import <span class="hl">'@andromeda/tokens/tokens.css'</span></pre>
+    <p>
+      Ese único <code>tokens.css</code> es la razón por la que un cambio de paleta en Figma se
+      convierte en una línea de código y llega a todas las pantallas de todas las apps.
+    </p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">✦</span><h2>Qué gana el banco con el circuito cerrado</h2></div>
+    <p class="sec-sub">
+      Cada ventaja de abajo existe porque el lazo está completo. Con solo la mitad —diseño que se
+      traduce a código, pero sin retorno— se pierden casi todas.
+    </p>
+
+    <div class="adv">
+      <div class="adv__item">
+        <span class="adv__k">Fuente única</span>
+        <h4>Figma manda, y se puede comprobar</h4>
+        <p>Las medidas salen del archivo, no de la interpretación de cada quien. <em>Un solo lugar</em> donde el diseño es verdad.</p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Fidelidad</span>
+        <h4>Pixel perfect medible</h4>
+        <p>Cada componente se verificó contra el diseño con medidas reales del navegador, no “a ojo”. <em>Las diferencias se detectan, no se discuten.</em></p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Handoff</span>
+        <h4>Se acaba el “¿cómo se llama esto?”</h4>
+        <p>En Dev Mode el diseñador ve el nombre y las props reales del componente. <em>Menos idas y vueltas</em> por cada pantalla.</p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Paridad</span>
+        <h4>React y Vue no se separan</h4>
+        <p>Misma API y el mismo archivo CSS en los dos paquetes: <em>42 y 42</em>, sin un framework rezagado.</p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Propagación</span>
+        <h4>Un token cambia todo</h4>
+        <p>El rojo INVEX vive en una línea. Cambiarlo actualiza <em>42 componentes × 2 frameworks × todas las apps</em> sin tocar un solo componente.</p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Velocidad</span>
+        <h4>Componentes nuevos en horas</h4>
+        <p>Leer el diseño, generar, verificar y publicar es un ciclo corto y repetible. <em>El costo por componente baja</em> a medida que crece la librería.</p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Onboarding</span>
+        <h4>Un dev nuevo arranca solo</h4>
+        <p>Storybook para explorar, manuales de integración para instalar y snippets en Figma para copiar. <em>Sin depender de quién lo construyó.</em></p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Deuda de UI</span>
+        <h4>Nadie escribe un hex a mano</h4>
+        <p>Los componentes solo usan tokens, así que las pantallas no se desalinean de la marca con el tiempo. <em>La consistencia deja de depender de la disciplina.</em></p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Trazabilidad</span>
+        <h4>Cada componente cita su origen</h4>
+        <p>El código guarda el <code>nodeId</code> de Figma del que salió. <em>Auditar una decisión de diseño</em> toma segundos.</p>
+      </div>
+      <div class="adv__item">
+        <span class="adv__k">Escala</span>
+        <h4>Se construye una vez, sirve a todo el banco</h4>
+        <p>El mismo componente atiende Renacer, Fiduciario e Invex por variante. <em>Cada app nueva parte del 80% hecho.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="closing">
+    <h3>Los tres comandos del ciclo</h3>
+    <pre><span class="cm"># explorar los componentes (documentación viva)</span>
+npm run storybook            <span class="cm">React → :6006 · Vue → :6007</span>
+
+<span class="cm"># validar los mappings sin escribir en Figma</span>
+npm run figma:connect:dry
+
+<span class="cm"># publicar el código de vuelta a Figma</span>
+npm run figma:connect -- --batch-size 10</pre>
+    <p style="margin-bottom:0">
+      Lo único que el circuito todavía no hace solo es <strong>avisar cuando el diseño cambia</strong>:
+      Code Connect va de código a Figma, no al revés. Para cerrar también ese lado hace falta un
+      webhook de Figma o un chequeo de tokens en CI.
+    </p>
+  </div>
+
+  <footer>
+    <span>Andromeda Design System · INVEX</span>
+    <span>github.com/victorrojas14/Andromeda-ds</span>
+  </footer>
+
+</div>
+
+</body>
+</html>

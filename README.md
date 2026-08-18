@@ -11,6 +11,8 @@ Si vas a **consumir la librería en un proyecto**, empieza aquí (guía paso a p
 | React | [docs/manual-react.html](docs/manual-react.html) | [docs/manual-react.pdf](docs/manual-react.pdf) |
 | Vue 3 | [docs/manual-vue.html](docs/manual-vue.html) | [docs/manual-vue.pdf](docs/manual-vue.pdf) |
 
+Y para entender **cómo está conectado todo** (MCP de Figma → código → Code Connect → apps) y las ventajas de tenerlo así: [docs/arquitectura-mcp-code-connect.html](docs/arquitectura-mcp-code-connect.html) · [PDF](docs/arquitectura-mcp-code-connect.pdf)
+
 El resto de este README es la referencia técnica de cada componente y su origen en Figma.
 
 ## Estructura del repositorio
