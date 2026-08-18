@@ -2,3 +2,7 @@ node_modules/
 storybook-static/
 dist/
 *.log
+
+# Token de Figma para publicar Code Connect (nunca versionarlo)
+.env
+.env.local
